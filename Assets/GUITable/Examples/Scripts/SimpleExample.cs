@@ -11,9 +11,19 @@ public class SimpleExample : MonoBehaviour {
 		public string stringProperty;
 		public float floatProperty;
 		public GameObject objectProperty;
+		public void Reset ()
+		{
+			stringProperty = "";
+			floatProperty = 0f;
+			objectProperty = null;
+		}
 	}
 
 	public List<SimpleObject> simpleObjects;
-	
+
+	void OnGUI ()
+	{
+		GUILayout.Label ("Select the SimpleExample scene object to visualize the table in the inspector");
+	}
 
 }
