@@ -13,6 +13,10 @@ namespace GUIExtensions
 
 	    public static GUITableState DrawTable (List<GUITableColumn> columns, List<List<GUITableEntry>> properties, GUITableState tableState)
 	    {
+
+			if (tableState == null)
+				tableState = new GUITableState();
+			
 			CheckTableState (tableState, columns);
 
 	        float rowHeight = EditorGUIUtility.singleLineHeight;
@@ -142,10 +146,25 @@ namespace GUIExtensions
 
 		public static GUITableState DrawTable (SerializedObject serializedObject, string collectionName, List<string> properties, GUITableState tableState) 
 		{
-
-			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(prop, new GUITableColumn(prop, 100f))).ToList();
+			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
+				prop, 
+				new GUITableColumn(ObjectNames.NicifyVariableName (prop), 100f))).ToList();
 
 			return DrawTable (columns, serializedObject, collectionName, tableState);
+		}
+
+		public static GUITableState DrawTable (SerializedObject serializedObject, string collectionName, GUITableState tableState) 
+		{
+			List<string> properties = new List<string>();
+			string firstElementPath = collectionName + ".Array.data[0]";
+			foreach (SerializedProperty prop in serializedObject.FindProperty(firstElementPath))
+				properties.Add (prop.propertyPath.Substring(firstElementPath.Length + 1));
+			return DrawTable (serializedObject, collectionName, properties, tableState);
+		}
+
+		public static GUITableState DrawTable (SerializedProperty collectionProperty, GUITableState tableState) 
+		{
+			return DrawTable (collectionProperty.serializedObject, collectionProperty.propertyPath, tableState);
 		}
 
 		static void RightClickMenu (GUITableState tableState, List<GUITableColumn> columns)
@@ -271,7 +290,7 @@ namespace GUIExtensions
 	        }
 	        else
 	        {
-	            Debug.LogWarningFormat ("Property not found: {0} -> {1}", so, propertyName);
+				Debug.LogWarningFormat ("Property not found: {0} -> {1}", so.targetObject.name, propertyName);
 	            GUILayout.Space (width + 4f);
 	        }
 	    }
