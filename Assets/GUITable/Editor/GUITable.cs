@@ -11,7 +11,7 @@ namespace GUIExtensions
 	public static class GUITable
 	{
 
-	    public static GUITableState Table (List<GUITableColumn> columns, List<List<GUITableEntry>> properties, GUITableState tableState)
+	    public static GUITableState DrawTable (List<GUITableColumn> columns, List<List<GUITableEntry>> properties, GUITableState tableState)
 	    {
 			CheckTableState (tableState, columns);
 
@@ -122,7 +122,7 @@ namespace GUIExtensions
 			}
 		}
 
-		public static GUITableState Table (List<PropertyColumn> propertyColumns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
+		public static GUITableState DrawTable (List<PropertyColumn> propertyColumns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
 		{
 
 			List<List<GUITableEntry>> rows = new List<List<GUITableEntry>>();
@@ -136,16 +136,16 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return Table (propertyColumns.Select(col => col.column).ToList(), rows, tableState);
+			return DrawTable (propertyColumns.Select(col => col.column).ToList(), rows, tableState);
 		}
 
 
-		public static GUITableState Table (SerializedObject serializedObject, string collectionName, List<string> properties, GUITableState tableState) 
+		public static GUITableState DrawTable (SerializedObject serializedObject, string collectionName, List<string> properties, GUITableState tableState) 
 		{
 
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(prop, new GUITableColumn(prop, 100f))).ToList();
 
-			return Table (columns, serializedObject, collectionName, tableState);
+			return DrawTable (columns, serializedObject, collectionName, tableState);
 		}
 
 		static void RightClickMenu (GUITableState tableState, List<GUITableColumn> columns)

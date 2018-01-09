@@ -46,7 +46,7 @@ public class ActionExampleEditor : Editor
 			});
 		}
 
-		tableState = GUITable.Table (columns, rows, tableState);
+		tableState = GUITable.DrawTable (columns, rows, tableState);
 
 	}
 

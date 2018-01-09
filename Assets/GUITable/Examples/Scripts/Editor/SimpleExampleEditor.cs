@@ -44,7 +44,7 @@ public class SimpleExampleEditor : Editor
 			});
 		}
 
-		tableState = GUITable.Table (columns, rows, tableState);
+		tableState = GUITable.DrawTable (columns, rows, tableState);
 
 		List<GUITable.PropertyColumn> propertyColumns = new List<GUITable.PropertyColumn>()
 		{
@@ -53,9 +53,9 @@ public class SimpleExampleEditor : Editor
 			new GUITable.PropertyColumn("objectProperty", new GUITableColumn("Object", 110f)),
 		};
 
-		tableState = GUITable.Table (propertyColumns, serializedObject, "simpleObjects", tableState);
+		tableState = GUITable.DrawTable (propertyColumns, serializedObject, "simpleObjects", tableState);
 
-		tableState = GUITable.Table (serializedObject, "simpleObjects", new List<string>(){"stringProperty", "floatProperty", "objectProperty"}, tableState);
+		tableState = GUITable.DrawTable (serializedObject, "simpleObjects", new List<string>(){"stringProperty", "floatProperty", "objectProperty"}, tableState);
 
 	}
 
