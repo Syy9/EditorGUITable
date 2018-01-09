@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using GUIExtensions;
 
 [CustomEditor(typeof(ActionExample))]
 public class ActionExampleEditor : Editor 
