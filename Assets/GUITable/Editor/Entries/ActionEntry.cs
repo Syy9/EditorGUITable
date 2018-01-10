@@ -6,7 +6,11 @@ using UnityEditor;
 
 namespace GUIExtensions
 {
-	
+
+	/// <summary>
+	/// This entry class draws a button which, when clicked, will trigger the
+	/// action given in the constructor.
+	/// </summary>
 	public class ActionEntry : TableEntry
 	{
 		string name;

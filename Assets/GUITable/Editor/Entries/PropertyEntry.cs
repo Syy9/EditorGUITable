@@ -7,6 +7,11 @@ using UnityEditor;
 
 namespace GUIExtensions
 {
+
+	/// <summary>
+	/// This entry class just uses EditorGUILayout.PropertyField to draw a given property.
+	/// This is the basic way to use GUITable. It will draw the properties the same way Unity would by default.
+	/// </summary>
 	public class PropertyEntry : TableEntry
 	{
 		SerializedObject so;

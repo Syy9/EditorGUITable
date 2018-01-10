@@ -11,7 +11,15 @@ namespace GUIExtensions
 	public static class GUITable
 	{
 
-	    public static GUITableState DrawTable (List<TableColumn> columns, List<List<TableEntry>> properties, GUITableState tableState)
+		/// <summary>
+		/// Draw a table completely manually.
+		/// Each entry has to be created and given as parameter in entries.
+		/// </summary>
+		/// <returns>The updated table state.</returns>
+		/// <param name="columns">The Columns of the table.</param>
+		/// <param name="entries">The Entries as a list of rows.</param>
+		/// <param name="tableState">The Table state.</param>
+	    public static GUITableState DrawTable (List<TableColumn> columns, List<List<TableEntry>> entries, GUITableState tableState)
 	    {
 
 			if (tableState == null)
@@ -35,7 +43,7 @@ namespace GUIExtensions
 	            TableColumn column = columns[i];
 				if (!tableState.columnVisible [i])
 					continue;
-	            string columnName = column.name;
+	            string columnName = column.title;
 	            if (tableState.sortByColumnIndex == i)
 	            {
 	                if (tableState.sortIncreasing)
@@ -74,13 +82,13 @@ namespace GUIExtensions
 	        EditorGUILayout.BeginVertical ();
 	        tableState.scrollPos = EditorGUILayout.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
 
-	        List<List<TableEntry>> orderedRows = properties;
+	        List<List<TableEntry>> orderedRows = entries;
 	        if (tableState.sortByColumnIndex >= 0)
 	        {
 				if (tableState.sortIncreasing)
-					orderedRows = properties.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
+					orderedRows = entries.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
 				else
-					orderedRows = properties.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
+					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
 	        }
 
 	        foreach (List<TableEntry> row in orderedRows)
@@ -115,6 +123,15 @@ namespace GUIExtensions
 	        return tableState;
 		}
 
+		/// <summary>
+		/// Draw a table by defining the columns's settings and the path of the corresponding properties.
+		/// This will automatically create Property Entries using these paths.
+		/// </summary>
+		/// <returns>The updated table state.</returns>
+		/// <param name="propertyColumns">The Property columns, that contain the columns properties and the corresponding property path.</param>
+		/// <param name="serializedObject">The Serialized object.</param>
+		/// <param name="collectionName">The Collection's property path in the serialized object.</param>
+		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (List<PropertyColumn> propertyColumns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
 		{
 
@@ -123,15 +140,24 @@ namespace GUIExtensions
 			for (int i = 0 ; i < serializedObject.FindProperty(collectionName).arraySize ; i++)
 			{
 				List<TableEntry> row = new List<TableEntry>();
-				foreach (string prop in propertyColumns.Select(col => col.propertyName))
+				foreach (PropertyColumn col in propertyColumns)
 				{
-					row.Add (new PropertyEntry (serializedObject, string.Format("{0}.Array.data[{1}].{2}", collectionName, i, prop)));
+					row.Add (new PropertyEntry (serializedObject, string.Format("{0}.Array.data[{1}].{2}", collectionName, i, col.propertyName)));
 				}
 				rows.Add(row);
 			}
 			return DrawTable (propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
 		}
 
+		/// <summary>
+		/// Draw a table from the columns' settings, the path for the corresponding properties and a selector function
+		/// that takes a SerializedProperty and returns the TableEntry to put in the corresponding cell.
+		/// </summary>
+		/// <returns>The updated table state.</returns>
+		/// <param name="columns">The Selector Columns.</param>
+		/// <param name="serializedObject">The Serialized object.</param>
+		/// <param name="collectionName">The Collection's property path in the serialized object.</param>
+		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (List<SelectorColumn> columns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
 		{
 
@@ -149,7 +175,16 @@ namespace GUIExtensions
 			return DrawTable (columns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
 		}
 
-
+		/// <summary>
+		/// Draw a table very simply, using just the paths of the properties to display.
+		/// This will create columns automatically using the property name as title, and will create
+		/// property entries automatically for those properties.
+		/// </summary>
+		/// <returns>The updated table state.</returns>
+		/// <param name="serializedObject">The Serialized object.</param>
+		/// <param name="collectionName">The Collection's property path in the serialized object.</param>
+		/// <param name="properties">The paths (names) of the properties to display.</param>
+		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (SerializedObject serializedObject, string collectionName, List<string> properties, GUITableState tableState) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
@@ -167,6 +202,14 @@ namespace GUIExtensions
 			return DrawTable (serializedObject, collectionName, properties, tableState);
 		}
 
+		/// <summary>
+		/// Draw a table only from its property.
+		/// This will create columns for all the visible members in the elements' class,
+		/// similar to what Unity would show in the classic vertical collection display, but as a table instead.
+		/// </summary>
+		/// <returns>The updated table state.</returns>
+		/// <param name="collectionProperty">The serialized property of the collection.</param>
+		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (SerializedProperty collectionProperty, GUITableState tableState) 
 		{
 			return DrawTable (collectionProperty.serializedObject, collectionProperty.propertyPath, tableState);
@@ -185,7 +228,7 @@ namespace GUIExtensions
 					if (column.optional)
 					{
 						int index = i;
-						contextMenu.AddItem (new GUIContent (column.name), tableState.columnVisible [i], () => tableState.columnVisible [index] = !tableState.columnVisible [index]);
+						contextMenu.AddItem (new GUIContent (column.title), tableState.columnVisible [i], () => tableState.columnVisible [index] = !tableState.columnVisible [index]);
 					}
 				}
 				contextMenu.ShowAsContext();
