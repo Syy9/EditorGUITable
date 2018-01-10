@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace GUIExtensions
 {
@@ -34,6 +35,37 @@ namespace GUIExtensions
 		public List<float> columnSizes = new List<float> ();
 
 		public List<bool> columnVisible = new List<bool> ();
+
+		string prefsKey;
+
+		public GUITableState ()
+		{
+		}
+
+		public GUITableState (string prefsKey)
+		{
+			this.prefsKey = prefsKey;
+			GUITableState loadedState = Load(prefsKey);
+			this.scrollPos = loadedState.scrollPos;
+			this.scrollPosHoriz = loadedState.scrollPosHoriz;
+			this.sortByColumnIndex = loadedState.sortByColumnIndex;
+			this.sortIncreasing = loadedState.sortIncreasing;
+			this.columnSizes = loadedState.columnSizes;
+			this.columnVisible = loadedState.columnVisible;
+		}
+
+		public void Save ()
+		{
+			EditorPrefs.SetString(prefsKey, JsonUtility.ToJson (this));
+		}
+
+		public static GUITableState Load (string prefsKey)
+		{
+			if (EditorPrefs.HasKey(prefsKey))
+				return JsonUtility.FromJson<GUITableState> (EditorPrefs.GetString(prefsKey, string.Empty));
+			else
+				return new GUITableState();
+		}
 
 	}
 

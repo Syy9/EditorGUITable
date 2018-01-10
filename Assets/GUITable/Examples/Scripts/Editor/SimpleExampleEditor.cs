@@ -16,6 +16,11 @@ public class SimpleExampleEditor : Editor
 
 	Vector2 scrollPos;
 
+	void OnEnable ()
+	{
+		tableState = new GUITableState("tableState");
+	}
+
 	public override void OnInspectorGUI ()
 	{
 		GUILayout.Label ("Default display", EditorStyles.boldLabel);
@@ -37,6 +42,7 @@ public class SimpleExampleEditor : Editor
 	void DrawSimple ()
 	{
 		tableState = GUITable.DrawTable (serializedObject.FindProperty("simpleObjects"), tableState);
+		tableState.Save();
 	}
 
 	void DrawCustomProperties ()
