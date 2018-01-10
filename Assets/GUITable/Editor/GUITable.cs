@@ -11,7 +11,7 @@ namespace GUIExtensions
 	public static class GUITable
 	{
 
-	    public static GUITableState DrawTable (List<GUITableColumn> columns, List<List<GUITableEntry>> properties, GUITableState tableState)
+	    public static GUITableState DrawTable (List<TableColumn> columns, List<List<TableEntry>> properties, GUITableState tableState)
 	    {
 
 			if (tableState == null)
@@ -32,7 +32,7 @@ namespace GUIExtensions
 
 	        for (int i = 0 ; i < columns.Count ; i++)
 	        {
-	            GUITableColumn column = columns[i];
+	            TableColumn column = columns[i];
 				if (!tableState.columnVisible [i])
 					continue;
 	            string columnName = column.name;
@@ -74,7 +74,7 @@ namespace GUIExtensions
 	        EditorGUILayout.BeginVertical ();
 	        tableState.scrollPos = EditorGUILayout.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
 
-	        List<List<GUITableEntry>> orderedRows = properties;
+	        List<List<TableEntry>> orderedRows = properties;
 	        if (tableState.sortByColumnIndex >= 0)
 	        {
 				if (tableState.sortIncreasing)
@@ -83,7 +83,7 @@ namespace GUIExtensions
 					orderedRows = properties.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
 	        }
 
-	        foreach (List<GUITableEntry> row in orderedRows)
+	        foreach (List<TableEntry> row in orderedRows)
 	        {
 	            EditorGUILayout.BeginHorizontal ();
 	            for (int i = 0 ; i < row.Count ; i++)
@@ -95,8 +95,8 @@ namespace GUIExtensions
 	                }
 					if (!tableState.columnVisible [i])
 						continue;
-	                GUITableColumn column = columns [i];
-	                GUITableEntry property = row[i];
+	                TableColumn column = columns [i];
+	                TableEntry property = row[i];
 	                GUI.enabled = column.enabledEntries;
 					property.DrawEntry (tableState.columnSizes[i], rowHeight);
 	            }
@@ -115,57 +115,38 @@ namespace GUIExtensions
 	        return tableState;
 		}
 
-		public class PropertyColumn : GUITableColumn
-		{
-			public string propertyName;
-			public PropertyColumn (string propertyName, string name, float width) : base (name, width)
-			{
-				this.propertyName = propertyName;
-			}
-		}
-
 		public static GUITableState DrawTable (List<PropertyColumn> propertyColumns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
 		{
 
-			List<List<GUITableEntry>> rows = new List<List<GUITableEntry>>();
+			List<List<TableEntry>> rows = new List<List<TableEntry>>();
 
 			for (int i = 0 ; i < serializedObject.FindProperty(collectionName).arraySize ; i++)
 			{
-				List<GUITableEntry> row = new List<GUITableEntry>();
+				List<TableEntry> row = new List<TableEntry>();
 				foreach (string prop in propertyColumns.Select(col => col.propertyName))
 				{
 					row.Add (new PropertyEntry (serializedObject, string.Format("{0}.Array.data[{1}].{2}", collectionName, i, prop)));
 				}
 				rows.Add(row);
 			}
-			return DrawTable (propertyColumns.Select((col) => (GUITableColumn) col).ToList(), rows, tableState);
-		}
-
-
-		public class SelectorColumn : PropertyColumn
-		{
-			public Func<SerializedProperty, GUITableEntry> selector;
-			public SelectorColumn (Func<SerializedProperty, GUITableEntry> selector, string propertyName, string name, float width) : base (propertyName, name, width)
-			{
-				this.selector = selector;
-			}
+			return DrawTable (propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
 		}
 
 		public static GUITableState DrawTable (List<SelectorColumn> columns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
 		{
 
-			List<List<GUITableEntry>> rows = new List<List<GUITableEntry>>();
+			List<List<TableEntry>> rows = new List<List<TableEntry>>();
 
 			for (int i = 0 ; i < serializedObject.FindProperty(collectionName).arraySize ; i++)
 			{
-				List<GUITableEntry> row = new List<GUITableEntry>();
+				List<TableEntry> row = new List<TableEntry>();
 				foreach (SelectorColumn col in columns)
 				{
 					row.Add ( col.selector.Invoke ( serializedObject.FindProperty( string.Format("{0}.Array.data[{1}].{2}", collectionName, i, col.propertyName))));
 				}
 				rows.Add(row);
 			}
-			return DrawTable (columns.Select((col) => (GUITableColumn) col).ToList(), rows, tableState);
+			return DrawTable (columns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
 		}
 
 
@@ -191,7 +172,7 @@ namespace GUIExtensions
 			return DrawTable (collectionProperty.serializedObject, collectionProperty.propertyPath, tableState);
 		}
 
-		static void RightClickMenu (GUITableState tableState, List<GUITableColumn> columns)
+		static void RightClickMenu (GUITableState tableState, List<TableColumn> columns)
 		{
 			Rect rect = new Rect(0, 0, tableState.columnSizes.Where((_, i) => tableState.columnVisible[i]).Sum(s => s + 4), EditorGUIUtility.singleLineHeight);
 			GUI.enabled = true;
@@ -200,7 +181,7 @@ namespace GUIExtensions
 				GenericMenu contextMenu = new GenericMenu();
 				for(int i = 0 ; i < columns.Count ; i++)
 				{
-					GUITableColumn column = columns[i];
+					TableColumn column = columns[i];
 					if (column.optional)
 					{
 						int index = i;
@@ -248,7 +229,7 @@ namespace GUIExtensions
 			}
 		}
 
-		static void CheckTableState (GUITableState tableState, List<GUITableColumn> columns)
+		static void CheckTableState (GUITableState tableState, List<TableColumn> columns)
 		{
 			if (tableState.columnSizes == null || tableState.columnSizes.Count < columns.Count)
 			{
@@ -259,213 +240,6 @@ namespace GUIExtensions
 				tableState.columnVisible = columns.Select ((column) => column.visibleByDefault).ToList ();
 			}
 		}
-
-	}
-
-	public class GUITableColumn
-	{
-	    public string name { get; private set; }
-	    public float width { get; private set; }
-		public bool enabledEntries = true;
-		public bool isSortable = true;
-		public bool enabledTitle = true;
-		public bool optional = false;
-		public bool visibleByDefault = true;
-		public GUITableColumn (string name, float width, bool enabled = true, bool isSortable = true, bool enabledTitle = true, bool optional = false, bool visibleByDefault = true)
-	    {
-	        this.name = name;
-	        this.width = width;
-	        this.enabledEntries = enabled;
-	        this.isSortable = isSortable;
-			this.enabledTitle = enabledTitle;
-			this.optional = optional;
-			this.visibleByDefault = visibleByDefault;
-	    }
-	}
-
-	public abstract class GUITableEntry : System.IComparable
-	{
-	    public abstract void DrawEntry (float width, float height);
-
-	    public abstract string comparingValue { get; }
-
-		public virtual int CompareTo (object other) 
-		{ 
-			GUITableEntry otherEntry = (GUITableEntry) other;
-			if (otherEntry == null)
-				return 1;
-			return comparingValue.CompareTo ( otherEntry.comparingValue );
-		}
-
-	}
-
-	public class PropertyEntry : GUITableEntry
-	{
-	    SerializedObject so;
-	    string propertyName;
-
-	    public override void DrawEntry (float width, float height)
-	    {
-	        SerializedProperty sp = so.FindProperty (propertyName);
-	        if (sp != null)
-	        {
-	            EditorGUILayout.PropertyField (sp, GUIContent.none, GUILayout.Width (width), GUILayout.Height (height));
-	            so.ApplyModifiedProperties ();
-	        }
-	        else
-	        {
-				Debug.LogWarningFormat ("Property not found: {0} -> {1}", so.targetObject.name, propertyName);
-	            GUILayout.Space (width + 4f);
-	        }
-	    }
-
-	    public override string comparingValue
-	    {
-	        get
-	        {
-	            SerializedProperty sp = so.FindProperty (propertyName);
-	            if (sp != null)
-	            {
-	                switch (sp.propertyType)
-					{
-						case SerializedPropertyType.String:
-						case SerializedPropertyType.Character:
-							return sp.stringValue.ToString ();
-						case SerializedPropertyType.Float:
-							return sp.doubleValue.ToString ();
-						case SerializedPropertyType.Integer:
-						case SerializedPropertyType.LayerMask:
-						case SerializedPropertyType.ArraySize:
-							return sp.intValue.ToString ();
-						case SerializedPropertyType.Enum:
-							return sp.enumValueIndex.ToString ();
-						case SerializedPropertyType.Boolean:
-							return sp.boolValue.ToString ();
-						case SerializedPropertyType.ObjectReference:
-							return sp.objectReferenceValue.name.ToString ();
-						case SerializedPropertyType.ExposedReference:
-							return sp.exposedReferenceValue.name.ToString ();
-	                }
-	            }
-	            return "";
-	        }
-	    }
-
-		public override int CompareTo (object other)
-		{
-			GUITableEntry otherEntry = (GUITableEntry) other;
-			if (otherEntry == null)
-				throw new ArgumentException ("Object is not a GUITableEntry");
-
-			PropertyEntry otherPropEntry = (PropertyEntry) other;
-			if (otherPropEntry == null)
-				return base.CompareTo(other);
-
-			SerializedProperty sp = so.FindProperty (propertyName);
-			SerializedProperty otherSp = otherPropEntry.so.FindProperty (otherPropEntry.propertyName);
-
-			if (sp.propertyType != otherSp.propertyType)
-				return base.CompareTo(other);
-			
-			if (sp != null)
-			{
-
-				switch (sp.propertyType)
-				{
-					case SerializedPropertyType.String:
-					case SerializedPropertyType.Character:
-						return sp.stringValue.CompareTo (otherSp.stringValue);
-					case SerializedPropertyType.Float:
-						return sp.doubleValue.CompareTo (otherSp.doubleValue);
-					case SerializedPropertyType.Integer:
-					case SerializedPropertyType.LayerMask:
-					case SerializedPropertyType.ArraySize:
-						return sp.intValue.CompareTo (otherSp.intValue);
-					case SerializedPropertyType.Enum:
-						return sp.enumValueIndex.CompareTo (otherSp.enumValueIndex);
-					case SerializedPropertyType.Boolean:
-						return sp.boolValue.CompareTo (otherSp.boolValue);
-					case SerializedPropertyType.ObjectReference:
-						return sp.objectReferenceValue.name.CompareTo (otherSp.objectReferenceValue.name);
-					case SerializedPropertyType.ExposedReference:
-						return sp.exposedReferenceValue.name.CompareTo (otherSp.exposedReferenceValue.name);
-				}
-			}
-			return 0;
-		}
-
-	    public PropertyEntry (SerializedObject so, string propertyName)
-	    {
-	        this.so = so;
-	        this.propertyName = propertyName;
-	    }
-	}
-
-	public class ActionEntry : GUITableEntry
-	{
-	    string name;
-	    System.Action action;
-	    public override void DrawEntry (float width, float height)
-	    {
-	        if (GUILayout.Button (name, GUILayout.Width (width), GUILayout.Height (height)))
-	        {
-	            if (action != null)
-	                action.Invoke ();
-	        }
-	    }
-
-	    public override string comparingValue
-	    {
-	        get
-	        {
-	            return name;
-	        }
-	    }
-
-	    public ActionEntry (string name, System.Action action)
-	    {
-	        this.name = name;
-	        this.action = action;
-	    }
-	}
-	public class LabelEntry : GUITableEntry
-	{
-	    
-	    string value;
-
-	    public override void DrawEntry (float width, float height)
-	    {
-	        EditorGUILayout.LabelField (value, GUILayout.Width (width), GUILayout.Height (height));
-	    }
-
-	    public override string comparingValue
-	    {
-	        get
-	        {
-	            return value;
-	        }
-	    }
-
-	    public LabelEntry (string value)
-	    {
-	        this.value = value;
-	    }
-	}
-
-	public class GUITableState
-	{
-
-	    public Vector2 scrollPos;
-
-	    public Vector2 scrollPosHoriz;
-
-	    public int sortByColumnIndex = -1;
-
-	    public bool sortIncreasing;
-
-		public List<float> columnSizes = new List<float> ();
-
-		public List<bool> columnVisible = new List<bool> ();
 
 	}
 

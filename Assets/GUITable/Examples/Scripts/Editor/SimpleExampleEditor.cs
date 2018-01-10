@@ -46,11 +46,11 @@ public class SimpleExampleEditor : Editor
 
 	void DrawCustomColumns ()
 	{
-		List<GUITable.PropertyColumn> propertyColumns = new List<GUITable.PropertyColumn>()
+		List<PropertyColumn> propertyColumns = new List<PropertyColumn>()
 		{
-			new GUITable.PropertyColumn("stringProperty", "String", 60f),
-			new GUITable.PropertyColumn("floatProperty", "Float", 50f) {optional = true},
-			new GUITable.PropertyColumn("objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
+			new PropertyColumn("stringProperty", "String", 60f),
+			new PropertyColumn("floatProperty", "Float", 50f) {optional = true},
+			new PropertyColumn("objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
 		};
 
 		tableState3 = GUITable.DrawTable (propertyColumns, serializedObject, "simpleObjects", tableState3);
@@ -59,11 +59,11 @@ public class SimpleExampleEditor : Editor
 	void DrawCustomColumnsWithSelector ()
 	{
 
-		List<GUITable.SelectorColumn> selectorColumns = new List<GUITable.SelectorColumn>()
+		List<SelectorColumn> selectorColumns = new List<SelectorColumn>()
 		{
-			new GUITable.SelectorColumn(prop => new LabelEntry(prop.stringValue), "stringProperty", "String", 60f),
-			new GUITable.SelectorColumn(prop => new LabelEntry(prop.floatValue.ToString()), "floatProperty", "Float", 50f) {optional = true},
-			new GUITable.SelectorColumn(prop => new LabelEntry(prop.objectReferenceValue.name), "objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
+			new SelectorColumn(prop => new LabelEntry(prop.stringValue), "stringProperty", "String", 60f),
+			new SelectorColumn(prop => new LabelEntry(prop.floatValue.ToString()), "floatProperty", "Float", 50f) {optional = true},
+			new SelectorColumn(prop => new LabelEntry(prop.objectReferenceValue.name), "objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
 		};
 
 		tableState4 = GUITable.DrawTable (selectorColumns, serializedObject, "simpleObjects", tableState4);
@@ -71,22 +71,22 @@ public class SimpleExampleEditor : Editor
 
 	void DrawCustomEntries ()
 	{
-		List<GUITableColumn> columns = new List<GUITableColumn>()
+		List<TableColumn> columns = new List<TableColumn>()
 		{
-			new GUITableColumn("String", 60f),
-			new GUITableColumn("Float", 50f),
-			new GUITableColumn("Object", 110f),
-			new GUITableColumn("", 100f) {enabledTitle = false},
+			new TableColumn("String", 60f),
+			new TableColumn("Float", 50f),
+			new TableColumn("Object", 110f),
+			new TableColumn("", 100f) {enabledTitle = false},
 		};
 
-		List<List<GUITableEntry>> rows = new List<List<GUITableEntry>>();
+		List<List<TableEntry>> rows = new List<List<TableEntry>>();
 
 		SimpleExample targetObject = (SimpleExample) target;
 
 		for (int i = 0 ; i < targetObject.simpleObjects.Count ; i++)
 		{
 			SimpleExample.SimpleObject entry = targetObject.simpleObjects[i];
-			rows.Add (new List<GUITableEntry>()
+			rows.Add (new List<TableEntry>()
 			{
 				new LabelEntry (entry.stringProperty),
 				new PropertyEntry (serializedObject, string.Format("simpleObjects.Array.data[{0}].floatProperty", i)),

@@ -22,22 +22,22 @@ public class ActionExampleEditor : Editor
 	void DrawObjectsTable ()
 	{
 
-		List<GUITableColumn> columns = new List<GUITableColumn>()
+		List<TableColumn> columns = new List<TableColumn>()
 		{
-			new GUITableColumn("String", 60f),
-			new GUITableColumn("Float", 50f),
-			new GUITableColumn("Object", 110f),
-			new GUITableColumn("", 50f) { enabledTitle = false },
+			new TableColumn("String", 60f),
+			new TableColumn("Float", 50f),
+			new TableColumn("Object", 110f),
+			new TableColumn("", 50f) { enabledTitle = false },
 		};
 
-		List<List<GUITableEntry>> rows = new List<List<GUITableEntry>>();
+		List<List<TableEntry>> rows = new List<List<TableEntry>>();
 
 		ActionExample targetObject = (ActionExample) target;
 
 		for (int i = 0 ; i < targetObject.simpleObjects.Count ; i++)
 		{
 			ActionExample.SimpleObject entry = targetObject.simpleObjects[i];
-			rows.Add (new List<GUITableEntry>()
+			rows.Add (new List<TableEntry>()
 			{
 				new LabelEntry (entry.stringProperty),
 				new PropertyEntry (serializedObject, string.Format("simpleObjects.Array.data[{0}].floatProperty", i)),
