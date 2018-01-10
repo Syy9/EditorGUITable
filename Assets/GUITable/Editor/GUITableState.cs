@@ -56,6 +56,7 @@ namespace GUIExtensions
 
 		public void Save ()
 		{
+			if (!string.IsNullOrEmpty(prefsKey))
 			EditorPrefs.SetString(prefsKey, JsonUtility.ToJson (this));
 		}
 

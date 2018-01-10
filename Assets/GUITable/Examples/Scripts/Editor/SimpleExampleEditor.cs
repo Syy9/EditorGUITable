@@ -19,6 +19,10 @@ public class SimpleExampleEditor : Editor
 	void OnEnable ()
 	{
 		tableState = new GUITableState("tableState");
+		tableState2 = new GUITableState("tableState2");
+		tableState3 = new GUITableState("tableState3");
+		tableState4 = new GUITableState("tableState4");
+		tableState5 = new GUITableState("tableState5");
 	}
 
 	public override void OnInspectorGUI ()
@@ -42,7 +46,6 @@ public class SimpleExampleEditor : Editor
 	void DrawSimple ()
 	{
 		tableState = GUITable.DrawTable (serializedObject.FindProperty("simpleObjects"), tableState);
-		tableState.Save();
 	}
 
 	void DrawCustomProperties ()

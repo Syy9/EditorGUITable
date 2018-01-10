@@ -120,6 +120,8 @@ namespace GUIExtensions
 	        EditorGUILayout.EndScrollView ();
 	        EditorGUILayout.EndHorizontal ();
 
+			tableState.Save();
+
 	        return tableState;
 		}
 
