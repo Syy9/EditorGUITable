@@ -115,14 +115,12 @@ namespace GUIExtensions
 	        return tableState;
 		}
 
-		public class PropertyColumn
+		public class PropertyColumn : GUITableColumn
 		{
 			public string propertyName;
-			public GUITableColumn column;
-			public PropertyColumn (string propertyName, GUITableColumn column)
+			public PropertyColumn (string propertyName, string name, float width) : base (name, width)
 			{
 				this.propertyName = propertyName;
-				this.column = column;
 			}
 		}
 
@@ -140,15 +138,14 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (propertyColumns.Select(col => col.column).ToList(), rows, tableState);
+			return DrawTable (propertyColumns.Select((col) => (GUITableColumn) col).ToList(), rows, tableState);
 		}
 
 
 		public static GUITableState DrawTable (SerializedObject serializedObject, string collectionName, List<string> properties, GUITableState tableState) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
-				prop, 
-				new GUITableColumn(ObjectNames.NicifyVariableName (prop), 100f))).ToList();
+				prop, ObjectNames.NicifyVariableName (prop), 100f)).ToList();
 
 			return DrawTable (columns, serializedObject, collectionName, tableState);
 		}

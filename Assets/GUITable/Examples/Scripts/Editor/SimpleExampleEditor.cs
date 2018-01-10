@@ -47,9 +47,9 @@ public class SimpleExampleEditor : Editor
 	{
 		List<GUITable.PropertyColumn> propertyColumns = new List<GUITable.PropertyColumn>()
 		{
-			new GUITable.PropertyColumn("stringProperty", new GUITableColumn("String", 60f)),
-			new GUITable.PropertyColumn("floatProperty", new GUITableColumn("Float", 50f) {optional = true}),
-			new GUITable.PropertyColumn("objectProperty", new GUITableColumn("Object", 110f) {enabledTitle = false, optional = true}),
+			new GUITable.PropertyColumn("stringProperty", "String", 60f),
+			new GUITable.PropertyColumn("floatProperty", "Float", 50f) {optional = true},
+			new GUITable.PropertyColumn("objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
 		};
 
 		tableState3 = GUITable.DrawTable (propertyColumns, serializedObject, "simpleObjects", tableState3);
