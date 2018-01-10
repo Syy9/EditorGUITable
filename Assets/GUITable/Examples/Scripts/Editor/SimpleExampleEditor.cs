@@ -36,12 +36,12 @@ public class SimpleExampleEditor : Editor
 
 	void DrawSimple ()
 	{
-		tableState = GUITable.DrawTable (serializedObject, "simpleObjects", tableState);
+		tableState = GUITable.DrawTable (serializedObject.FindProperty("simpleObjects"), tableState);
 	}
 
 	void DrawCustomProperties ()
 	{
-		tableState2 = GUITable.DrawTable (serializedObject, "simpleObjects", new List<string>(){"floatProperty", "objectProperty"}, tableState2);
+		tableState2 = GUITable.DrawTable (serializedObject.FindProperty("simpleObjects"), new List<string>(){"floatProperty", "objectProperty"}, tableState2);
 	}
 
 	void DrawCustomColumns ()
@@ -53,7 +53,7 @@ public class SimpleExampleEditor : Editor
 			new PropertyColumn("objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
 		};
 
-		tableState3 = GUITable.DrawTable (propertyColumns, serializedObject, "simpleObjects", tableState3);
+		tableState3 = GUITable.DrawTable (serializedObject.FindProperty("simpleObjects"), propertyColumns, tableState3);
 	}
 
 	void DrawCustomColumnsWithSelector ()

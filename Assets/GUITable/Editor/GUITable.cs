@@ -128,21 +128,20 @@ namespace GUIExtensions
 		/// This will automatically create Property Entries using these paths.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
+		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="propertyColumns">The Property columns, that contain the columns properties and the corresponding property path.</param>
-		/// <param name="serializedObject">The Serialized object.</param>
-		/// <param name="collectionName">The Collection's property path in the serialized object.</param>
 		/// <param name="tableState">The Table state.</param>
-		public static GUITableState DrawTable (List<PropertyColumn> propertyColumns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
+		public static GUITableState DrawTable (SerializedProperty collectionProperty, List<PropertyColumn> propertyColumns, GUITableState tableState) 
 		{
 
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
 
-			for (int i = 0 ; i < serializedObject.FindProperty(collectionName).arraySize ; i++)
+			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
 				List<TableEntry> row = new List<TableEntry>();
 				foreach (PropertyColumn col in propertyColumns)
 				{
-					row.Add (new PropertyEntry (serializedObject, string.Format("{0}.Array.data[{1}].{2}", collectionName, i, col.propertyName)));
+					row.Add (new PropertyEntry (collectionProperty.serializedObject, string.Format("{0}.Array.data[{1}].{2}", collectionProperty.propertyPath, i, col.propertyName)));
 				}
 				rows.Add(row);
 			}
@@ -154,9 +153,8 @@ namespace GUIExtensions
 		/// that takes a SerializedProperty and returns the TableEntry to put in the corresponding cell.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
+		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="columns">The Selector Columns.</param>
-		/// <param name="serializedObject">The Serialized object.</param>
-		/// <param name="collectionName">The Collection's property path in the serialized object.</param>
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (List<SelectorColumn> columns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
 		{
@@ -181,25 +179,15 @@ namespace GUIExtensions
 		/// property entries automatically for those properties.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
-		/// <param name="serializedObject">The Serialized object.</param>
-		/// <param name="collectionName">The Collection's property path in the serialized object.</param>
+		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="properties">The paths (names) of the properties to display.</param>
 		/// <param name="tableState">The Table state.</param>
-		public static GUITableState DrawTable (SerializedObject serializedObject, string collectionName, List<string> properties, GUITableState tableState) 
+		public static GUITableState DrawTable (SerializedProperty collectionProperty, List<string> properties, GUITableState tableState) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
 				prop, ObjectNames.NicifyVariableName (prop), 100f)).ToList();
 
-			return DrawTable (columns, serializedObject, collectionName, tableState);
-		}
-
-		public static GUITableState DrawTable (SerializedObject serializedObject, string collectionName, GUITableState tableState) 
-		{
-			List<string> properties = new List<string>();
-			string firstElementPath = collectionName + ".Array.data[0]";
-			foreach (SerializedProperty prop in serializedObject.FindProperty(firstElementPath))
-				properties.Add (prop.propertyPath.Substring(firstElementPath.Length + 1));
-			return DrawTable (serializedObject, collectionName, properties, tableState);
+			return DrawTable (collectionProperty, columns, tableState);
 		}
 
 		/// <summary>
@@ -212,7 +200,11 @@ namespace GUIExtensions
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (SerializedProperty collectionProperty, GUITableState tableState) 
 		{
-			return DrawTable (collectionProperty.serializedObject, collectionProperty.propertyPath, tableState);
+			List<string> properties = new List<string>();
+			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
+			foreach (SerializedProperty prop in collectionProperty.serializedObject.FindProperty(firstElementPath))
+				properties.Add (prop.propertyPath.Substring(firstElementPath.Length + 1));
+			return DrawTable (collectionProperty, properties, tableState);
 		}
 
 		static void RightClickMenu (GUITableState tableState, List<TableColumn> columns)
