@@ -12,6 +12,7 @@ public class SimpleExampleEditor : Editor
 	GUITableState tableState2;
 	GUITableState tableState3;
 	GUITableState tableState4;
+	GUITableState tableState5;
 
 	Vector2 scrollPos;
 
@@ -55,6 +56,19 @@ public class SimpleExampleEditor : Editor
 		tableState3 = GUITable.DrawTable (propertyColumns, serializedObject, "simpleObjects", tableState3);
 	}
 
+	void DrawCustomColumnsWithSelector ()
+	{
+
+		List<GUITable.SelectorColumn> selectorColumns = new List<GUITable.SelectorColumn>()
+		{
+			new GUITable.SelectorColumn(prop => new LabelEntry(prop.stringValue), "stringProperty", "String", 60f),
+			new GUITable.SelectorColumn(prop => new LabelEntry(prop.floatValue.ToString()), "floatProperty", "Float", 50f) {optional = true},
+			new GUITable.SelectorColumn(prop => new LabelEntry(prop.objectReferenceValue.name), "objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
+		};
+
+		tableState4 = GUITable.DrawTable (selectorColumns, serializedObject, "simpleObjects", tableState4);
+	}
+
 	void DrawCustomEntries ()
 	{
 		List<GUITableColumn> columns = new List<GUITableColumn>()
@@ -81,7 +95,7 @@ public class SimpleExampleEditor : Editor
 			});
 		}
 
-		tableState4 = GUITable.DrawTable (columns, rows, tableState4);
+		tableState5 = GUITable.DrawTable (columns, rows, tableState5);
 	}
 
 	void DrawObjectsTable ()
@@ -98,6 +112,10 @@ public class SimpleExampleEditor : Editor
 		GUILayout.Label ("Customize the columns (right-click to hide optional columns)", EditorStyles.boldLabel);
 
 		DrawCustomColumns ();
+
+		GUILayout.Label ("Customize the columns and the selector function for entries", EditorStyles.boldLabel);
+
+		DrawCustomColumnsWithSelector ();
 
 		GUILayout.Label ("Customize the entries", EditorStyles.boldLabel);
 

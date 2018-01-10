@@ -142,6 +142,33 @@ namespace GUIExtensions
 		}
 
 
+		public class SelectorColumn : PropertyColumn
+		{
+			public Func<SerializedProperty, GUITableEntry> selector;
+			public SelectorColumn (Func<SerializedProperty, GUITableEntry> selector, string propertyName, string name, float width) : base (propertyName, name, width)
+			{
+				this.selector = selector;
+			}
+		}
+
+		public static GUITableState DrawTable (List<SelectorColumn> columns, SerializedObject serializedObject, string collectionName, GUITableState tableState) 
+		{
+
+			List<List<GUITableEntry>> rows = new List<List<GUITableEntry>>();
+
+			for (int i = 0 ; i < serializedObject.FindProperty(collectionName).arraySize ; i++)
+			{
+				List<GUITableEntry> row = new List<GUITableEntry>();
+				foreach (SelectorColumn col in columns)
+				{
+					row.Add ( col.selector.Invoke ( serializedObject.FindProperty( string.Format("{0}.Array.data[{1}].{2}", collectionName, i, col.propertyName))));
+				}
+				rows.Add(row);
+			}
+			return DrawTable (columns.Select((col) => (GUITableColumn) col).ToList(), rows, tableState);
+		}
+
+
 		public static GUITableState DrawTable (SerializedObject serializedObject, string collectionName, List<string> properties, GUITableState tableState) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
