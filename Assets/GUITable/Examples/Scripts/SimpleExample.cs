@@ -4,7 +4,18 @@ using UnityEngine;
 
 
 public class SimpleExample : MonoBehaviour {
-	
+
+	private static SimpleExample instance = null;
+	public static SimpleExample Instance
+	{
+		get
+		{
+			if (instance == null)
+				instance = FindObjectOfType<SimpleExample>();
+			return instance;
+		}
+	}
+
 	[System.Serializable]
 	public class SimpleObject
 	{

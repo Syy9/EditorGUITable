@@ -26,17 +26,9 @@ public class CustomSelectorsWindow : EditorWindow
 
 	}
 
-	public static CustomSelectorsWindow ShowWindow (SerializedObject serializedObject)
-	{
-		CustomSelectorsWindow window = EditorWindow.GetWindow<CustomSelectorsWindow>();
-		window.serializedObject = serializedObject;
-		window.Show();
-		return window;
-	}
-
-
 	void DrawCustomColumnsWithSelector ()
 	{
+		SerializedObject serializedObject = new SerializedObject(SimpleExample.Instance);
 
 		List<SelectorColumn> selectorColumns = new List<SelectorColumn>()
 		{

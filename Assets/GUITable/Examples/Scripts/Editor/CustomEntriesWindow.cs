@@ -26,16 +26,10 @@ public class CustomEntriesWindow : EditorWindow
 
 	}
 
-	public static CustomEntriesWindow ShowWindow (SerializedObject serializedObject)
-	{
-		CustomEntriesWindow window = EditorWindow.GetWindow<CustomEntriesWindow>();
-		window.serializedObject = serializedObject;
-		window.Show();
-		return window;
-	}
-
 	void DrawCustomEntries ()
 	{
+		SerializedObject serializedObject = new SerializedObject(SimpleExample.Instance);
+		
 		List<TableColumn> columns = new List<TableColumn>()
 		{
 			new TableColumn("String", 60f),

@@ -19,24 +19,16 @@ public class CustomPropertiesWindow : EditorWindow
 
 	void OnGUI () 
 	{
-
+		
 		GUILayout.Label ("Customize the properties to display", EditorStyles.boldLabel);
 
 		DrawCustomProperties ();
 
 	}
 
-	public static CustomPropertiesWindow ShowWindow (SerializedObject serializedObject)
-	{
-		CustomPropertiesWindow window = EditorWindow.GetWindow<CustomPropertiesWindow>();
-		window.serializedObject = serializedObject;
-		window.Show();
-		return window;
-	}
-
-
 	void DrawCustomProperties ()
 	{
+		SerializedObject serializedObject = new SerializedObject(SimpleExample.Instance);
 		tableState = GUITable.DrawTable (serializedObject.FindProperty("simpleObjects"), new List<string>(){"floatProperty", "objectProperty"}, tableState);
 	}
 

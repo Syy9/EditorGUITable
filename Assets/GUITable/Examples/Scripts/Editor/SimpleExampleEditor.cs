@@ -43,7 +43,7 @@ public class SimpleExampleEditor : Editor
 		GUILayout.BeginHorizontal ();
 		GUILayout.Label ("Customize the properties", EditorStyles.boldLabel, GUILayout.Width(160f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
-			CustomPropertiesWindow.ShowWindow(serializedObject);
+			EditorWindow.GetWindow<CustomPropertiesWindow>().Show();
 		GUILayout.EndHorizontal ();
 
 		GUILayout.Space (10f);
@@ -51,7 +51,7 @@ public class SimpleExampleEditor : Editor
 		GUILayout.BeginHorizontal ();
 		GUILayout.Label ("Customize the columns", EditorStyles.boldLabel, GUILayout.Width(160f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
-			CustomColumnsWindow.ShowWindow(serializedObject);
+			EditorWindow.GetWindow<CustomColumnsWindow>().Show();
 		GUILayout.EndHorizontal ();
 
 		GUILayout.Space (10f);
@@ -59,7 +59,7 @@ public class SimpleExampleEditor : Editor
 		GUILayout.BeginHorizontal ();
 		GUILayout.Label ("Customize the selectors", EditorStyles.boldLabel, GUILayout.Width(160f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
-			CustomSelectorsWindow.ShowWindow(serializedObject);
+			EditorWindow.GetWindow<CustomSelectorsWindow>().Show();
 		GUILayout.EndHorizontal ();
 
 		GUILayout.Space (10f);
@@ -67,7 +67,7 @@ public class SimpleExampleEditor : Editor
 		GUILayout.BeginHorizontal ();
 		GUILayout.Label ("Customize the entries", EditorStyles.boldLabel, GUILayout.Width(160f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
-			CustomEntriesWindow.ShowWindow(serializedObject);
+			EditorWindow.GetWindow<CustomEntriesWindow>().Show();
 		GUILayout.EndHorizontal ();
 
 		GUILayout.FlexibleSpace();

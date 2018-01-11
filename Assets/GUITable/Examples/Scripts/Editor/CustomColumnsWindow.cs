@@ -26,16 +26,9 @@ public class CustomColumnsWindow : EditorWindow
 
 	}
 
-	public static CustomColumnsWindow ShowWindow (SerializedObject serializedObject)
-	{
-		CustomColumnsWindow window = EditorWindow.GetWindow<CustomColumnsWindow>();
-		window.serializedObject = serializedObject;
-		window.Show();
-		return window;
-	}
-
 	void DrawCustomColumns ()
 	{
+		SerializedObject serializedObject = new SerializedObject(SimpleExample.Instance);
 		List<PropertyColumn> propertyColumns = new List<PropertyColumn>()
 		{
 			new PropertyColumn("stringProperty", "String", 60f),
