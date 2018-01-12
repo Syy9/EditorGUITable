@@ -17,8 +17,10 @@ public class Enemy : MonoBehaviour
 	public float speed;
 	public Color color;
 	public bool canSwim;
+	public int spawnersMask;
 
 	public void Instantiate ()
 	{
+		UnityEditor.PrefabUtility.InstantiatePrefab(this);
 	}
 }

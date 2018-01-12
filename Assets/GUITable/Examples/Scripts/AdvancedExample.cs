@@ -37,7 +37,7 @@ public class AdvancedExample : MonoBehaviour {
 
 	void OnGUI ()
 	{
-		GUILayout.Label ("Select the SimpleExample scene object to visualize the table in the inspector");
+		GUILayout.Label ("Select the AdvancedExample scene object to visualize the table in the editor");
 	}
 
 }
