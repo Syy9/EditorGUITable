@@ -14,12 +14,12 @@ namespace GUIExtensions
 	/// </summary>
 	public class PropertyEntry : TableEntry
 	{
+		SerializedProperty sp;
 		SerializedObject so;
-		string propertyName;
+		string propertyPath;
 
 		public override void DrawEntry (float width, float height)
 		{
-			SerializedProperty sp = so.FindProperty (propertyName);
 			if (sp != null)
 			{
 				EditorGUILayout.PropertyField (sp, GUIContent.none, GUILayout.Width (width), GUILayout.Height (height));
@@ -27,7 +27,7 @@ namespace GUIExtensions
 			}
 			else
 			{
-				Debug.LogWarningFormat ("Property not found: {0} -> {1}", so.targetObject.name, propertyName);
+				Debug.LogWarningFormat ("Property not found: {0} -> {1}", so.targetObject.name, propertyPath);
 				GUILayout.Space (width + 4f);
 			}
 		}
@@ -36,7 +36,6 @@ namespace GUIExtensions
 		{
 			get
 			{
-				SerializedProperty sp = so.FindProperty (propertyName);
 				if (sp != null)
 				{
 					switch (sp.propertyType)
@@ -74,8 +73,7 @@ namespace GUIExtensions
 			if (otherPropEntry == null)
 				return base.CompareTo(other);
 
-			SerializedProperty sp = so.FindProperty (propertyName);
-			SerializedProperty otherSp = otherPropEntry.so.FindProperty (otherPropEntry.propertyName);
+			SerializedProperty otherSp = otherPropEntry.sp;
 
 			if (sp.propertyType != otherSp.propertyType)
 				return base.CompareTo(other);
@@ -107,11 +105,20 @@ namespace GUIExtensions
 			return 0;
 		}
 
-		public PropertyEntry (SerializedObject so, string propertyName)
+		public PropertyEntry (SerializedProperty property)
+		{
+			this.sp = property;
+			this.so = property.serializedObject;
+			this.propertyPath = property.propertyPath;
+		}
+
+		public PropertyEntry (SerializedObject so, string propertyPath)
 		{
 			this.so = so;
-			this.propertyName = propertyName;
+			this.propertyPath = propertyPath;
+			this.sp = so.FindProperty(propertyPath);
 		}
+
 	}
 
 }

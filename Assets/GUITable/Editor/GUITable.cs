@@ -76,7 +76,9 @@ namespace GUIExtensions
 				List<TableEntry> row = new List<TableEntry>();
 				foreach (PropertyColumn col in propertyColumns)
 				{
-					row.Add (new PropertyEntry (collectionProperty.serializedObject, string.Format("{0}.Array.data[{1}].{2}", collectionProperty.propertyPath, i, col.propertyName)));
+					row.Add (new PropertyEntry (
+						collectionProperty.serializedObject, 
+						string.Format("{0}.Array.data[{1}].{2}", collectionProperty.propertyPath, i, col.propertyName)));
 				}
 				rows.Add(row);
 			}
