@@ -21,13 +21,14 @@ public class AdvancedExampleWindow : EditorWindow
 	{
 		AdvancedExampleWindow window = EditorWindow.GetWindow<AdvancedExampleWindow>();
 		window.position = new Rect(Screen.currentResolution.width / 2 - 300, Screen.currentResolution.height / 2 - 200, 600, 400);
+		window.titleContent = new GUIContent("Enemies Window");
 		window.Show();
 	}
 
 	void OnGUI () 
 	{
-		
-		GUILayout.Label ("Fully customized table display", EditorStyles.boldLabel);
+		EditorStyles.boldLabel.alignment = TextAnchor.MiddleCenter;
+		GUILayout.Label ("Enemies", EditorStyles.boldLabel);
 
 		DrawObjectsTable ();
 
