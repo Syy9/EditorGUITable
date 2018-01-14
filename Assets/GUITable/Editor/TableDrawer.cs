@@ -5,6 +5,10 @@ using UnityEditor;
 using GUIExtensions;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// Drawer for the Table Attribute.
+/// See the TableAttribute class documentation for the limitations of this attribute.
+/// </summary>
 [CustomPropertyDrawer(typeof(TableAttribute))]
 public class TableDrawer : PropertyDrawer
 {
