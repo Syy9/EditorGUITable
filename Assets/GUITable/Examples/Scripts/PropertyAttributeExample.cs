@@ -12,6 +12,7 @@ public class PropertyAttributeExample : MonoBehaviour {
 		public string stringProperty;
 		public float floatProperty;
 		public GameObject objectProperty;
+		public Vector2 v2Property;
 	}
 
 	[Table]

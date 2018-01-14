@@ -31,7 +31,12 @@ namespace GUIExtensions
 			List<string> properties = new List<string>();
 			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
 			foreach (SerializedProperty prop in collectionProperty.serializedObject.FindProperty(firstElementPath))
-				properties.Add (prop.propertyPath.Substring(firstElementPath.Length + 1));
+			{
+				string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
+				// Avoid drawing properties more than 1 level deep
+				if (!subPropName.Contains("."))
+					properties.Add (subPropName);
+			}
 			return DrawTable (collectionProperty, properties, tableState);
 		}
 
