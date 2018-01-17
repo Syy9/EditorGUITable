@@ -1,6 +1,6 @@
 # EditorGUITable
 
-<img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Logo.png" />
+<img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Logo_rounded.png" />
 
 A beautiful, easy-to-use and customizable table to display in the Unity Editor! <BR><BR>
 This plugin helps programmers to create nice visual editors for artists and game designers to use in the Editor. <BR><BR>
