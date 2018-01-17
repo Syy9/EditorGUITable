@@ -14,6 +14,8 @@ It uses the GUILayout elements and just organizes them in a table, so the style 
  - Create each entry to draw in the table <BR>
 <BR>
 <A HREF="http://www.jeremyquentin.fr/EditorGUITable/Documentation"> <STRONG> Documentation </STRONG> </A>
+ <A HREF="https://www.dropbox.com/s/52clq6i2tx9h5il/EditorGUITable.unitypackage?dl=0"> <STRONG> Unity Package </STRONG> </A>
+ 
 <BR> <BR>
 
  <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%201.png" width="500" />
