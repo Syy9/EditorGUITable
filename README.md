@@ -16,12 +16,12 @@ It uses the GUILayout elements and just organizes them in a table, so the style 
 <A HREF="http://www.jeremyquentin.fr/EditorGUITable/Documentation"> <STRONG> Documentation </STRONG> </A>
 <BR> <BR>
 
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%201.png" />
+ <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%201.png" width="500" />
  
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%202.png" />
+ <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%202.png" width="500" />
  
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%203.png" />
+ <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%203.png" width="500" />
  
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%204.png" />
+ <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%204.png" width="500" />
  
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%205.png" />
+ <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%205.png" width="500" />
