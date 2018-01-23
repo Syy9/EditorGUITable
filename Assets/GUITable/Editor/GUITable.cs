@@ -25,6 +25,7 @@ namespace GUIExtensions
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
+			Rect rect,
 			SerializedProperty collectionProperty, 
 			GUITableState tableState) 
 		{
@@ -37,7 +38,7 @@ namespace GUIExtensions
 				if (!subPropName.Contains("."))
 					properties.Add (subPropName);
 			}
-			return DrawTable (collectionProperty, properties, tableState);
+			return DrawTable (rect, collectionProperty, properties, tableState);
 		}
 
 		/// <summary>
@@ -50,6 +51,7 @@ namespace GUIExtensions
 		/// <param name="properties">The paths (names) of the properties to display.</param>
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
+			Rect rect,
 			SerializedProperty collectionProperty, 
 			List<string> properties, 
 			GUITableState tableState) 
@@ -57,7 +59,7 @@ namespace GUIExtensions
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
 				prop, ObjectNames.NicifyVariableName (prop), 100f)).ToList();
 
-			return DrawTable (collectionProperty, columns, tableState);
+			return DrawTable (rect, collectionProperty, columns, tableState);
 		}
 
 		/// <summary>
@@ -69,6 +71,7 @@ namespace GUIExtensions
 		/// <param name="propertyColumns">The Property columns, that contain the columns properties and the corresponding property path.</param>
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
+			Rect rect,
 			SerializedProperty collectionProperty, 
 			List<PropertyColumn> propertyColumns, 
 			GUITableState tableState) 
@@ -87,7 +90,7 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
+			return DrawTable (rect, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
 		}
 
 		/// <summary>
@@ -99,6 +102,7 @@ namespace GUIExtensions
 		/// <param name="columns">The Selector Columns.</param>
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
+			Rect rect,
 			SerializedProperty collectionProperty, 
 			List<SelectorColumn> columns, 
 			GUITableState tableState) 
@@ -115,7 +119,7 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (columns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
+			return DrawTable (rect, columns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
 		}
 
 		/// <summary>
@@ -127,6 +131,7 @@ namespace GUIExtensions
 		/// <param name="entries">The Entries as a list of rows.</param>
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
+			Rect rect,
 			List<TableColumn> columns, 
 			List<List<TableEntry>> entries, 
 			GUITableState tableState)
@@ -139,11 +144,11 @@ namespace GUIExtensions
 
 			float rowHeight = EditorGUIUtility.singleLineHeight;
 
-			EditorGUILayout.BeginHorizontal ();
-			tableState.scrollPosHoriz = EditorGUILayout.BeginScrollView (tableState.scrollPosHoriz);
+//			EditorGUILayout.BeginHorizontal ();
+			tableState.scrollPosHoriz = GUI.BeginScrollView (rect, tableState.scrollPosHoriz, new Rect(0, 0, tableState.columnSizes.Sum(), rowHeight * entries.Count));
 
-			EditorGUILayout.BeginHorizontal ();
-			GUILayout.Space (2f);
+//			EditorGUILayout.BeginHorizontal ();
+//			GUILayout.Space (2f);
 			float currentX = 0f;
 
 			RightClickMenu (tableState, columns);
@@ -166,7 +171,7 @@ namespace GUIExtensions
 
 				GUI.enabled = column.enabledTitle;
 
-				if (GUILayout.Button(columnName, EditorStyles.miniButtonMid, GUILayout.Width (tableState.columnSizes[i]+4), GUILayout.Height (EditorGUIUtility.singleLineHeight)) && column.isSortable)
+				if (GUI.Button(new Rect(currentX, 0f, tableState.columnSizes[i]+4, EditorGUIUtility.singleLineHeight), columnName, EditorStyles.miniButtonMid) && column.isSortable)
 				{
 					if (tableState.sortByColumnIndex == i && tableState.sortIncreasing)
 					{
@@ -186,11 +191,11 @@ namespace GUIExtensions
 				currentX += tableState.columnSizes[i] + 4f;
 			}
 			GUI.enabled = true;
-			EditorGUILayout.EndHorizontal ();
+//			EditorGUILayout.EndHorizontal ();
 
 
-			EditorGUILayout.BeginVertical ();
-			tableState.scrollPos = EditorGUILayout.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
+//			EditorGUILayout.BeginVertical ();
+//			tableState.scrollPos = GUI.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
 
 			List<List<TableEntry>> orderedRows = entries;
 			if (tableState.sortByColumnIndex >= 0)
@@ -201,9 +206,12 @@ namespace GUIExtensions
 					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
 			}
 
+			float currentY = rowHeight;
+
 			foreach (List<TableEntry> row in orderedRows)
 			{
-				EditorGUILayout.BeginHorizontal ();
+//				EditorGUILayout.BeginHorizontal ();
+				currentX = 0f;
 				for (int i = 0 ; i < row.Count ; i++)
 				{
 					if (i >= columns.Count)
@@ -216,19 +224,21 @@ namespace GUIExtensions
 					TableColumn column = columns [i];
 					TableEntry property = row[i];
 					GUI.enabled = column.enabledEntries;
-					property.DrawEntry (tableState.columnSizes[i], rowHeight);
+					property.DrawEntry (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
+					currentX += tableState.columnSizes[i] + 4f;
 				}
-				EditorGUILayout.EndHorizontal ();
+//				EditorGUILayout.EndHorizontal ();
+				currentY += rowHeight;
 			}
 
 			GUI.enabled = true;
 
-			EditorGUILayout.EndScrollView ();
-			EditorGUILayout.EndVertical ();
-
-
-			EditorGUILayout.EndScrollView ();
-			EditorGUILayout.EndHorizontal ();
+//			EditorGUILayout.EndScrollView ();
+//			EditorGUILayout.EndVertical ();
+//
+//
+//			EditorGUILayout.EndScrollView ();
+//			EditorGUILayout.EndHorizontal ();
 
 			tableState.Save();
 

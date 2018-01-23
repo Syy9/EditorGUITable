@@ -40,13 +40,18 @@ public class AdvancedExampleEditor : Editor
 public class SpawnersEntry : TableEntry
 {
 
+	SerializedProperty sp;
 	SerializedObject so;
-	string propertyName;
 
 	public override void DrawEntry (float width, float height)
 	{
-		SerializedProperty sp = so.FindProperty(propertyName);
 		sp.intValue = EditorGUILayout.MaskField (sp.intValue, AdvancedExample.Instance.spawners.Select(s => s.name).ToArray(), GUILayout.Width(width), GUILayout.Height(height));
+		so.ApplyModifiedProperties();
+	}
+
+	public override void DrawEntry (Rect rect)
+	{
+		sp.intValue = EditorGUI.MaskField (rect, sp.intValue, AdvancedExample.Instance.spawners.Select(s => s.name).ToArray());
 		so.ApplyModifiedProperties();
 	}
 
@@ -58,8 +63,8 @@ public class SpawnersEntry : TableEntry
 
 	public SpawnersEntry (SerializedObject so, string propertyName)
 	{
+		sp = so.FindProperty(propertyName);
 		this.so = so;
-		this.propertyName = propertyName;
 	}
 
 }

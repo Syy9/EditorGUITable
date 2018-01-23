@@ -40,7 +40,7 @@ public class TableDrawer : PropertyDrawer
 		Rect r = new Rect(lastRect.x + 15f, lastRect.y + 35f, lastRect.width, lastRect.height);
 		GUILayout.BeginArea(r);
 		EditorGUI.indentLevel = 0;
-		tableState = GUITable.DrawTable(property.serializedObject.FindProperty(collectionPath), tableState);
+		tableState = GUITableLayout.DrawTable(property.serializedObject.FindProperty(collectionPath), tableState);
 		GUILayout.EndArea();
 		GUILayout.Space(30f);
 	}

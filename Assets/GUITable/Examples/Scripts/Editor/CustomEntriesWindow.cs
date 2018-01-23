@@ -54,7 +54,7 @@ public class CustomEntriesWindow : EditorWindow
 			});
 		}
 
-		tableState = GUITable.DrawTable (columns, rows, tableState);
+		tableState = GUITableLayout.DrawTable (columns, rows, tableState);
 	}
 
 }

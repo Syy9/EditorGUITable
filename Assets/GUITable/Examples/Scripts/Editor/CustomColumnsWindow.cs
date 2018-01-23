@@ -36,7 +36,7 @@ public class CustomColumnsWindow : EditorWindow
 			new PropertyColumn("objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
 		};
 
-		tableState = GUITable.DrawTable (serializedObject.FindProperty("simpleObjects"), propertyColumns, tableState);
+		tableState = GUITableLayout.DrawTable (serializedObject.FindProperty("simpleObjects"), propertyColumns, tableState);
 	}
 
 }
