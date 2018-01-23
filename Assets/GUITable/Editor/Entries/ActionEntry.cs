@@ -24,6 +24,15 @@ namespace GUIExtensions
 			}
 		}
 
+		public override void DrawEntry (Rect rect)
+		{
+			if (GUI.Button (rect, name))
+			{
+				if (action != null)
+					action.Invoke ();
+			}
+		}
+
 		public override string comparingValue
 		{
 			get

@@ -22,6 +22,11 @@ namespace GUIExtensions
 			EditorGUILayout.LabelField (value, GUILayout.Width (width), GUILayout.Height (height));
 		}
 
+		public override void DrawEntry (Rect rect)
+		{
+			GUI.Label(rect, value);
+		}
+
 		public override string comparingValue
 		{
 			get

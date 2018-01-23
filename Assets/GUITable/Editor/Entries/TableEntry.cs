@@ -15,7 +15,18 @@ namespace GUIExtensions
 	/// </summary>
 	public abstract class TableEntry : System.IComparable
 	{
+		/// <summary>
+		/// Draws the entry using GUILayout.
+		/// </summary>
+		/// <param name="width">Width.</param>
+		/// <param name="height">Height.</param>
 		public abstract void DrawEntry (float width, float height);
+
+		/// <summary>
+		/// Draws the entry using GUI (without GUILayout).
+		/// </summary>
+		/// <param name="rect">Rect.</param>
+		public abstract void DrawEntry (Rect rect);
 
 		public abstract string comparingValue { get; }
 

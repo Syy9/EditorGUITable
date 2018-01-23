@@ -32,6 +32,19 @@ namespace GUIExtensions
 			}
 		}
 
+		public override void DrawEntry (Rect rect)
+		{
+			if (sp != null)
+			{
+				EditorGUI.PropertyField (rect, sp, GUIContent.none);
+				so.ApplyModifiedProperties ();
+			}
+			else
+			{
+				Debug.LogWarningFormat ("Property not found: {0} -> {1}", so.targetObject.name, propertyPath);
+			}
+		}
+
 		public override string comparingValue
 		{
 			get
