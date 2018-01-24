@@ -144,14 +144,12 @@ namespace GUIExtensions
 
 			float rowHeight = EditorGUIUtility.singleLineHeight;
 
-//			EditorGUILayout.BeginHorizontal ();
-			tableState.scrollPosHoriz = GUI.BeginScrollView (rect, tableState.scrollPosHoriz, new Rect(0, 0, tableState.columnSizes.Sum(), rowHeight * entries.Count));
+//			tableState.scrollPosHoriz = GUI.BeginScrollView (rect, tableState.scrollPosHoriz, new Rect(0, 0, tableState.columnSizes.Sum(), rowHeight * entries.Count));
 
-//			EditorGUILayout.BeginHorizontal ();
-//			GUILayout.Space (2f);
-			float currentX = 0f;
+			float currentX = rect.x;
+			float currentY = rect.y;
 
-			RightClickMenu (tableState, columns);
+			RightClickMenu (rect, tableState, columns);
 
 			for (int i = 0 ; i < columns.Count ; i++)
 			{
@@ -167,11 +165,11 @@ namespace GUIExtensions
 						columnName += " " + '\u25BC'.ToString();
 				}
 
-				ResizeColumn (tableState, i, currentX);
+				ResizeColumn (rect, tableState, i, currentX);
 
 				GUI.enabled = column.enabledTitle;
 
-				if (GUI.Button(new Rect(currentX, 0f, tableState.columnSizes[i]+4, EditorGUIUtility.singleLineHeight), columnName, EditorStyles.miniButtonMid) && column.isSortable)
+				if (GUI.Button(new Rect(currentX, currentY, tableState.columnSizes[i]+4, EditorGUIUtility.singleLineHeight), columnName, EditorStyles.miniButtonMid) && column.isSortable)
 				{
 					if (tableState.sortByColumnIndex == i && tableState.sortIncreasing)
 					{
@@ -191,11 +189,6 @@ namespace GUIExtensions
 				currentX += tableState.columnSizes[i] + 4f;
 			}
 			GUI.enabled = true;
-//			EditorGUILayout.EndHorizontal ();
-
-
-//			EditorGUILayout.BeginVertical ();
-//			tableState.scrollPos = GUI.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
 
 			List<List<TableEntry>> orderedRows = entries;
 			if (tableState.sortByColumnIndex >= 0)
@@ -206,12 +199,11 @@ namespace GUIExtensions
 					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
 			}
 
-			float currentY = rowHeight;
+			currentY += rowHeight;
 
 			foreach (List<TableEntry> row in orderedRows)
 			{
-//				EditorGUILayout.BeginHorizontal ();
-				currentX = 0f;
+				currentX = rect.x;
 				for (int i = 0 ; i < row.Count ; i++)
 				{
 					if (i >= columns.Count)
@@ -227,27 +219,21 @@ namespace GUIExtensions
 					property.DrawEntry (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
 					currentX += tableState.columnSizes[i] + 4f;
 				}
-//				EditorGUILayout.EndHorizontal ();
 				currentY += rowHeight;
 			}
 
 			GUI.enabled = true;
 
-//			EditorGUILayout.EndScrollView ();
-//			EditorGUILayout.EndVertical ();
-//
-//
-//			EditorGUILayout.EndScrollView ();
-//			EditorGUILayout.EndHorizontal ();
+//			GUI.EndScrollView ();
 
 			tableState.Save();
 
 			return tableState;
 		}
 
-		static void RightClickMenu (GUITableState tableState, List<TableColumn> columns)
+		static void RightClickMenu (Rect position, GUITableState tableState, List<TableColumn> columns)
 		{
-			Rect rect = new Rect(0, 0, tableState.columnSizes.Where((_, i) => tableState.columnVisible[i]).Sum(s => s + 4), EditorGUIUtility.singleLineHeight);
+			Rect rect = new Rect(position.x, position.y, tableState.columnSizes.Where((_, i) => tableState.columnVisible[i]).Sum(s => s + 4), EditorGUIUtility.singleLineHeight);
 			GUI.enabled = true;
 			if (rect.Contains (Event.current.mousePosition) && Event.current.type == EventType.MouseDown && Event.current.button == 1)
 			{
@@ -265,10 +251,10 @@ namespace GUIExtensions
 			}
 		}
 
-		static void ResizeColumn (GUITableState tableState, int indexColumn, float currentX)
+		static void ResizeColumn (Rect position, GUITableState tableState, int indexColumn, float currentX)
 		{
 			int controlId = EditorGUIUtility.GetControlID(FocusType.Passive);
-			Rect resizeRect = new Rect(currentX + tableState.columnSizes[indexColumn] + 2, 0, 10, EditorGUIUtility.singleLineHeight);
+			Rect resizeRect = new Rect(currentX + tableState.columnSizes[indexColumn] + 2, position.y, 10, EditorGUIUtility.singleLineHeight);
 			EditorGUIUtility.AddCursorRect(resizeRect, MouseCursor.ResizeHorizontal, controlId);
 			switch(Event.current.type)
 			{

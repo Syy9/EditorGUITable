@@ -34,14 +34,13 @@ public class TableDrawer : PropertyDrawer
 
 		if (index != "0")
 			return;
-
+		EditorGUI.indentLevel = 0;
 		if (GUILayoutUtility.GetLastRect().width > 1f)
 			lastRect = GUILayoutUtility.GetLastRect();
-		Rect r = new Rect(lastRect.x + 15f, lastRect.y + 35f, lastRect.width, lastRect.height);
-		GUILayout.BeginArea(r);
-		EditorGUI.indentLevel = 0;
-		tableState = GUITableLayout.DrawTable(property.serializedObject.FindProperty(collectionPath), tableState);
-		GUILayout.EndArea();
-		GUILayout.Space(30f);
+		Debug.LogFormat("position={0} ; lastRec={1}", position, lastRect);
+//		Rect r = new Rect(lastRect.x + 15f, lastRect.y + 35f, lastRect.width, lastRect.height);
+		Rect r = new Rect(position.x + 15f, position.y, position.width, lastRect.height);
+		tableState = GUITable.DrawTable(r, property.serializedObject.FindProperty(collectionPath), tableState);
+//		GUILayout.Space(30f);
 	}
 }
