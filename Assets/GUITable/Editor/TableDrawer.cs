@@ -17,6 +17,24 @@ public class TableDrawer : PropertyDrawer
 
 	Rect lastRect;
 
+	public override float GetPropertyHeight (SerializedProperty property, GUIContent label)
+	{
+		//Check that it is a collection
+		Match match = Regex.Match(property.propertyPath, "^([a-zA-Z0-9_]*).Array.data\\[([0-9]*)\\]$");
+		if (!match.Success)
+		{
+			return EditorGUIUtility.singleLineHeight;
+		}
+
+		// Check that it's the first element
+		string index = match.Groups[2].Value;
+
+		if (index != "0")
+			return EditorGUIUtility.singleLineHeight;
+		
+		return 2 * EditorGUIUtility.singleLineHeight;
+	}
+
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 	{
 		//Check that it is a collection
@@ -37,10 +55,7 @@ public class TableDrawer : PropertyDrawer
 		EditorGUI.indentLevel = 0;
 		if (GUILayoutUtility.GetLastRect().width > 1f)
 			lastRect = GUILayoutUtility.GetLastRect();
-		Debug.LogFormat("position={0} ; lastRec={1}", position, lastRect);
-//		Rect r = new Rect(lastRect.x + 15f, lastRect.y + 35f, lastRect.width, lastRect.height);
 		Rect r = new Rect(position.x + 15f, position.y, position.width, lastRect.height);
 		tableState = GUITable.DrawTable(r, property.serializedObject.FindProperty(collectionPath), tableState);
-//		GUILayout.Space(30f);
 	}
 }
