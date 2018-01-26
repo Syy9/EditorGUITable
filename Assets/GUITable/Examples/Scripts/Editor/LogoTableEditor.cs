@@ -37,7 +37,7 @@ public class LogoTableEditor : Editor
 			});
 		}
 
-		tableState = GUITableLayout.DrawTable (columns, rows, tableState);
+		tableState = GUITableLayout.DrawTable (tableState, columns, rows);
 	}
 
 }

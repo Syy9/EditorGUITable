@@ -75,7 +75,7 @@ public class AdvancedExampleWindow : EditorWindow
 			});
 		}
 
-		tableState = GUITableLayout.DrawTable (columns, rows, tableState);
+		tableState = GUITableLayout.DrawTable (tableState, columns, rows);
 	}
 
 }

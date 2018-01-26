@@ -37,7 +37,7 @@ public class CustomSelectorsWindow : EditorWindow
 			new SelectorColumn(prop => new LabelEntry(prop.objectReferenceValue.name), "objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
 		};
 
-		tableState = GUITableLayout.DrawTable (serializedObject.FindProperty("simpleObjects"), selectorColumns, tableState);
+		tableState = GUITableLayout.DrawTable (tableState, serializedObject.FindProperty("simpleObjects"), selectorColumns);
 	}
 
 }

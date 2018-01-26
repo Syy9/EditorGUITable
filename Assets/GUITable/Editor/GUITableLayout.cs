@@ -25,8 +25,9 @@ namespace GUIExtensions
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
-			SerializedProperty collectionProperty, 
-			GUITableState tableState) 
+			GUITableState tableState,
+			SerializedProperty collectionProperty
+			) 
 		{
 			List<string> properties = new List<string>();
 			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
@@ -37,7 +38,7 @@ namespace GUIExtensions
 				if (!subPropName.Contains("."))
 					properties.Add (subPropName);
 			}
-			return DrawTable (collectionProperty, properties, tableState);
+			return DrawTable (tableState, collectionProperty, properties);
 		}
 
 		/// <summary>
@@ -49,15 +50,15 @@ namespace GUIExtensions
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="properties">The paths (names) of the properties to display.</param>
 		/// <param name="tableState">The Table state.</param>
-		public static GUITableState DrawTable (
+		public static GUITableState DrawTable ( 
+			GUITableState tableState,
 			SerializedProperty collectionProperty, 
-			List<string> properties, 
-			GUITableState tableState) 
+			List<string> properties) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
 				prop, ObjectNames.NicifyVariableName (prop), 100f)).ToList();
 
-			return DrawTable (collectionProperty, columns, tableState);
+			return DrawTable (tableState, collectionProperty, columns);
 		}
 
 		/// <summary>
@@ -68,10 +69,10 @@ namespace GUIExtensions
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="propertyColumns">The Property columns, that contain the columns properties and the corresponding property path.</param>
 		/// <param name="tableState">The Table state.</param>
-		public static GUITableState DrawTable (
+		public static GUITableState DrawTable ( 
+			GUITableState tableState,
 			SerializedProperty collectionProperty, 
-			List<PropertyColumn> propertyColumns, 
-			GUITableState tableState) 
+			List<PropertyColumn> propertyColumns) 
 		{
 
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
@@ -87,7 +88,7 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
+			return DrawTable (tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows);
 		}
 
 		/// <summary>
@@ -98,10 +99,10 @@ namespace GUIExtensions
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="columns">The Selector Columns.</param>
 		/// <param name="tableState">The Table state.</param>
-		public static GUITableState DrawTable (
+		public static GUITableState DrawTable ( 
+			GUITableState tableState,
 			SerializedProperty collectionProperty, 
-			List<SelectorColumn> columns, 
-			GUITableState tableState) 
+			List<SelectorColumn> columns) 
 		{
 
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
@@ -115,7 +116,7 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (columns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
+			return DrawTable (tableState, columns.Select((col) => (TableColumn) col).ToList(), rows);
 		}
 
 		/// <summary>
@@ -126,10 +127,10 @@ namespace GUIExtensions
 		/// <param name="columns">The Columns of the table.</param>
 		/// <param name="entries">The Entries as a list of rows.</param>
 		/// <param name="tableState">The Table state.</param>
-		public static GUITableState DrawTable (
+		public static GUITableState DrawTable ( 
+			GUITableState tableState,
 			List<TableColumn> columns, 
-			List<List<TableEntry>> entries, 
-			GUITableState tableState)
+			List<List<TableEntry>> entries)
 		{
 
 			if (tableState == null)

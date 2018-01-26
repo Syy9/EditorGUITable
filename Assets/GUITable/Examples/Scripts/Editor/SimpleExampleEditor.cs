@@ -28,7 +28,7 @@ public class SimpleExampleEditor : Editor
 
 	void DrawSimple ()
 	{
-		tableState = GUITableLayout.DrawTable (serializedObject.FindProperty("simpleObjects"), tableState);
+		tableState = GUITableLayout.DrawTable (tableState, serializedObject.FindProperty("simpleObjects"));
 	}
 
 	void DrawObjectsTable ()
