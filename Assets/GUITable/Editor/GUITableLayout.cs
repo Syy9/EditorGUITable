@@ -237,7 +237,7 @@ namespace GUIExtensions
 
 		static void RightClickMenu (GUITableState tableState, List<TableColumn> columns)
 		{
-			Rect rect = new Rect(0, 0, tableState.columnSizes.Where((_, i) => tableState.columnVisible[i]).Sum(s => s + 4), EditorGUIUtility.singleLineHeight);
+			Rect rect = new Rect(0, 0, tableState.totalWidth, EditorGUIUtility.singleLineHeight);
 			GUI.enabled = true;
 			if (rect.Contains (Event.current.mousePosition) && Event.current.type == EventType.MouseDown && Event.current.button == 1)
 			{

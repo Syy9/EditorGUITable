@@ -26,8 +26,9 @@ namespace GUIExtensions
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
 			Rect rect,
-			SerializedProperty collectionProperty, 
-			GUITableState tableState) 
+			GUITableState tableState,
+			SerializedProperty collectionProperty,
+			params GUITableOption[] options) 
 		{
 			List<string> properties = new List<string>();
 			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
@@ -38,7 +39,7 @@ namespace GUIExtensions
 				if (!subPropName.Contains("."))
 					properties.Add (subPropName);
 			}
-			return DrawTable (rect, collectionProperty, properties, tableState);
+			return DrawTable (rect, tableState, collectionProperty, properties, options);
 		}
 
 		/// <summary>
@@ -52,14 +53,15 @@ namespace GUIExtensions
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
 			Rect rect,
+			GUITableState tableState,
 			SerializedProperty collectionProperty, 
 			List<string> properties, 
-			GUITableState tableState) 
+			params GUITableOption[] options) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
 				prop, ObjectNames.NicifyVariableName (prop), 100f)).ToList();
 
-			return DrawTable (rect, collectionProperty, columns, tableState);
+			return DrawTable (rect, tableState, collectionProperty, columns, options);
 		}
 
 		/// <summary>
@@ -72,9 +74,10 @@ namespace GUIExtensions
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
 			Rect rect,
+			GUITableState tableState,
 			SerializedProperty collectionProperty, 
 			List<PropertyColumn> propertyColumns, 
-			GUITableState tableState) 
+			params GUITableOption[] options) 
 		{
 
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
@@ -90,7 +93,7 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (rect, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
+			return DrawTable (rect, tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, options);
 		}
 
 		/// <summary>
@@ -103,9 +106,10 @@ namespace GUIExtensions
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
 			Rect rect,
+			GUITableState tableState,
 			SerializedProperty collectionProperty, 
 			List<SelectorColumn> columns, 
-			GUITableState tableState) 
+			params GUITableOption[] options) 
 		{
 
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
@@ -119,7 +123,7 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (rect, columns.Select((col) => (TableColumn) col).ToList(), rows, tableState);
+			return DrawTable (rect, tableState, columns.Select((col) => (TableColumn) col).ToList(), rows, options);
 		}
 
 		/// <summary>
@@ -132,9 +136,10 @@ namespace GUIExtensions
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
 			Rect rect,
+			GUITableState tableState,
 			List<TableColumn> columns, 
 			List<List<TableEntry>> entries, 
-			GUITableState tableState)
+			params GUITableOption[] options)
 		{
 
 			if (tableState == null)
@@ -144,10 +149,19 @@ namespace GUIExtensions
 
 			float rowHeight = EditorGUIUtility.singleLineHeight;
 
-//			tableState.scrollPosHoriz = GUI.BeginScrollView (rect, tableState.scrollPosHoriz, new Rect(0, 0, tableState.columnSizes.Sum(), rowHeight * entries.Count));
-
 			float currentX = rect.x;
 			float currentY = rect.y;
+
+			bool widthTooLarge = tableState.totalWidth > rect.width;
+			bool allowScrollView = true;
+			if (options.Any ((arg) => arg.type == GUITableOption.Type.AllowScrollView))
+				allowScrollView = (bool) options.First((arg) => arg.type == GUITableOption.Type.AllowScrollView).value;
+			if (allowScrollView && widthTooLarge)
+			{
+				tableState.scrollPosHoriz = GUI.BeginScrollView (rect, tableState.scrollPosHoriz, new Rect(0f, 0f, tableState.totalWidth, rect.height));
+				currentX = 0f;
+				currentY = 0f;
+			}
 
 			RightClickMenu (rect, tableState, columns);
 
@@ -224,7 +238,10 @@ namespace GUIExtensions
 
 			GUI.enabled = true;
 
-//			GUI.EndScrollView ();
+			if (allowScrollView && widthTooLarge)
+			{
+				GUI.EndScrollView ();
+			}
 
 			tableState.Save();
 

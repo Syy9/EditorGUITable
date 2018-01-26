@@ -56,6 +56,6 @@ public class TableDrawer : PropertyDrawer
 		if (GUILayoutUtility.GetLastRect().width > 1f)
 			lastRect = GUILayoutUtility.GetLastRect();
 		Rect r = new Rect(position.x + 15f, position.y, position.width, lastRect.height);
-		tableState = GUITable.DrawTable(r, property.serializedObject.FindProperty(collectionPath), tableState);
+		tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), GUITableOption.AllowScrollView(false));
 	}
 }

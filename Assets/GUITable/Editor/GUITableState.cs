@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -37,6 +38,14 @@ namespace GUIExtensions
 		public List<bool> columnVisible = new List<bool> ();
 
 		string prefsKey;
+
+		public float totalWidth
+		{
+			get
+			{
+				return columnSizes.Where((_, i) => columnVisible[i]).Sum(s => s + 4);
+			}
+		}
 
 		public GUITableState ()
 		{
