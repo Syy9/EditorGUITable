@@ -26,8 +26,8 @@ namespace GUIExtensions
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable (
 			GUITableState tableState,
-			SerializedProperty collectionProperty
-			) 
+			SerializedProperty collectionProperty, 
+			params GUITableOption[] options) 
 		{
 			List<string> properties = new List<string>();
 			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
@@ -38,7 +38,7 @@ namespace GUIExtensions
 				if (!subPropName.Contains("."))
 					properties.Add (subPropName);
 			}
-			return DrawTable (tableState, collectionProperty, properties);
+			return DrawTable (tableState, collectionProperty, properties, options);
 		}
 
 		/// <summary>
@@ -53,12 +53,13 @@ namespace GUIExtensions
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			SerializedProperty collectionProperty, 
-			List<string> properties) 
+			List<string> properties, 
+			params GUITableOption[] options) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
 				prop, ObjectNames.NicifyVariableName (prop), 100f)).ToList();
 
-			return DrawTable (tableState, collectionProperty, columns);
+			return DrawTable (tableState, collectionProperty, columns, options);
 		}
 
 		/// <summary>
@@ -72,7 +73,8 @@ namespace GUIExtensions
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			SerializedProperty collectionProperty, 
-			List<PropertyColumn> propertyColumns) 
+			List<PropertyColumn> propertyColumns, 
+			params GUITableOption[] options) 
 		{
 
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
@@ -88,7 +90,7 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows);
+			return DrawTable (tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, options);
 		}
 
 		/// <summary>
@@ -102,7 +104,8 @@ namespace GUIExtensions
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			SerializedProperty collectionProperty, 
-			List<SelectorColumn> columns) 
+			List<SelectorColumn> columns, 
+			params GUITableOption[] options) 
 		{
 
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
@@ -116,7 +119,7 @@ namespace GUIExtensions
 				}
 				rows.Add(row);
 			}
-			return DrawTable (tableState, columns.Select((col) => (TableColumn) col).ToList(), rows);
+			return DrawTable (tableState, columns.Select((col) => (TableColumn) col).ToList(), rows, options);
 		}
 
 		/// <summary>
@@ -130,7 +133,8 @@ namespace GUIExtensions
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			List<TableColumn> columns, 
-			List<List<TableEntry>> entries)
+			List<List<TableEntry>> entries, 
+			params GUITableOption[] options)
 		{
 
 			if (tableState == null)
@@ -140,8 +144,13 @@ namespace GUIExtensions
 
 			float rowHeight = EditorGUIUtility.singleLineHeight;
 
+			bool allowScrollView = true;
+			if (options.Any ((arg) => arg.type == GUITableOption.Type.AllowScrollView))
+				allowScrollView = (bool) options.First((arg) => arg.type == GUITableOption.Type.AllowScrollView).value;
+
 			EditorGUILayout.BeginHorizontal ();
-			tableState.scrollPosHoriz = EditorGUILayout.BeginScrollView (tableState.scrollPosHoriz);
+			if (allowScrollView)
+				tableState.scrollPosHoriz = EditorGUILayout.BeginScrollView (tableState.scrollPosHoriz);
 
 			EditorGUILayout.BeginHorizontal ();
 			GUILayout.Space (2f);
@@ -191,7 +200,8 @@ namespace GUIExtensions
 
 
 			EditorGUILayout.BeginVertical ();
-			tableState.scrollPos = EditorGUILayout.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
+			if (allowScrollView)
+				tableState.scrollPos = EditorGUILayout.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
 
 			List<List<TableEntry>> orderedRows = entries;
 			if (tableState.sortByColumnIndex >= 0)
@@ -224,11 +234,13 @@ namespace GUIExtensions
 
 			GUI.enabled = true;
 
-			EditorGUILayout.EndScrollView ();
+			if (allowScrollView)
+				EditorGUILayout.EndScrollView ();
 			EditorGUILayout.EndVertical ();
 
 
-			EditorGUILayout.EndScrollView ();
+			if (allowScrollView)
+				EditorGUILayout.EndScrollView ();
 			EditorGUILayout.EndHorizontal ();
 
 			tableState.Save();
