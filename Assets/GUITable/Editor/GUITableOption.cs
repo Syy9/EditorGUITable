@@ -8,6 +8,7 @@ public class GUITableOption
 	public enum Type
 	{
 		AllowScrollView,
+		RowHeight,
 	}
 
 	public Type type;
@@ -22,5 +23,10 @@ public class GUITableOption
 	public static GUITableOption AllowScrollView (bool enable)
 	{
 		return new GUITableOption (Type.AllowScrollView, enable);
+	}
+
+	public static GUITableOption RowHeight (float value)
+	{
+		return new GUITableOption (Type.RowHeight, value);
 	}
 }

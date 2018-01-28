@@ -15,7 +15,7 @@ namespace GUIExtensions
 	public class PropertyColumn : TableColumn
 	{
 		public string propertyName;
-		public PropertyColumn (string propertyName, string name, float width) : base (name, width)
+		public PropertyColumn (string propertyName, string name, params TableColumnOption[] options) : base (name, options)
 		{
 			this.propertyName = propertyName;
 		}

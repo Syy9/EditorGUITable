@@ -14,7 +14,7 @@ public class AdvancedExampleWindow : EditorWindow
 
 	void OnEnable ()
 	{
-		tableState = new GUITableState("tableState2");
+//		tableState = new GUITableState("tableState2");
 	}
 
 	public static void Init ()
@@ -40,16 +40,16 @@ public class AdvancedExampleWindow : EditorWindow
 
 		List<TableColumn> columns = new List<TableColumn>()
 		{
-			new TableColumn("Name", 60f),
-			new TableColumn("Prefab", 50f){enabledEntries = false, optional = true},
-			new TableColumn("Type", 50f) {optional = true},
-			new TableColumn("Health", 50f),
-			new TableColumn("Speed", 50f),
-			new TableColumn("Color", 50f) {optional = true},
-			new TableColumn("Can Swim", 30f) {optional = true},
-			new TableColumn("Spawners", 450f) {optional = true},
-			new TableColumn("Intro (shared by type)", 110f) {optional = true},
-			new TableColumn("Instantiation", 110f) {optional = true}
+			new TableColumn("Name", TableColumn.Width(60f), TableColumn.ExpandWidth(true)),
+			new TableColumn("Prefab", TableColumn.Width(50f), TableColumn.EnabledEntries(false), TableColumn.Optional(true)),
+			new TableColumn("Type", TableColumn.Width(50f), TableColumn.Optional(true)),
+			new TableColumn("Health", TableColumn.Width(50f)),
+			new TableColumn("Speed", TableColumn.Width(50f)),
+			new TableColumn("Color", TableColumn.Width(50f), TableColumn.Optional(true)),
+			new TableColumn("Can Swim", TableColumn.Width(30f), TableColumn.Optional(true)),
+			new TableColumn("Spawners", TableColumn.Width(450f), TableColumn.Optional(true)),
+			new TableColumn("Intro (shared by type)", TableColumn.Width(110f), TableColumn.Optional(true)),
+			new TableColumn("Instantiation", TableColumn.Width(110f), TableColumn.Optional(true))
 		};
 
 		List<List<TableEntry>> rows = new List<List<TableEntry>>();

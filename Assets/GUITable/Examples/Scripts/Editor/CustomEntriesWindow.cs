@@ -35,7 +35,7 @@ public class CustomEntriesWindow : EditorWindow
 			new TableColumn("String", 60f),
 			new TableColumn("Float", 50f),
 			new TableColumn("Object", 110f),
-			new TableColumn("", 100f) {enabledTitle = false},
+			new TableColumn("", TableColumn.Width(100f), TableColumn.EnabledTitle(false)),
 		};
 
 		List<List<TableEntry>> rows = new List<List<TableEntry>>();

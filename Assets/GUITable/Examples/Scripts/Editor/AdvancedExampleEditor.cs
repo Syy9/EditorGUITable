@@ -43,7 +43,7 @@ public class SpawnersEntry : TableEntry
 	SerializedProperty sp;
 	SerializedObject so;
 
-	public override void DrawEntry (float width, float height)
+	public override void DrawEntryLayout (float width, float height)
 	{
 		sp.intValue = EditorGUILayout.MaskField (sp.intValue, AdvancedExample.Instance.spawners.Select(s => s.name).ToArray(), GUILayout.Width(width), GUILayout.Height(height));
 		so.ApplyModifiedProperties();

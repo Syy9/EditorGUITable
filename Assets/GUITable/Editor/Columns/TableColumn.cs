@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -13,39 +14,76 @@ namespace GUIExtensions
 	/// </summary>
 	public class TableColumn
 	{
+		
 		public string title { get; private set; }
-		public float width { get; private set; }
-		/// <summary>
-		/// Defines if the entries are enabled (interactable) or disabled (grayed out). Default: true.
-		/// </summary>
-		public bool enabledEntries = true;
-		/// <summary>
-		/// Defines if the column is sortable.
-		/// </summary>
-		public bool isSortable = true;
-		/// <summary>
-		/// Defines if the title is enabled (interactable) or disabled (grayed out). Default: true.
-		/// </summary>
-		public bool enabledTitle = true;
-		/// <summary>
-		/// Defines if the column can be hidden by right-clicking the column titles bar. Default: false.
-		/// </summary>
-		public bool optional = false;
-		/// <summary>
-		/// Defines if the column is visible by default. If this is false, and optional is false too. The column can never be viewed. Default: true.
-		/// </summary>
-		public bool visibleByDefault = true;
+
+		public TableColumnEntry entry;
 
 		/// <summary>
-		/// Initializes a column with its title and width.
+		/// Initializes a column with its title and options.
 		/// Edit the other public properties for more settings.
 		/// </summary>
 		/// <param name="title">The column title.</param>
-		/// <param name="width">The column width.</param>
-		public TableColumn (string title, float width)
+		/// <param name="options">The column options.</param>
+		public TableColumn (string title, params TableColumnOption[] options)
 		{
 			this.title = title;
-			this.width = width;
+			this.entry = new TableColumnEntry(options);
+		}
+
+		[System.Obsolete ("Use TableColumn(title, options) instead, with TableColumn.Width() to set the width")]
+		public TableColumn (string title, float width) : this (title, TableColumn.Width(width))
+		{
+		}
+
+		public static TableColumnOption ExpandWidth (bool enable)
+		{
+			return new TableColumnOption (TableColumnOption.Type.ExpandWidth, enable);
+		}
+
+		public static TableColumnOption MinWidth (float value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.MinWidth, value);
+		}
+
+		public static TableColumnOption MaxWidth (float value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.MaxWidth, value);
+		}
+
+		public static TableColumnOption Width (float value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.Width, value);
+		}
+
+		public static TableColumnOption Resizeable (bool value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.Resizeable, value);
+		}
+
+		public static TableColumnOption Sortable (bool value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.Sortable, value);
+		}
+
+		public static TableColumnOption EnabledTitle (bool value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.EnabledTitle, value);
+		}
+
+		public static TableColumnOption EnabledEntries (bool value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.EnabledEntries, value);
+		}
+
+		public static TableColumnOption Optional (bool value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.Optional, value);
+		}
+
+		public static TableColumnOption VisibleByDefault (bool value)
+		{
+			return new TableColumnOption (TableColumnOption.Type.VisibleByDefault, value);
 		}
 	}
 

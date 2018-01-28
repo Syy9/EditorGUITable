@@ -15,7 +15,11 @@ namespace GUIExtensions
 	/// </summary>
 	public static class GUITableLayout
 	{
-		
+
+		static bool isBeingResized = false;
+
+		static Rect lastRect;
+
 		/// <summary>
 		/// Draw a table just from the collection's property.
 		/// This will create columns for all the visible members in the elements' class,
@@ -57,7 +61,7 @@ namespace GUIExtensions
 			params GUITableOption[] options) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
-				prop, ObjectNames.NicifyVariableName (prop), 100f)).ToList();
+				prop, ObjectNames.NicifyVariableName (prop), TableColumn.Width(100f))).ToList();
 
 			return DrawTable (tableState, collectionProperty, columns, options);
 		}
@@ -137,16 +141,18 @@ namespace GUIExtensions
 			params GUITableOption[] options)
 		{
 
+			lastRect = GUILayoutUtility.GetLastRect ();
+
+			GUITableEntry tableEntry = new GUITableEntry (options);
+
 			if (tableState == null)
 				tableState = new GUITableState();
+			
+			CheckTableState (tableState, columns, tableEntry);
 
-			CheckTableState (tableState, columns);
+			float rowHeight = tableEntry.rowHeight;
 
-			float rowHeight = EditorGUIUtility.singleLineHeight;
-
-			bool allowScrollView = true;
-			if (options.Any ((arg) => arg.type == GUITableOption.Type.AllowScrollView))
-				allowScrollView = (bool) options.First((arg) => arg.type == GUITableOption.Type.AllowScrollView).value;
+			bool allowScrollView = tableEntry.allowScrollView;
 
 			EditorGUILayout.BeginHorizontal ();
 			if (allowScrollView)
@@ -174,9 +180,9 @@ namespace GUIExtensions
 
 				ResizeColumn (tableState, i, currentX);
 
-				GUI.enabled = column.enabledTitle;
+				GUI.enabled = column.entry.enabledTitle;
 
-				if (GUILayout.Button(columnName, EditorStyles.miniButtonMid, GUILayout.Width (tableState.columnSizes[i]+4), GUILayout.Height (EditorGUIUtility.singleLineHeight)) && column.isSortable)
+				if (GUILayout.Button(columnName, EditorStyles.miniButtonMid, GUILayout.Width (tableState.columnSizes[i]+4), GUILayout.Height (EditorGUIUtility.singleLineHeight)) && column.entry.isSortable)
 				{
 					if (tableState.sortByColumnIndex == i && tableState.sortIncreasing)
 					{
@@ -226,8 +232,8 @@ namespace GUIExtensions
 						continue;
 					TableColumn column = columns [i];
 					TableEntry property = row[i];
-					GUI.enabled = column.enabledEntries;
-					property.DrawEntry (tableState.columnSizes[i], rowHeight);
+					GUI.enabled = column.entry.enabledEntries;
+					property.DrawEntryLayout (tableState.columnSizes[i], rowHeight);
 				}
 				EditorGUILayout.EndHorizontal ();
 			}
@@ -258,7 +264,7 @@ namespace GUIExtensions
 				for(int i = 0 ; i < columns.Count ; i++)
 				{
 					TableColumn column = columns[i];
-					if (column.optional)
+					if (column.entry.optional)
 					{
 						int index = i;
 						contextMenu.AddItem (new GUIContent (column.title), tableState.columnVisible [i], () => tableState.columnVisible [index] = !tableState.columnVisible [index]);
@@ -281,6 +287,7 @@ namespace GUIExtensions
 						{
 							GUIUtility.hotControl = controlId;
 							Event.current.Use();
+							isBeingResized = true;
 						}
 						break;
 					}
@@ -288,8 +295,9 @@ namespace GUIExtensions
 					{
 						if (GUIUtility.hotControl == controlId)
 						{
-							tableState.columnSizes[indexColumn] = Event.current.mousePosition.x - currentX - 5;
+							tableState.columnSizes[indexColumn] = Mathf.Max (0f, Event.current.mousePosition.x - currentX - 5);
 							Event.current.Use();
+							isBeingResized = true;
 						}
 						break;
 					}
@@ -299,21 +307,37 @@ namespace GUIExtensions
 						{
 							GUIUtility.hotControl = 0;
 							Event.current.Use();
+//							if (tableState.totalWidth >= lastRect.width)
+								isBeingResized = false;
 						}
 						break;
 					}
 			}
 		}
 
-		static void CheckTableState (GUITableState tableState, List<TableColumn> columns)
+		static void CheckTableState (GUITableState tableState, List<TableColumn> columns, GUITableEntry tableEntry)
 		{
 			if (tableState.columnSizes == null || tableState.columnSizes.Count < columns.Count)
 			{
-				tableState.columnSizes = columns.Select ((column) => column.width).ToList ();
+				tableState.columnSizes = columns.Select ((column) => column.entry.defaultWidth).ToList ();
 			}
 			if (tableState.columnVisible == null || tableState.columnVisible.Count < columns.Count)
 			{
-				tableState.columnVisible = columns.Select ((column) => column.visibleByDefault).ToList ();
+				tableState.columnVisible = columns.Select ((column) => column.entry.visibleByDefault).ToList ();
+			}
+			if (tableState.totalWidth < lastRect.width && !isBeingResized)
+			{
+				List<int> expandableColumns = new List<int> ();
+				for (int i = 0 ; i < columns.Count ; i++)
+					if (columns[i].entry.expandWidth && tableState.columnSizes[i] < columns[i].entry.maxWidth)
+						expandableColumns.Add (i);
+				float addWidth = (lastRect.width - tableState.totalWidth) / expandableColumns.Count;
+				foreach (int i in expandableColumns)
+					tableState.columnSizes[i] += addWidth;
+			}
+			for (int i = 0 ; i < columns.Count ; i++)
+			{
+				tableState.columnSizes[i] = Mathf.Clamp(tableState.columnSizes[i], columns[i].entry.minWidth, columns[i].entry.maxWidth);
 			}
 		}
 

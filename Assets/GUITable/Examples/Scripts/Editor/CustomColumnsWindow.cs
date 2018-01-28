@@ -31,9 +31,9 @@ public class CustomColumnsWindow : EditorWindow
 		SerializedObject serializedObject = new SerializedObject(SimpleExample.Instance);
 		List<PropertyColumn> propertyColumns = new List<PropertyColumn>()
 		{
-			new PropertyColumn("stringProperty", "String", 60f),
-			new PropertyColumn("floatProperty", "Float", 50f) {optional = true},
-			new PropertyColumn("objectProperty", "Object", 110f) {enabledTitle = false, optional = true},
+			new PropertyColumn("stringProperty", "String", TableColumn.Width(60f)),
+			new PropertyColumn("floatProperty", "Float", TableColumn.Width(50f), TableColumn.Optional(true)),
+			new PropertyColumn("objectProperty", "Object", TableColumn.Width(50f), TableColumn.EnabledTitle(false), TableColumn.Optional(true)),
 		};
 
 		tableState = GUITableLayout.DrawTable (tableState, serializedObject.FindProperty("simpleObjects"), propertyColumns);

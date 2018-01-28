@@ -59,7 +59,7 @@ namespace GUIExtensions
 			params GUITableOption[] options) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
-				prop, ObjectNames.NicifyVariableName (prop), 100f)).ToList();
+				prop, ObjectNames.NicifyVariableName (prop), TableColumn.Width(100f))).ToList();
 
 			return DrawTable (rect, tableState, collectionProperty, columns, options);
 		}
@@ -142,21 +142,20 @@ namespace GUIExtensions
 			params GUITableOption[] options)
 		{
 
+			GUITableEntry tableEntry = new GUITableEntry (options);
+
 			if (tableState == null)
 				tableState = new GUITableState();
 
 			CheckTableState (tableState, columns);
 
-			float rowHeight = EditorGUIUtility.singleLineHeight;
+			float rowHeight = tableEntry.rowHeight;
 
 			float currentX = rect.x;
 			float currentY = rect.y;
 
-			bool widthTooLarge = tableState.totalWidth > rect.width;
-			bool allowScrollView = true;
-			if (options.Any ((arg) => arg.type == GUITableOption.Type.AllowScrollView))
-				allowScrollView = (bool) options.First((arg) => arg.type == GUITableOption.Type.AllowScrollView).value;
-			if (allowScrollView && widthTooLarge)
+			bool displayScrollView = tableState.totalWidth > rect.width && tableEntry.allowScrollView;
+			if (displayScrollView)
 			{
 				tableState.scrollPosHoriz = GUI.BeginScrollView (rect, tableState.scrollPosHoriz, new Rect(0f, 0f, tableState.totalWidth, rect.height));
 				currentX = 0f;
@@ -181,9 +180,9 @@ namespace GUIExtensions
 
 				ResizeColumn (rect, tableState, i, currentX);
 
-				GUI.enabled = column.enabledTitle;
+				GUI.enabled = column.entry.enabledTitle;
 
-				if (GUI.Button(new Rect(currentX, currentY, tableState.columnSizes[i]+4, EditorGUIUtility.singleLineHeight), columnName, EditorStyles.miniButtonMid) && column.isSortable)
+				if (GUI.Button(new Rect(currentX, currentY, tableState.columnSizes[i]+4, EditorGUIUtility.singleLineHeight), columnName, EditorStyles.miniButtonMid) && column.entry.isSortable)
 				{
 					if (tableState.sortByColumnIndex == i && tableState.sortIncreasing)
 					{
@@ -229,7 +228,7 @@ namespace GUIExtensions
 						continue;
 					TableColumn column = columns [i];
 					TableEntry property = row[i];
-					GUI.enabled = column.enabledEntries;
+					GUI.enabled = column.entry.enabledEntries;
 					property.DrawEntry (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
 					currentX += tableState.columnSizes[i] + 4f;
 				}
@@ -238,7 +237,7 @@ namespace GUIExtensions
 
 			GUI.enabled = true;
 
-			if (allowScrollView && widthTooLarge)
+			if (displayScrollView)
 			{
 				GUI.EndScrollView ();
 			}
@@ -258,7 +257,7 @@ namespace GUIExtensions
 				for(int i = 0 ; i < columns.Count ; i++)
 				{
 					TableColumn column = columns[i];
-					if (column.optional)
+					if (column.entry.optional)
 					{
 						int index = i;
 						contextMenu.AddItem (new GUIContent (column.title), tableState.columnVisible [i], () => tableState.columnVisible [index] = !tableState.columnVisible [index]);
@@ -309,11 +308,11 @@ namespace GUIExtensions
 		{
 			if (tableState.columnSizes == null || tableState.columnSizes.Count < columns.Count)
 			{
-				tableState.columnSizes = columns.Select ((column) => column.width).ToList ();
+				tableState.columnSizes = columns.Select ((column) => column.entry.defaultWidth).ToList ();
 			}
 			if (tableState.columnVisible == null || tableState.columnVisible.Count < columns.Count)
 			{
-				tableState.columnVisible = columns.Select ((column) => column.visibleByDefault).ToList ();
+				tableState.columnVisible = columns.Select ((column) => column.entry.visibleByDefault).ToList ();
 			}
 		}
 

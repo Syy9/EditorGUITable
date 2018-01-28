@@ -15,7 +15,7 @@ namespace GUIExtensions
 	public class SelectorColumn : PropertyColumn
 	{
 		public Func<SerializedProperty, TableEntry> selector;
-		public SelectorColumn (Func<SerializedProperty, TableEntry> selector, string propertyName, string name, float width) : base (propertyName, name, width)
+		public SelectorColumn (Func<SerializedProperty, TableEntry> selector, string propertyName, string name, params TableColumnOption[] options) : base (propertyName, name, options)
 		{
 			this.selector = selector;
 		}
