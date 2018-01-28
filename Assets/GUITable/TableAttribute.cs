@@ -42,6 +42,17 @@ namespace GUIExtensions
 	public class TableAttribute : PropertyAttribute
 	{
 
+		public string[] properties = null;
+
+		public TableAttribute () 
+		{
+		}
+
+		public TableAttribute (params string[] properties)
+		{
+			this.properties = properties;
+		}
+
 	}
 
 }
