@@ -17,7 +17,7 @@ namespace GUIExtensions
 
 		string value;
 
-		public override void DrawEntry (float width, float height)
+		public override void DrawEntryLayout (float width, float height)
 		{
 			EditorGUILayout.LabelField (value, GUILayout.Width (width), GUILayout.Height (height));
 		}

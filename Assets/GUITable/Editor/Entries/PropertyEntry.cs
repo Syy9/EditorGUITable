@@ -18,7 +18,7 @@ namespace GUIExtensions
 		SerializedObject so;
 		string propertyPath;
 
-		public override void DrawEntry (float width, float height)
+		public override void DrawEntryLayout (float width, float height)
 		{
 			if (sp != null)
 			{

@@ -15,7 +15,7 @@ namespace GUIExtensions
 	{
 		string name;
 		System.Action action;
-		public override void DrawEntry (float width, float height)
+		public override void DrawEntryLayout (float width, float height)
 		{
 			if (GUILayout.Button (name, GUILayout.Width (width), GUILayout.Height (height)))
 			{

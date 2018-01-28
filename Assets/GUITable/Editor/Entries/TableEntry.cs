@@ -20,7 +20,7 @@ namespace GUIExtensions
 		/// </summary>
 		/// <param name="width">Width.</param>
 		/// <param name="height">Height.</param>
-		public abstract void DrawEntry (float width, float height);
+		public abstract void DrawEntryLayout (float width, float height);
 
 		/// <summary>
 		/// Draws the entry using GUI (without GUILayout).
