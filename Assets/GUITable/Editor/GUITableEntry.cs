@@ -2,33 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GUITableEntry
+namespace EditorGUITable
 {
 
-	public bool allowScrollView = true;
-	public float rowHeight = UnityEditor.EditorGUIUtility.singleLineHeight;
-
-	public GUITableEntry (GUITableOption[] options)
+	public class GUITableEntry
 	{
-		ApplyOptions (options);
-	}
 
-	public virtual void ApplyOptions(GUITableOption[] options)
-	{
-		if (options == null)
-			return;
-		foreach (GUITableOption option in options)
+		public bool allowScrollView = true;
+		public float rowHeight = UnityEditor.EditorGUIUtility.singleLineHeight;
+
+		public GUITableEntry (GUITableOption[] options)
 		{
-			switch (option.type)
+			ApplyOptions (options);
+		}
+
+		public virtual void ApplyOptions(GUITableOption[] options)
+		{
+			if (options == null)
+				return;
+			foreach (GUITableOption option in options)
 			{
-				case GUITableOption.Type.AllowScrollView:
-					this.allowScrollView = (bool) option.value;
-					break;
-				case GUITableOption.Type.RowHeight:
-					this.rowHeight = (float) option.value;
-					break;
+				switch (option.type)
+				{
+					case GUITableOption.Type.AllowScrollView:
+						this.allowScrollView = (bool) option.value;
+						break;
+					case GUITableOption.Type.RowHeight:
+						this.rowHeight = (float) option.value;
+						break;
+				}
 			}
 		}
+
 	}
 
 }
