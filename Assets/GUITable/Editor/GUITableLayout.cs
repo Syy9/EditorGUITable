@@ -10,8 +10,8 @@ namespace GUIExtensions
 
 	/// <summary>
 	/// Main Class of the Table Plugin.
-	/// This contains static functions to draw a table, from the most basic
-	/// to the most customizable.
+	/// This contains static functions to draw a table, from the most basic 
+	/// to the most customizable, using GUILayout functions.
 	/// </summary>
 	public static class GUITableLayout
 	{
