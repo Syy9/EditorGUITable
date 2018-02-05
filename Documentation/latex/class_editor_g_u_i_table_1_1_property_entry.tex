@@ -1,0 +1,88 @@
+\hypertarget{class_editor_g_u_i_table_1_1_property_entry}{}\section{Editor\+G\+U\+I\+Table.\+Property\+Entry Class Reference}
+\label{class_editor_g_u_i_table_1_1_property_entry}\index{Editor\+G\+U\+I\+Table.\+Property\+Entry@{Editor\+G\+U\+I\+Table.\+Property\+Entry}}
+
+
+This entry class just uses Editor\+G\+U\+I\+Layout.\+Property\+Field to draw a given property. This is the basic way to use G\+U\+I\+Table. It will draw the properties the same way Unity would by default.  
+
+
+Inheritance diagram for Editor\+G\+U\+I\+Table.\+Property\+Entry\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_editor_g_u_i_table_1_1_property_entry}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+override void \mbox{\hyperlink{class_editor_g_u_i_table_1_1_property_entry_a5930e1e0e8cf4954cdbf25ef72e815f8}{Draw\+Entry\+Layout}} (float width, float height)
+\begin{DoxyCompactList}\small\item\em Draws the entry using G\+U\+I\+Layout. \end{DoxyCompactList}\item 
+override void \mbox{\hyperlink{class_editor_g_u_i_table_1_1_property_entry_a176094e41cb53be100106c1d58763607}{Draw\+Entry}} (Rect rect)
+\begin{DoxyCompactList}\small\item\em Draws the entry using G\+UI (without G\+U\+I\+Layout). \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_property_entry_a7ca61820fc62ad5de3cd974fa9740222}\label{class_editor_g_u_i_table_1_1_property_entry_a7ca61820fc62ad5de3cd974fa9740222}} 
+override int {\bfseries Compare\+To} (object other)
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_property_entry_af596ccc66215ccce2b1368d14675f5e7}\label{class_editor_g_u_i_table_1_1_property_entry_af596ccc66215ccce2b1368d14675f5e7}} 
+{\bfseries Property\+Entry} (Serialized\+Property property)
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_property_entry_ac45cada48f9079257cc50efbbdaec6a2}\label{class_editor_g_u_i_table_1_1_property_entry_ac45cada48f9079257cc50efbbdaec6a2}} 
+{\bfseries Property\+Entry} (Serialized\+Object so, string property\+Path)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_property_entry_aa8cdc61d8dc7838c7f34af454108b52c}\label{class_editor_g_u_i_table_1_1_property_entry_aa8cdc61d8dc7838c7f34af454108b52c}} 
+override string {\bfseries comparing\+Value}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This entry class just uses Editor\+G\+U\+I\+Layout.\+Property\+Field to draw a given property. This is the basic way to use G\+U\+I\+Table. It will draw the properties the same way Unity would by default. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_property_entry_a176094e41cb53be100106c1d58763607}\label{class_editor_g_u_i_table_1_1_property_entry_a176094e41cb53be100106c1d58763607}} 
+\index{Editor\+G\+U\+I\+Table\+::\+Property\+Entry@{Editor\+G\+U\+I\+Table\+::\+Property\+Entry}!Draw\+Entry@{Draw\+Entry}}
+\index{Draw\+Entry@{Draw\+Entry}!Editor\+G\+U\+I\+Table\+::\+Property\+Entry@{Editor\+G\+U\+I\+Table\+::\+Property\+Entry}}
+\subsubsection{\texorpdfstring{Draw\+Entry()}{DrawEntry()}}
+{\footnotesize\ttfamily override void Editor\+G\+U\+I\+Table.\+Property\+Entry.\+Draw\+Entry (\begin{DoxyParamCaption}\item[{Rect}]{rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Draws the entry using G\+UI (without G\+U\+I\+Layout). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rect} & Rect.\\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_editor_g_u_i_table_1_1_table_entry_ae02e641122da6dd161d61a20576812ca}{Editor\+G\+U\+I\+Table.\+Table\+Entry}}.
+
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_property_entry_a5930e1e0e8cf4954cdbf25ef72e815f8}\label{class_editor_g_u_i_table_1_1_property_entry_a5930e1e0e8cf4954cdbf25ef72e815f8}} 
+\index{Editor\+G\+U\+I\+Table\+::\+Property\+Entry@{Editor\+G\+U\+I\+Table\+::\+Property\+Entry}!Draw\+Entry\+Layout@{Draw\+Entry\+Layout}}
+\index{Draw\+Entry\+Layout@{Draw\+Entry\+Layout}!Editor\+G\+U\+I\+Table\+::\+Property\+Entry@{Editor\+G\+U\+I\+Table\+::\+Property\+Entry}}
+\subsubsection{\texorpdfstring{Draw\+Entry\+Layout()}{DrawEntryLayout()}}
+{\footnotesize\ttfamily override void Editor\+G\+U\+I\+Table.\+Property\+Entry.\+Draw\+Entry\+Layout (\begin{DoxyParamCaption}\item[{float}]{width,  }\item[{float}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Draws the entry using G\+U\+I\+Layout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & Width.\\
+\hline
+{\em height} & Height.\\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_editor_g_u_i_table_1_1_table_entry_abe1e2747e56d50731eeec28635b366a1}{Editor\+G\+U\+I\+Table.\+Table\+Entry}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Entries/Property\+Entry.\+cs\end{DoxyCompactItemize}

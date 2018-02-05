@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['optional',['optional',['../class_g_u_i_extensions_1_1_table_column.html#ac09648f6d91b018cae5c80bcd7499630',1,'GUIExtensions::TableColumn']]]
+  ['optional',['optional',['../class_table_column_entry.html#a475870b7af204554a3ee617cc68886e1',1,'TableColumnEntry']]]
 ];

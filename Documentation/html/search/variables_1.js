@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['issortable',['isSortable',['../class_g_u_i_extensions_1_1_table_column.html#ad46a3aeba25051869bcad488eaa6f9dc',1,'GUIExtensions::TableColumn']]]
+  ['issortable',['isSortable',['../class_table_column_entry.html#ac15f6f79fd208e7d3cf25d38e94c2b24',1,'TableColumnEntry']]]
 ];

@@ -1,0 +1,82 @@
+\hypertarget{class_editor_g_u_i_table_1_1_table_entry}{}\section{Editor\+G\+U\+I\+Table.\+Table\+Entry Class Reference}
+\label{class_editor_g_u_i_table_1_1_table_entry}\index{Editor\+G\+U\+I\+Table.\+Table\+Entry@{Editor\+G\+U\+I\+Table.\+Table\+Entry}}
+
+
+Base class for all table entries. Draw\+Entry needs to be overriden to draw the entry for the cell. Use this to customize the table however needed. Compare\+To can be overriden to customize the sorting. comparing\+Value is used as a fallback for sorting any types of entries, even different types.  
+
+
+Inheritance diagram for Editor\+G\+U\+I\+Table.\+Table\+Entry\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.994653cm]{class_editor_g_u_i_table_1_1_table_entry}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+abstract void \mbox{\hyperlink{class_editor_g_u_i_table_1_1_table_entry_abe1e2747e56d50731eeec28635b366a1}{Draw\+Entry\+Layout}} (float width, float height)
+\begin{DoxyCompactList}\small\item\em Draws the entry using G\+U\+I\+Layout. \end{DoxyCompactList}\item 
+abstract void \mbox{\hyperlink{class_editor_g_u_i_table_1_1_table_entry_ae02e641122da6dd161d61a20576812ca}{Draw\+Entry}} (Rect rect)
+\begin{DoxyCompactList}\small\item\em Draws the entry using G\+UI (without G\+U\+I\+Layout). \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_table_entry_a6545f137420db34b649873ff8d7b7b51}\label{class_editor_g_u_i_table_1_1_table_entry_a6545f137420db34b649873ff8d7b7b51}} 
+virtual int {\bfseries Compare\+To} (object other)
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_table_entry_a512ab46a9b994edfcf3a9d43a7496516}\label{class_editor_g_u_i_table_1_1_table_entry_a512ab46a9b994edfcf3a9d43a7496516}} 
+abstract string {\bfseries comparing\+Value}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base class for all table entries. Draw\+Entry needs to be overriden to draw the entry for the cell. Use this to customize the table however needed. Compare\+To can be overriden to customize the sorting. comparing\+Value is used as a fallback for sorting any types of entries, even different types. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_table_entry_ae02e641122da6dd161d61a20576812ca}\label{class_editor_g_u_i_table_1_1_table_entry_ae02e641122da6dd161d61a20576812ca}} 
+\index{Editor\+G\+U\+I\+Table\+::\+Table\+Entry@{Editor\+G\+U\+I\+Table\+::\+Table\+Entry}!Draw\+Entry@{Draw\+Entry}}
+\index{Draw\+Entry@{Draw\+Entry}!Editor\+G\+U\+I\+Table\+::\+Table\+Entry@{Editor\+G\+U\+I\+Table\+::\+Table\+Entry}}
+\subsubsection{\texorpdfstring{Draw\+Entry()}{DrawEntry()}}
+{\footnotesize\ttfamily abstract void Editor\+G\+U\+I\+Table.\+Table\+Entry.\+Draw\+Entry (\begin{DoxyParamCaption}\item[{Rect}]{rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Draws the entry using G\+UI (without G\+U\+I\+Layout). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rect} & Rect.\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_editor_g_u_i_table_1_1_property_entry_a176094e41cb53be100106c1d58763607}{Editor\+G\+U\+I\+Table.\+Property\+Entry}}, \mbox{\hyperlink{class_editor_g_u_i_table_1_1_action_entry_a84dfbc114f27c8108899c3c25803ae60}{Editor\+G\+U\+I\+Table.\+Action\+Entry}}, and \mbox{\hyperlink{class_editor_g_u_i_table_1_1_label_entry_a94247717318efb4e51347519e0b985dc}{Editor\+G\+U\+I\+Table.\+Label\+Entry}}.
+
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_table_entry_abe1e2747e56d50731eeec28635b366a1}\label{class_editor_g_u_i_table_1_1_table_entry_abe1e2747e56d50731eeec28635b366a1}} 
+\index{Editor\+G\+U\+I\+Table\+::\+Table\+Entry@{Editor\+G\+U\+I\+Table\+::\+Table\+Entry}!Draw\+Entry\+Layout@{Draw\+Entry\+Layout}}
+\index{Draw\+Entry\+Layout@{Draw\+Entry\+Layout}!Editor\+G\+U\+I\+Table\+::\+Table\+Entry@{Editor\+G\+U\+I\+Table\+::\+Table\+Entry}}
+\subsubsection{\texorpdfstring{Draw\+Entry\+Layout()}{DrawEntryLayout()}}
+{\footnotesize\ttfamily abstract void Editor\+G\+U\+I\+Table.\+Table\+Entry.\+Draw\+Entry\+Layout (\begin{DoxyParamCaption}\item[{float}]{width,  }\item[{float}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Draws the entry using G\+U\+I\+Layout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & Width.\\
+\hline
+{\em height} & Height.\\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{class_editor_g_u_i_table_1_1_property_entry_a5930e1e0e8cf4954cdbf25ef72e815f8}{Editor\+G\+U\+I\+Table.\+Property\+Entry}}, \mbox{\hyperlink{class_editor_g_u_i_table_1_1_label_entry_a1bf901bb1f193f4c7ff842d898968572}{Editor\+G\+U\+I\+Table.\+Label\+Entry}}, and \mbox{\hyperlink{class_editor_g_u_i_table_1_1_action_entry_ae556137b72e1e356a2e4cf4a12b88336}{Editor\+G\+U\+I\+Table.\+Action\+Entry}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/\+Entries/Table\+Entry.\+cs\end{DoxyCompactItemize}

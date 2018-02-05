@@ -1,0 +1,29 @@
+\hypertarget{namespace_editor_g_u_i_table}{}\section{Editor\+G\+U\+I\+Table Namespace Reference}
+\label{namespace_editor_g_u_i_table}\index{Editor\+G\+U\+I\+Table@{Editor\+G\+U\+I\+Table}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_action_entry}{Action\+Entry}}
+\begin{DoxyCompactList}\small\item\em This entry class draws a button which, when clicked, will trigger the action given in the constructor. \end{DoxyCompactList}\item 
+class {\bfseries G\+U\+I\+Table}
+\begin{DoxyCompactList}\small\item\em Main Class of the Table Plugin. This contains static functions to draw a table, from the most basic to the most customizable. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_g_u_i_table_entry}{G\+U\+I\+Table\+Entry}}
+\item 
+class {\bfseries G\+U\+I\+Table\+Layout}
+\begin{DoxyCompactList}\small\item\em Main Class of the Table Plugin. This contains static functions to draw a table, from the most basic to the most customizable, using G\+U\+I\+Layout functions. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_g_u_i_table_option}{G\+U\+I\+Table\+Option}}
+\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_g_u_i_table_state}{G\+U\+I\+Table\+State}}
+\begin{DoxyCompactList}\small\item\em The current state of the G\+U\+I\+Table. This has to be used the same way state parameters are used in Unity G\+UI functions, like the scroll position in Begin\+Scroll\+View. It has to be passed from one G\+UI frame to another by keeping a reference in your calling code. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_label_entry}{Label\+Entry}}
+\begin{DoxyCompactList}\small\item\em This entry class draws a string as a label. This is useful for properties you want to display in the table as read only, as the default Property\+Field used in \mbox{\hyperlink{class_editor_g_u_i_table_1_1_property_entry}{Property\+Entry}} uses editable fields. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_property_column}{Property\+Column}}
+\begin{DoxyCompactList}\small\item\em Internal Use Only. This class adds a property to a column. This will be used to automatically draw the entries for this column in some versions of G\+U\+I\+Table.\+Draw\+Table \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_property_entry}{Property\+Entry}}
+\begin{DoxyCompactList}\small\item\em This entry class just uses Editor\+G\+U\+I\+Layout.\+Property\+Field to draw a given property. This is the basic way to use G\+U\+I\+Table. It will draw the properties the same way Unity would by default. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_selector_column}{Selector\+Column}}
+\begin{DoxyCompactList}\small\item\em This class adds a property and a selector to a column. This will be used to automatically draw the entries for this column in some versions of G\+U\+I\+Table.\+Draw\+Table \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_table_column}{Table\+Column}}
+\begin{DoxyCompactList}\small\item\em Base class for all table columns. It only takes a title and a width in the constructor, but other settings are available to customize the column. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_editor_g_u_i_table_1_1_table_entry}{Table\+Entry}}
+\begin{DoxyCompactList}\small\item\em Base class for all table entries. Draw\+Entry needs to be overriden to draw the entry for the cell. Use this to customize the table however needed. Compare\+To can be overriden to customize the sorting. comparing\+Value is used as a fallback for sorting any types of entries, even different types. \end{DoxyCompactList}\end{DoxyCompactItemize}

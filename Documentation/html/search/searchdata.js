@@ -2,7 +2,7 @@ var indexSectionsWithContent =
 {
   0: "adegilopstv",
   1: "aglpst",
-  2: "g",
+  2: "e",
   3: "dgt",
   4: "eiov"
 };

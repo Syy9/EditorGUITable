@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['guiextensions',['GUIExtensions',['../namespace_g_u_i_extensions.html',1,'']]]
+  ['editorguitable',['EditorGUITable',['../namespace_editor_g_u_i_table.html',1,'']]]
 ];

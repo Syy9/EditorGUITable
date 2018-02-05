@@ -9,14 +9,6 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
-<link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
-<script type="text/javascript" src="navtreedata.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-  $(document).ready(initResizable);
-/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -31,6 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="Logo_rounded.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Editor GUI Table
+   &#160;<span id="projectnumber">1.0</span>
    </div>
    <div id="projectbrief">A plugin to allow programmers to easily create customizable tables in Unity Editor</div>
   </td>
@@ -56,22 +49,6 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('annotated.html','');});
-/* @license-end */
-</script>
-<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -93,27 +70,28 @@ $(document).ready(function(){initNavTree('annotated.html','');});
 <div class="contents">
 <div class="textblock">Here are the classes, structs, unions and interfaces with brief descriptions:</div><div class="directory">
 <div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><span class="icona"><span class="icon">N</span></span><a class="el" href="namespace_g_u_i_extensions.html" target="_self">GUIExtensions</a></td><td class="desc"></td></tr>
-<tr id="row_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_action_entry.html" target="_self">ActionEntry</a></td><td class="desc">This entry class draws a button which, when clicked, will trigger the action given in the constructor. </td></tr>
-<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_g_u_i_table.html" target="_self">GUITable</a></td><td class="desc">Main Class of the Table Plugin. This contains static functions to draw a table, from the most basic to the most customizable. </td></tr>
-<tr id="row_0_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_g_u_i_table_state.html" target="_self">GUITableState</a></td><td class="desc">The current state of the <a class="el" href="class_g_u_i_extensions_1_1_g_u_i_table.html" title="Main Class of the Table Plugin. This contains static functions to draw a table, from the most basic t...">GUITable</a>. This has to be used the same way state parameters are used in Unity GUI functions, like the scroll position in BeginScrollView. It has to be passed from one GUI frame to another by keeping a reference in your calling code. </td></tr>
-<tr id="row_0_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_label_entry.html" target="_self">LabelEntry</a></td><td class="desc">This entry class draws a string as a label. This is useful for properties you want to display in the table as read only, as the default PropertyField used in <a class="el" href="class_g_u_i_extensions_1_1_property_entry.html" title="This entry class just uses EditorGUILayout.PropertyField to draw a given property. This is the basic way to use GUITable. It will draw the properties the same way Unity would by default. ">PropertyEntry</a> uses editable fields. </td></tr>
-<tr id="row_0_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_property_column.html" target="_self">PropertyColumn</a></td><td class="desc">Internal Use Only. This class adds a property to a column. This will be used to automatically draw the entries for this column in some versions of <a class="el" href="class_g_u_i_extensions_1_1_g_u_i_table.html#a3fd53841df17f9b2d1be7678a0cdc1a2" title="Draw a table just from the collection&#39;s property. This will create columns for all the visible member...">GUITable.DrawTable</a> </td></tr>
-<tr id="row_0_5_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_property_entry.html" target="_self">PropertyEntry</a></td><td class="desc">This entry class just uses EditorGUILayout.PropertyField to draw a given property. This is the basic way to use <a class="el" href="class_g_u_i_extensions_1_1_g_u_i_table.html" title="Main Class of the Table Plugin. This contains static functions to draw a table, from the most basic t...">GUITable</a>. It will draw the properties the same way Unity would by default. </td></tr>
-<tr id="row_0_6_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_selector_column.html" target="_self">SelectorColumn</a></td><td class="desc">This class adds a property and a selector to a column. This will be used to automatically draw the entries for this column in some versions of <a class="el" href="class_g_u_i_extensions_1_1_g_u_i_table.html#a3fd53841df17f9b2d1be7678a0cdc1a2" title="Draw a table just from the collection&#39;s property. This will create columns for all the visible member...">GUITable.DrawTable</a> </td></tr>
-<tr id="row_0_7_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_table_column.html" target="_self">TableColumn</a></td><td class="desc">Base class for all table columns. It only takes a title and a width in the constructor, but other settings are available to customize the column. </td></tr>
-<tr id="row_0_8_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_g_u_i_extensions_1_1_table_entry.html" target="_self">TableEntry</a></td><td class="desc">Base class for all table entries. DrawEntry needs to be overriden to draw the entry for the cell. Use this to customize the table however needed. CompareTo can be overriden to customize the sorting. comparingValue is used as a fallback for sorting any types of entries, even different types. </td></tr>
+<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><span class="icona"><span class="icon">N</span></span><a class="el" href="namespace_editor_g_u_i_table.html" target="_self">EditorGUITable</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_action_entry.html" target="_self">ActionEntry</a></td><td class="desc">This entry class draws a button which, when clicked, will trigger the action given in the constructor. </td></tr>
+<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_entry.html" target="_self">GUITableEntry</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_option.html" target="_self">GUITableOption</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_state.html" target="_self">GUITableState</a></td><td class="desc">The current state of the GUITable. This has to be used the same way state parameters are used in Unity GUI functions, like the scroll position in BeginScrollView. It has to be passed from one GUI frame to another by keeping a reference in your calling code. </td></tr>
+<tr id="row_0_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_label_entry.html" target="_self">LabelEntry</a></td><td class="desc">This entry class draws a string as a label. This is useful for properties you want to display in the table as read only, as the default PropertyField used in <a class="el" href="class_editor_g_u_i_table_1_1_property_entry.html" title="This entry class just uses EditorGUILayout.PropertyField to draw a given property. This is the basic way to use GUITable. It will draw the properties the same way Unity would by default. ">PropertyEntry</a> uses editable fields. </td></tr>
+<tr id="row_0_5_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_property_column.html" target="_self">PropertyColumn</a></td><td class="desc">Internal Use Only. This class adds a property to a column. This will be used to automatically draw the entries for this column in some versions of GUITable.DrawTable </td></tr>
+<tr id="row_0_6_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_property_entry.html" target="_self">PropertyEntry</a></td><td class="desc">This entry class just uses EditorGUILayout.PropertyField to draw a given property. This is the basic way to use GUITable. It will draw the properties the same way Unity would by default. </td></tr>
+<tr id="row_0_7_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_selector_column.html" target="_self">SelectorColumn</a></td><td class="desc">This class adds a property and a selector to a column. This will be used to automatically draw the entries for this column in some versions of GUITable.DrawTable </td></tr>
+<tr id="row_0_8_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_table_column.html" target="_self">TableColumn</a></td><td class="desc">Base class for all table columns. It only takes a title and a width in the constructor, but other settings are available to customize the column. </td></tr>
+<tr id="row_0_9_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_editor_g_u_i_table_1_1_table_entry.html" target="_self">TableEntry</a></td><td class="desc">Base class for all table entries. DrawEntry needs to be overriden to draw the entry for the cell. Use this to customize the table however needed. CompareTo can be overriden to customize the sorting. comparingValue is used as a fallback for sorting any types of entries, even different types. </td></tr>
+<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_table_column_entry.html" target="_self">TableColumnEntry</a></td><td class="desc"></td></tr>
+<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_table_column_option.html" target="_self">TableColumnOption</a></td><td class="desc"></td></tr>
+<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="class_table_drawer.html" target="_self">TableDrawer</a></td><td class="desc">Drawer for the Table Attribute. See the TableAttribute class documentation for the limitations of this attribute. </td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->
-</div><!-- doc-content -->
 <!-- start footer part -->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-  <ul>
-    <li class="footer">Generated by
-    <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
-  </ul>
-</div>
+<hr class="footer"/><address class="footer"><small>
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.14
+</small></address>
 </body>
 </html>

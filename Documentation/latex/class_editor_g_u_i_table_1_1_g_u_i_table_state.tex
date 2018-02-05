@@ -1,0 +1,84 @@
+\hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state}{}\section{Editor\+G\+U\+I\+Table.\+G\+U\+I\+Table\+State Class Reference}
+\label{class_editor_g_u_i_table_1_1_g_u_i_table_state}\index{Editor\+G\+U\+I\+Table.\+G\+U\+I\+Table\+State@{Editor\+G\+U\+I\+Table.\+G\+U\+I\+Table\+State}}
+
+
+The current state of the G\+U\+I\+Table. This has to be used the same way state parameters are used in Unity G\+UI functions, like the scroll position in Begin\+Scroll\+View. It has to be passed from one G\+UI frame to another by keeping a reference in your calling code.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_editor_g_u_i_table_1_1_g_u_i_table_state_aab7e8f3314020a2f5fda74e6d618d330}{G\+U\+I\+Table\+State}} (string prefs\+Key)
+\begin{DoxyCompactList}\small\item\em Initializes a G\+U\+I\+Extensions.\+G\+U\+I\+Table\+State with a key to save it in Editor\+Prefs. This constructor can\textquotesingle{}t be used in Scriptable\+Object\textquotesingle{}s constructor or in the property\textquotesingle{}s declaration, because it uses the Editor\+Prefs. Use it in On\+Enable or Awake instead. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_a02acb0bb7c75ca1bcd97a2f89da2617b}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_a02acb0bb7c75ca1bcd97a2f89da2617b}} 
+void {\bfseries Save} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_afe7dda29a996965d4b42b6861a148115}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_afe7dda29a996965d4b42b6861a148115}} 
+static \mbox{\hyperlink{class_editor_g_u_i_table_1_1_g_u_i_table_state}{G\+U\+I\+Table\+State}} {\bfseries Load} (string prefs\+Key)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_a5d522c1790784ff16db98b345b74a0ca}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_a5d522c1790784ff16db98b345b74a0ca}} 
+Vector2 {\bfseries scroll\+Pos}
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_ac9aaf765fd446c9e48b17b47528f647f}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_ac9aaf765fd446c9e48b17b47528f647f}} 
+Vector2 {\bfseries scroll\+Pos\+Horiz}
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_ad4fe2697eec54139de525bb0b87be1b3}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_ad4fe2697eec54139de525bb0b87be1b3}} 
+int {\bfseries sort\+By\+Column\+Index} = -\/1
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_a77f82460b4a1a57c23035e404ff47346}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_a77f82460b4a1a57c23035e404ff47346}} 
+bool {\bfseries sort\+Increasing}
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_ade1dee36083109909f4bf31bd88d995e}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_ade1dee36083109909f4bf31bd88d995e}} 
+List$<$ float $>$ {\bfseries column\+Sizes} = new List$<$float$>$ ()
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_a5351f180498096a8da853064d8a2e4d0}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_a5351f180498096a8da853064d8a2e4d0}} 
+List$<$ bool $>$ {\bfseries column\+Visible} = new List$<$bool$>$ ()
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_ad2f4887bcadfd3fcdf6e4642e5be1d80}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_ad2f4887bcadfd3fcdf6e4642e5be1d80}} 
+float {\bfseries total\+Width}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The current state of the G\+U\+I\+Table. This has to be used the same way state parameters are used in Unity G\+UI functions, like the scroll position in Begin\+Scroll\+View. It has to be passed from one G\+UI frame to another by keeping a reference in your calling code. 
+
+
+\begin{DoxyCode}
+GUITableState tableState;
+\textcolor{keywordtype}{void} OnGUI ()
+\{
+    tableState = GUITable.DrawTable(collectionProperty, tableState);
+\}
+\end{DoxyCode}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_editor_g_u_i_table_1_1_g_u_i_table_state_aab7e8f3314020a2f5fda74e6d618d330}\label{class_editor_g_u_i_table_1_1_g_u_i_table_state_aab7e8f3314020a2f5fda74e6d618d330}} 
+\index{Editor\+G\+U\+I\+Table\+::\+G\+U\+I\+Table\+State@{Editor\+G\+U\+I\+Table\+::\+G\+U\+I\+Table\+State}!G\+U\+I\+Table\+State@{G\+U\+I\+Table\+State}}
+\index{G\+U\+I\+Table\+State@{G\+U\+I\+Table\+State}!Editor\+G\+U\+I\+Table\+::\+G\+U\+I\+Table\+State@{Editor\+G\+U\+I\+Table\+::\+G\+U\+I\+Table\+State}}
+\subsubsection{\texorpdfstring{G\+U\+I\+Table\+State()}{GUITableState()}}
+{\footnotesize\ttfamily Editor\+G\+U\+I\+Table.\+G\+U\+I\+Table\+State.\+G\+U\+I\+Table\+State (\begin{DoxyParamCaption}\item[{string}]{prefs\+Key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initializes a G\+U\+I\+Extensions.\+G\+U\+I\+Table\+State with a key to save it in Editor\+Prefs. This constructor can\textquotesingle{}t be used in Scriptable\+Object\textquotesingle{}s constructor or in the property\textquotesingle{}s declaration, because it uses the Editor\+Prefs. Use it in On\+Enable or Awake instead. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prefs\+Key} & Prefs key.\\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Editor/G\+U\+I\+Table\+State.\+cs\end{DoxyCompactItemize}

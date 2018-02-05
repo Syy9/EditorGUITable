@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['enabledentries',['enabledEntries',['../class_g_u_i_extensions_1_1_table_column.html#a6c4958c3bcf3a93a78d575c9a41776fe',1,'GUIExtensions::TableColumn']]],
-  ['enabledtitle',['enabledTitle',['../class_g_u_i_extensions_1_1_table_column.html#a9fe6044251cdd55a22469a638ead7d7f',1,'GUIExtensions::TableColumn']]]
+  ['editorguitable',['EditorGUITable',['../namespace_editor_g_u_i_table.html',1,'']]],
+  ['enabledentries',['enabledEntries',['../class_table_column_entry.html#a67b708efeb53404a92acd14d3d835be5',1,'TableColumnEntry']]],
+  ['enabledtitle',['enabledTitle',['../class_table_column_entry.html#ad861d6d58bae1518e32a3a9351effbb7',1,'TableColumnEntry']]]
 ];
