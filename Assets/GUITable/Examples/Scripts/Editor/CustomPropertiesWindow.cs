@@ -29,7 +29,7 @@ public class CustomPropertiesWindow : EditorWindow
 	void DrawCustomProperties ()
 	{
 		SerializedObject serializedObject = new SerializedObject(SimpleExample.Instance);
-		tableState = GUITableLayout.DrawTable (serializedObject.FindProperty("simpleObjects"), new List<string>(){"floatProperty", "objectProperty"}, tableState);
+		tableState = GUITableLayout.DrawTable (tableState, serializedObject.FindProperty("simpleObjects"), new List<string>(){"floatProperty", "objectProperty"});
 	}
 
 }
