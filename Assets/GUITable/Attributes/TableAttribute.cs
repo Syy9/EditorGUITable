@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GUIExtensions
+namespace EditorGUITable
 {
 
 	/// <summary>

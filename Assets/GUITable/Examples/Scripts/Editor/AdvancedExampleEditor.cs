@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using GUIExtensions;
+using EditorGUITable;
 
 [CustomEditor(typeof(AdvancedExample))]
 public class AdvancedExampleEditor : Editor 

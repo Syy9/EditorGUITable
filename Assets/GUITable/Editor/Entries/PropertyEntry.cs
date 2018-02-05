@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 
 
-namespace GUIExtensions
+namespace EditorGUITable
 {
 
 	/// <summary>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using GUIExtensions;
+using EditorGUITable;
 
 public class AdvancedExampleWindow : EditorWindow 
 {
