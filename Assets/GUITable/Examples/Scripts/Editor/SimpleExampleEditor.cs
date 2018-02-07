@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using GUIExtensions;
+using EditorGUITable;
 
 [CustomEditor(typeof(SimpleExample))]
 public class SimpleExampleEditor : Editor 
@@ -41,7 +41,7 @@ public class SimpleExampleEditor : Editor
 		GUILayout.Space (20f);
 
 		GUILayout.BeginHorizontal ();
-		GUILayout.Label ("Customize the properties", EditorStyles.boldLabel, GUILayout.Width(160f));
+		GUILayout.Label ("Customize the properties", EditorStyles.boldLabel, GUILayout.Width(170f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
 			EditorWindow.GetWindow<CustomPropertiesWindow>().Show();
 		GUILayout.EndHorizontal ();
@@ -49,7 +49,7 @@ public class SimpleExampleEditor : Editor
 		GUILayout.Space (10f);
 
 		GUILayout.BeginHorizontal ();
-		GUILayout.Label ("Customize the columns", EditorStyles.boldLabel, GUILayout.Width(160f));
+		GUILayout.Label ("Customize the columns", EditorStyles.boldLabel, GUILayout.Width(170f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
 			EditorWindow.GetWindow<CustomColumnsWindow>().Show();
 		GUILayout.EndHorizontal ();
@@ -57,7 +57,7 @@ public class SimpleExampleEditor : Editor
 		GUILayout.Space (10f);
 
 		GUILayout.BeginHorizontal ();
-		GUILayout.Label ("Customize the selectors", EditorStyles.boldLabel, GUILayout.Width(160f));
+		GUILayout.Label ("Customize the selectors", EditorStyles.boldLabel, GUILayout.Width(170f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
 			EditorWindow.GetWindow<CustomSelectorsWindow>().Show();
 		GUILayout.EndHorizontal ();
@@ -65,7 +65,7 @@ public class SimpleExampleEditor : Editor
 		GUILayout.Space (10f);
 
 		GUILayout.BeginHorizontal ();
-		GUILayout.Label ("Customize the entries", EditorStyles.boldLabel, GUILayout.Width(160f));
+		GUILayout.Label ("Customize the entries", EditorStyles.boldLabel, GUILayout.Width(170f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
 			EditorWindow.GetWindow<CustomEntriesWindow>().Show();
 		GUILayout.EndHorizontal ();
