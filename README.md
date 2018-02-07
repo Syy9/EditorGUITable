@@ -19,7 +19,7 @@ It uses the GUILayout elements and just organizes them in a table, so the style 
  
 <BR> <BR>
 
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%201.png" width="500" />
+ <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/e654bb23c86862637d73e24c06d4ac8ccaba2868/StoreAssets/Screenshot%201.png" width="500" />
  
  <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%202.png" width="500" />
  
