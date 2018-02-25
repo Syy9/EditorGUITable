@@ -83,6 +83,33 @@ namespace EditorGUITable
 				return new GUITableState();
 		}
 
+		public void CheckState (List<TableColumn> columns, GUITableEntry tableEntry, float availableWidth, bool isBeingResized)
+		{
+
+			if (columnSizes == null || columnSizes.Count < columns.Count)
+			{
+				columnSizes = columns.Select ((column) => column.entry.defaultWidth).ToList ();
+			}
+			if (columnVisible == null || columnVisible.Count < columns.Count)
+			{
+				columnVisible = columns.Select ((column) => column.entry.visibleByDefault).ToList ();
+			}
+			if (totalWidth < availableWidth && !isBeingResized)
+			{
+				List<int> expandableColumns = new List<int> ();
+				for (int i = 0 ; i < columns.Count ; i++)
+					if (columns[i].entry.expandWidth && columnSizes[i] < columns[i].entry.maxWidth)
+						expandableColumns.Add (i);
+				float addWidth = (availableWidth - totalWidth) / expandableColumns.Count;
+				foreach (int i in expandableColumns)
+					columnSizes[i] += addWidth;
+			}
+			for (int i = 0 ; i < columns.Count ; i++)
+			{
+				columnSizes[i] = Mathf.Clamp(columnSizes[i], columns[i].entry.minWidth, columns[i].entry.maxWidth);
+			}
+		}
+
 	}
 
 }

@@ -15,7 +15,9 @@ namespace EditorGUITable
 	/// </summary>
 	public static class GUITable
 	{
-		
+
+		static bool isBeingResized = false;
+
 		/// <summary>
 		/// Draw a table just from the collection's property.
 		/// This will create columns for all the visible members in the elements' class,
@@ -146,8 +148,8 @@ namespace EditorGUITable
 
 			if (tableState == null)
 				tableState = new GUITableState();
-
-			CheckTableState (tableState, columns);
+			
+			tableState.CheckState(columns, tableEntry, rect.width, isBeingResized);
 
 			float rowHeight = tableEntry.rowHeight;
 
@@ -280,6 +282,7 @@ namespace EditorGUITable
 						{
 							GUIUtility.hotControl = controlId;
 							Event.current.Use();
+							isBeingResized = true;
 						}
 						break;
 					}
@@ -289,6 +292,7 @@ namespace EditorGUITable
 						{
 							tableState.columnSizes[indexColumn] = Event.current.mousePosition.x - currentX - 5;
 							Event.current.Use();
+							isBeingResized = true;
 						}
 						break;
 					}
@@ -298,21 +302,10 @@ namespace EditorGUITable
 						{
 							GUIUtility.hotControl = 0;
 							Event.current.Use();
+							isBeingResized = false;
 						}
 						break;
 					}
-			}
-		}
-
-		static void CheckTableState (GUITableState tableState, List<TableColumn> columns)
-		{
-			if (tableState.columnSizes == null || tableState.columnSizes.Count < columns.Count)
-			{
-				tableState.columnSizes = columns.Select ((column) => column.entry.defaultWidth).ToList ();
-			}
-			if (tableState.columnVisible == null || tableState.columnVisible.Count < columns.Count)
-			{
-				tableState.columnVisible = columns.Select ((column) => column.entry.visibleByDefault).ToList ();
 			}
 		}
 

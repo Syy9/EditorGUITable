@@ -18,8 +18,6 @@ namespace EditorGUITable
 
 		static bool isBeingResized = false;
 
-		static Rect lastRect;
-
 		/// <summary>
 		/// Draw a table just from the collection's property.
 		/// This will create columns for all the visible members in the elements' class,
@@ -141,14 +139,15 @@ namespace EditorGUITable
 			params GUITableOption[] options)
 		{
 
-			lastRect = GUILayoutUtility.GetLastRect ();
+			Rect lastRect = GUILayoutUtility.GetLastRect ();
 
 			GUITableEntry tableEntry = new GUITableEntry (options);
 
 			if (tableState == null)
 				tableState = new GUITableState();
 			
-			CheckTableState (tableState, columns, tableEntry);
+			tableState.CheckState(columns, tableEntry, lastRect.width, isBeingResized);
+
 
 			float rowHeight = tableEntry.rowHeight;
 
@@ -312,32 +311,6 @@ namespace EditorGUITable
 						}
 						break;
 					}
-			}
-		}
-
-		static void CheckTableState (GUITableState tableState, List<TableColumn> columns, GUITableEntry tableEntry)
-		{
-			if (tableState.columnSizes == null || tableState.columnSizes.Count < columns.Count)
-			{
-				tableState.columnSizes = columns.Select ((column) => column.entry.defaultWidth).ToList ();
-			}
-			if (tableState.columnVisible == null || tableState.columnVisible.Count < columns.Count)
-			{
-				tableState.columnVisible = columns.Select ((column) => column.entry.visibleByDefault).ToList ();
-			}
-			if (tableState.totalWidth < lastRect.width && !isBeingResized)
-			{
-				List<int> expandableColumns = new List<int> ();
-				for (int i = 0 ; i < columns.Count ; i++)
-					if (columns[i].entry.expandWidth && tableState.columnSizes[i] < columns[i].entry.maxWidth)
-						expandableColumns.Add (i);
-				float addWidth = (lastRect.width - tableState.totalWidth) / expandableColumns.Count;
-				foreach (int i in expandableColumns)
-					tableState.columnSizes[i] += addWidth;
-			}
-			for (int i = 0 ; i < columns.Count ; i++)
-			{
-				tableState.columnSizes[i] = Mathf.Clamp(tableState.columnSizes[i], columns[i].entry.minWidth, columns[i].entry.maxWidth);
 			}
 		}
 
