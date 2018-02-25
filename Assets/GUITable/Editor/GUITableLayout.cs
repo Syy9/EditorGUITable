@@ -16,8 +16,6 @@ namespace EditorGUITable
 	public static class GUITableLayout
 	{
 
-		static bool isBeingResized = false;
-
 		/// <summary>
 		/// Draw a table just from the collection's property.
 		/// This will create columns for all the visible members in the elements' class,
@@ -146,7 +144,7 @@ namespace EditorGUITable
 			if (tableState == null)
 				tableState = new GUITableState();
 			
-			tableState.CheckState(columns, tableEntry, lastRect.width, isBeingResized);
+			tableState.CheckState(columns, tableEntry, lastRect.width);
 
 
 			float rowHeight = tableEntry.rowHeight;
@@ -161,7 +159,7 @@ namespace EditorGUITable
 			GUILayout.Space (2f);
 			float currentX = 0f;
 
-			RightClickMenu (tableState, columns);
+			tableState.RightClickMenu (columns);
 
 			for (int i = 0 ; i < columns.Count ; i++)
 			{
@@ -177,7 +175,7 @@ namespace EditorGUITable
 						columnName += " " + '\u25BC'.ToString();
 				}
 
-				ResizeColumn (tableState, i, currentX);
+				tableState.ResizeColumn (i, currentX);
 
 				GUI.enabled = column.entry.enabledTitle;
 
@@ -253,67 +251,5 @@ namespace EditorGUITable
 			return tableState;
 		}
 
-		static void RightClickMenu (GUITableState tableState, List<TableColumn> columns)
-		{
-			Rect rect = new Rect(0, 0, tableState.totalWidth, EditorGUIUtility.singleLineHeight);
-			GUI.enabled = true;
-			if (rect.Contains (Event.current.mousePosition) && Event.current.type == EventType.MouseDown && Event.current.button == 1)
-			{
-				GenericMenu contextMenu = new GenericMenu();
-				for(int i = 0 ; i < columns.Count ; i++)
-				{
-					TableColumn column = columns[i];
-					if (column.entry.optional)
-					{
-						int index = i;
-						contextMenu.AddItem (new GUIContent (column.title), tableState.columnVisible [i], () => tableState.columnVisible [index] = !tableState.columnVisible [index]);
-					}
-				}
-				contextMenu.ShowAsContext();
-			}
-		}
-
-		static void ResizeColumn (GUITableState tableState, int indexColumn, float currentX)
-		{
-			int controlId = EditorGUIUtility.GetControlID(FocusType.Passive);
-			Rect resizeRect = new Rect(currentX + tableState.columnSizes[indexColumn] + 2, 0, 10, EditorGUIUtility.singleLineHeight);
-			EditorGUIUtility.AddCursorRect(resizeRect, MouseCursor.ResizeHorizontal, controlId);
-			switch(Event.current.type)
-			{
-				case EventType.MouseDown:
-					{
-						if (resizeRect.Contains(Event.current.mousePosition))
-						{
-							GUIUtility.hotControl = controlId;
-							Event.current.Use();
-							isBeingResized = true;
-						}
-						break;
-					}
-				case EventType.MouseDrag:
-					{
-						if (GUIUtility.hotControl == controlId)
-						{
-							tableState.columnSizes[indexColumn] = Mathf.Max (0f, Event.current.mousePosition.x - currentX - 5);
-							Event.current.Use();
-							isBeingResized = true;
-						}
-						break;
-					}
-				case EventType.MouseUp:
-					{
-						if (GUIUtility.hotControl == controlId)
-						{
-							GUIUtility.hotControl = 0;
-							Event.current.Use();
-//							if (tableState.totalWidth >= lastRect.width)
-								isBeingResized = false;
-						}
-						break;
-					}
-			}
-		}
-
 	}
-
 }

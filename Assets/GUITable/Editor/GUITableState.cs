@@ -39,6 +39,8 @@ namespace EditorGUITable
 
 		string prefsKey;
 
+		public bool isBeingResized { get; private set; }
+
 		public float totalWidth
 		{
 			get
@@ -83,7 +85,7 @@ namespace EditorGUITable
 				return new GUITableState();
 		}
 
-		public void CheckState (List<TableColumn> columns, GUITableEntry tableEntry, float availableWidth, bool isBeingResized)
+		public void CheckState (List<TableColumn> columns, GUITableEntry tableEntry, float availableWidth)
 		{
 
 			if (columnSizes == null || columnSizes.Count < columns.Count)
@@ -107,6 +109,74 @@ namespace EditorGUITable
 			for (int i = 0 ; i < columns.Count ; i++)
 			{
 				columnSizes[i] = Mathf.Clamp(columnSizes[i], columns[i].entry.minWidth, columns[i].entry.maxWidth);
+			}
+		}
+
+		public void RightClickMenu (List<TableColumn> columns, Rect? position = null)
+		{
+			Rect rect;
+			if (position == null)
+				rect = new Rect(0, 0, totalWidth, EditorGUIUtility.singleLineHeight);
+			else
+				rect = new Rect(position.Value.x, position.Value.y, totalWidth, EditorGUIUtility.singleLineHeight);
+			GUI.enabled = true;
+			if (rect.Contains (Event.current.mousePosition) && Event.current.type == EventType.MouseDown && Event.current.button == 1)
+			{
+				GenericMenu contextMenu = new GenericMenu();
+				for(int i = 0 ; i < columns.Count ; i++)
+				{
+					TableColumn column = columns[i];
+					if (column.entry.optional)
+					{
+						int index = i;
+						contextMenu.AddItem (new GUIContent (column.title), columnVisible [i], () => columnVisible [index] = !columnVisible [index]);
+					}
+				}
+				contextMenu.ShowAsContext();
+			}
+		}
+
+		public void ResizeColumn (int indexColumn, float currentX, Rect? position = null)
+		{
+			int controlId = EditorGUIUtility.GetControlID(FocusType.Passive);
+			Rect resizeRect;
+			if (position == null)
+				resizeRect = new Rect(currentX + columnSizes[indexColumn] + 2, 0, 10, EditorGUIUtility.singleLineHeight);
+			else
+				resizeRect = new Rect(currentX + columnSizes[indexColumn] + 2, position.Value.y, 10, EditorGUIUtility.singleLineHeight);
+			EditorGUIUtility.AddCursorRect(resizeRect, MouseCursor.ResizeHorizontal, controlId);
+			switch(Event.current.type)
+			{
+				case EventType.MouseDown:
+					{
+						if (resizeRect.Contains(Event.current.mousePosition))
+						{
+							GUIUtility.hotControl = controlId;
+							Event.current.Use();
+							isBeingResized = true;
+						}
+						break;
+					}
+				case EventType.MouseDrag:
+					{
+						if (GUIUtility.hotControl == controlId)
+						{
+							columnSizes[indexColumn] = Event.current.mousePosition.x - currentX - 5;
+							Event.current.Use();
+							isBeingResized = true;
+						}
+						break;
+					}
+				case EventType.MouseUp:
+					{
+						if (GUIUtility.hotControl == controlId)
+						{
+							GUIUtility.hotControl = 0;
+							Event.current.Use();
+							isBeingResized = false;
+						}
+						break;
+					}
 			}
 		}
 
