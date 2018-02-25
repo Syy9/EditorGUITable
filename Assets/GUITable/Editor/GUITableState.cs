@@ -88,7 +88,7 @@ namespace EditorGUITable
 
 			if (columnSizes == null || columnSizes.Count < columns.Count)
 			{
-				columnSizes = columns.Select ((column) => column.entry.defaultWidth).ToList ();
+				columnSizes = columns.Select ((column) => column.GetDefaultWidth()).ToList ();
 			}
 			if (columnVisible == null || columnVisible.Count < columns.Count)
 			{

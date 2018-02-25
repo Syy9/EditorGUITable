@@ -5,7 +5,7 @@ using UnityEngine;
 public class TableColumnEntry
 {
 
-	public float defaultWidth = 100f;
+	public float defaultWidth = 0f;
 	public bool expandWidth = false;
 	public float maxWidth = float.MaxValue;
 	public float minWidth = 20f;

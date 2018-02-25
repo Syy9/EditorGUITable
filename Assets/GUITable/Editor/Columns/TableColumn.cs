@@ -36,6 +36,18 @@ namespace EditorGUITable
 		{
 		}
 
+		public float GetDefaultWidth ()
+		{
+			if (entry.defaultWidth > 0f)
+				return entry.defaultWidth;
+			else
+			{
+				float minWidth, maxWidth;
+				GUI.skin.button.CalcMinMaxWidth(new GUIContent(title), out minWidth, out maxWidth);
+				return minWidth;
+			}
+		}
+
 		public static TableColumnOption ExpandWidth (bool enable)
 		{
 			return new TableColumnOption (TableColumnOption.Type.ExpandWidth, enable);

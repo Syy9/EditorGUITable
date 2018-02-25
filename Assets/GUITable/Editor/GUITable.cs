@@ -61,7 +61,7 @@ namespace EditorGUITable
 			params GUITableOption[] options) 
 		{
 			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
-				prop, ObjectNames.NicifyVariableName (prop), TableColumn.Width(100f))).ToList();
+				prop, ObjectNames.NicifyVariableName (prop))).ToList();
 
 			return DrawTable (rect, tableState, collectionProperty, columns, options);
 		}
