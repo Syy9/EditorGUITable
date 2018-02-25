@@ -41,62 +41,49 @@ namespace EditorGUITable
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
 			TableAttribute tableAttribute = (TableAttribute) attribute;
-			if (tableAttribute.properties == null)
+			DrawTable (position, property, label, tableAttribute);
+		}
+
+		void DrawTable (Rect position, SerializedProperty property, GUIContent label, TableAttribute tableAttribute)
+		{
+			//Check that it is a collection
+			Match match = Regex.Match(property.propertyPath, "^([a-zA-Z0-9_]*).Array.data\\[([0-9]*)\\]$");
+			if (!match.Success)
 			{
-				OnGUIAuto (position, property, label);
+				EditorGUI.LabelField(position, label.text, "Use the Table attribute with a collection.");
+				return;
 			}
+
+			string collectionPath = match.Groups[1].Value;
+
+			// Check that it's the first element
+			string index = match.Groups[2].Value;
+
+			if (index != "0")
+				return;
+			EditorGUI.indentLevel = 0;
+			if (GUILayoutUtility.GetLastRect().width > 1f)
+				lastRect = GUILayoutUtility.GetLastRect();
+			Rect r = new Rect(position.x + 15f, position.y, position.width, lastRect.height);
+			if (tableAttribute.properties == null && tableAttribute.widths == null)
+				tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), GUITableOption.AllowScrollView(false));
+			else if (tableAttribute.widths == null)
+				tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), tableAttribute.properties.ToList(), GUITableOption.AllowScrollView(false));
 			else
-			{
-				OnGUIPropList (position, property, label, tableAttribute.properties);
-			}
+				tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), GetPropertyColumns(tableAttribute), GUITableOption.AllowScrollView(false));
 		}
 
-		void OnGUIAuto(Rect position, SerializedProperty property, GUIContent label)
+		static List<PropertyColumn> GetPropertyColumns (TableAttribute tableAttribute)
 		{
-			//Check that it is a collection
-			Match match = Regex.Match(property.propertyPath, "^([a-zA-Z0-9_]*).Array.data\\[([0-9]*)\\]$");
-			if (!match.Success)
+			List<PropertyColumn> res = new List<PropertyColumn>();
+			for (int i = 0 ; i < tableAttribute.properties.Length ; i++)
 			{
-				EditorGUI.LabelField(position, label.text, "Use the Table attribute with a collection.");
-				return;
+				if (i >= tableAttribute.widths.Length)
+					res.Add(new PropertyColumn(tableAttribute.properties[i], tableAttribute.properties[i]));
+				else
+					res.Add(new PropertyColumn(tableAttribute.properties[i], tableAttribute.properties[i], TableColumn.Width(tableAttribute.widths[i])));
 			}
-
-			string collectionPath = match.Groups[1].Value;
-
-			// Check that it's the first element
-			string index = match.Groups[2].Value;
-
-			if (index != "0")
-				return;
-			EditorGUI.indentLevel = 0;
-			if (GUILayoutUtility.GetLastRect().width > 1f)
-				lastRect = GUILayoutUtility.GetLastRect();
-			Rect r = new Rect(position.x + 15f, position.y, position.width, lastRect.height);
-			tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), GUITableOption.AllowScrollView(false));
-		}
-
-		void OnGUIPropList(Rect position, SerializedProperty property, GUIContent label, string[] properties)
-		{
-			//Check that it is a collection
-			Match match = Regex.Match(property.propertyPath, "^([a-zA-Z0-9_]*).Array.data\\[([0-9]*)\\]$");
-			if (!match.Success)
-			{
-				EditorGUI.LabelField(position, label.text, "Use the Table attribute with a collection.");
-				return;
-			}
-
-			string collectionPath = match.Groups[1].Value;
-
-			// Check that it's the first element
-			string index = match.Groups[2].Value;
-
-			if (index != "0")
-				return;
-			EditorGUI.indentLevel = 0;
-			if (GUILayoutUtility.GetLastRect().width > 1f)
-				lastRect = GUILayoutUtility.GetLastRect();
-			Rect r = new Rect(position.x + 15f, position.y, position.width, lastRect.height);
-			tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), properties.ToList(), GUITableOption.AllowScrollView(false));
+			return res;
 		}
 
 	}

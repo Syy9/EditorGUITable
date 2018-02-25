@@ -32,6 +32,7 @@ namespace EditorGUITable
 	{
 
 		public string[] properties = null;
+		public float[] widths = null;
 
 		public TableAttribute () 
 		{
@@ -40,6 +41,12 @@ namespace EditorGUITable
 		public TableAttribute (params string[] properties)
 		{
 			this.properties = properties;
+		}
+
+		public TableAttribute (string[] properties, float[] widths)
+		{
+			this.properties = properties;
+			this.widths = widths;
 		}
 
 	}
