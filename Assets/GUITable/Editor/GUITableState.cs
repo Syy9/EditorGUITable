@@ -54,7 +54,7 @@ namespace EditorGUITable
 		}
 
 		/// <summary>
-		/// Initializes a <see cref="GUIExtensions.GUITableState"/> with a key to save it in EditorPrefs.
+		/// Initializes a <see cref="EditorGUITable.GUITableState"/> with a key to save it in EditorPrefs.
 		/// This constructor can't be used in ScriptableObject's constructor or in the property's declaration,
 		/// because it uses the EditorPrefs. Use it in OnEnable or Awake instead.
 		/// </summary>
