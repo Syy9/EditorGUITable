@@ -32,7 +32,7 @@ namespace EditorGUITable
 		}
 
 		[System.Obsolete ("Use TableColumn(title, options) instead, with TableColumn.Width() to set the width")]
-		public TableColumn (string title, float width) : this (title, TableColumn.Width(width))
+		public TableColumn (string title, float width, params TableColumnOption[] options) : this (title, options.Concat(new[] { TableColumn.Width (width) }).ToArray ())
 		{
 		}
 
