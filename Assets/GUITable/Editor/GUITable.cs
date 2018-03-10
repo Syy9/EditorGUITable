@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 namespace EditorGUITable
 {
@@ -79,7 +80,7 @@ namespace EditorGUITable
 			List<PropertyColumn> propertyColumns, 
 			params GUITableOption[] options) 
 		{
-
+			
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
 
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
@@ -93,7 +94,7 @@ namespace EditorGUITable
 				}
 				rows.Add(row);
 			}
-			return DrawTable (rect, tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, options);
+			return DrawTable (rect, tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, collectionProperty, options);
 		}
 
 		/// <summary>
@@ -111,9 +112,8 @@ namespace EditorGUITable
 			List<SelectorColumn> columns, 
 			params GUITableOption[] options) 
 		{
-
+			
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
-
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
 				List<TableEntry> row = new List<TableEntry>();
@@ -123,8 +123,22 @@ namespace EditorGUITable
 				}
 				rows.Add(row);
 			}
-			return DrawTable (rect, tableState, columns.Select((col) => (TableColumn) col).ToList(), rows, options);
+
+			return DrawTable (rect, tableState, columns.Select((col) => (TableColumn) col).ToList(), rows, collectionProperty, options);
 		}
+
+		public static GUITableState DrawTable (
+			Rect rect,
+			GUITableState tableState,
+			List<TableColumn> columns, 
+			List<List<TableEntry>> entries, 
+			params GUITableOption[] options)
+		{
+			return DrawTable(rect, tableState, columns, entries, null, options);
+		}
+
+		// Used for ReorderableList's callbacks access
+		static List<List<TableEntry>> staticEntries;
 
 		/// <summary>
 		/// Draw a table completely manually.
@@ -139,15 +153,46 @@ namespace EditorGUITable
 			GUITableState tableState,
 			List<TableColumn> columns, 
 			List<List<TableEntry>> entries, 
+			SerializedProperty collectionProperty,
 			params GUITableOption[] options)
 		{
-
+			
 			GUITableEntry tableEntry = new GUITableEntry (options);
-
+			if (tableEntry.reorderable)
+				staticEntries = entries;
 			if (tableState == null)
-				tableState = new GUITableState();
+			{
+				if (tableEntry.reorderable)
+				{
+					ReorderableList list = new ReorderableList (
+						collectionProperty.serializedObject, 
+						collectionProperty,
+						true, true, true, true);
+
+					list.drawElementCallback = (Rect r, int index, bool isActive, bool isFocused) => {
+						DrawLine (tableState, columns, staticEntries[index], r.xMin, r.yMin, tableEntry.rowHeight);
+					};
+
+					list.drawHeaderCallback = (r => {DrawHeaders(r, tableState, columns, r.xMin + 10, r.yMin);});
+
+					tableState = new GUITableState(list);
+				}
+				else
+				{
+					tableState = new GUITableState();
+				}
+			}
 			
 			tableState.CheckState(columns, tableEntry, rect.width);
+
+			if (tableEntry.reorderable)
+			{
+				collectionProperty.serializedObject.Update();
+				tableState.list.DoList(rect);
+				collectionProperty.serializedObject.ApplyModifiedProperties();
+				return tableState;
+			}
+
 
 			float rowHeight = tableEntry.rowHeight;
 
@@ -164,6 +209,49 @@ namespace EditorGUITable
 
 			tableState.RightClickMenu (columns, rect);
 
+			DrawHeaders(rect, tableState, columns, currentX, currentY);
+
+			GUI.enabled = true;
+
+			List<List<TableEntry>> orderedRows = entries;
+			if (tableState.sortByColumnIndex >= 0)
+			{
+				if (tableState.sortIncreasing)
+					orderedRows = entries.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
+				else
+					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
+			}
+
+			currentY += rowHeight;
+
+			foreach (List<TableEntry> row in orderedRows)
+			{
+				currentX = rect.x;
+				DrawLine (tableState, columns, row, currentX, currentY, rowHeight);
+				currentY += rowHeight;
+			}
+
+			GUI.enabled = true;
+
+			if (displayScrollView)
+			{
+				GUI.EndScrollView ();
+			}
+
+			tableState.Save();
+
+			return tableState;
+		}
+
+	
+
+		static void DrawHeaders (
+			Rect rect,
+			GUITableState tableState,
+			List<TableColumn> columns,
+			float currentX,
+			float currentY)
+		{
 			for (int i = 0 ; i < columns.Count ; i++)
 			{
 				TableColumn column = columns[i];
@@ -201,52 +289,33 @@ namespace EditorGUITable
 
 				currentX += tableState.columnSizes[i] + 4f;
 			}
-			GUI.enabled = true;
+		}
 
-			List<List<TableEntry>> orderedRows = entries;
-			if (tableState.sortByColumnIndex >= 0)
+		static void DrawLine (
+			GUITableState tableState,
+			List<TableColumn> columns,
+			List<TableEntry> row, 
+			float currentX,
+			float currentY,
+			float rowHeight)
+		{
+
+			for (int i = 0 ; i < row.Count ; i++)
 			{
-				if (tableState.sortIncreasing)
-					orderedRows = entries.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
-				else
-					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
-			}
-
-			currentY += rowHeight;
-
-			foreach (List<TableEntry> row in orderedRows)
-			{
-				currentX = rect.x;
-				for (int i = 0 ; i < row.Count ; i++)
+				if (i >= columns.Count)
 				{
-					if (i >= columns.Count)
-					{
-						Debug.LogWarning ("The number of entries in this row is more than the number of columns");
-						continue;
-					}
-					if (!tableState.columnVisible [i])
-						continue;
-					TableColumn column = columns [i];
-					TableEntry property = row[i];
-					GUI.enabled = column.entry.enabledEntries;
-					property.DrawEntry (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
-					currentX += tableState.columnSizes[i] + 4f;
+					Debug.LogWarning ("The number of entries in this row is more than the number of columns");
+					continue;
 				}
-				currentY += rowHeight;
+				if (!tableState.columnVisible [i])
+					continue;
+				TableColumn column = columns [i];
+				TableEntry property = row[i];
+				GUI.enabled = column.entry.enabledEntries;
+				property.DrawEntry (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
+				currentX += tableState.columnSizes[i] + 4f;
 			}
-
-			GUI.enabled = true;
-
-			if (displayScrollView)
-			{
-				GUI.EndScrollView ();
-			}
-
-			tableState.Save();
-
-			return tableState;
 		}
 
 	}
-
 }

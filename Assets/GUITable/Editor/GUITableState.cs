@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 namespace EditorGUITable
 {
@@ -39,6 +40,8 @@ namespace EditorGUITable
 
 		string prefsKey;
 
+		public ReorderableList list;
+
 		public bool isBeingResized { get; private set; }
 
 		public float totalWidth
@@ -61,6 +64,24 @@ namespace EditorGUITable
 		/// <param name="prefsKey">Prefs key.</param>
 		public GUITableState (string prefsKey)
 		{
+			this.prefsKey = prefsKey;
+			GUITableState loadedState = Load(prefsKey);
+			this.scrollPos = loadedState.scrollPos;
+			this.scrollPosHoriz = loadedState.scrollPosHoriz;
+			this.sortByColumnIndex = loadedState.sortByColumnIndex;
+			this.sortIncreasing = loadedState.sortIncreasing;
+			this.columnSizes = loadedState.columnSizes;
+			this.columnVisible = loadedState.columnVisible;
+		}
+
+		public GUITableState (ReorderableList list)
+		{
+			this.list = list;
+		}
+
+		public GUITableState (ReorderableList list, string prefsKey)
+		{
+			this.list = list;
 			this.prefsKey = prefsKey;
 			GUITableState loadedState = Load(prefsKey);
 			this.scrollPos = loadedState.scrollPos;

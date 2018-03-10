@@ -12,6 +12,7 @@ namespace EditorGUITable
 		{
 			AllowScrollView,
 			RowHeight,
+			Reorderable,
 		}
 
 		public Type type;
@@ -31,6 +32,11 @@ namespace EditorGUITable
 		public static GUITableOption RowHeight (float value)
 		{
 			return new GUITableOption (Type.RowHeight, value);
+		}
+
+		public static GUITableOption Reorderable (bool enable = true)
+		{
+			return new GUITableOption (Type.Reorderable, enable);
 		}
 	}
 

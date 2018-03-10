@@ -16,7 +16,7 @@ namespace EditorGUITable
 	public class TableDrawer : PropertyDrawer
 	{
 
-		GUITableState tableState;
+		protected GUITableState tableState;
 
 		Rect lastRect;
 
@@ -35,17 +35,18 @@ namespace EditorGUITable
 			if (index != "0")
 				return EditorGUIUtility.singleLineHeight;
 			
-			return 2 * EditorGUIUtility.singleLineHeight;
+			return EditorGUIUtility.singleLineHeight + GetRequiredAdditionalHeight ();
+		}
+
+		protected virtual float GetRequiredAdditionalHeight ()
+		{
+			return 1f * EditorGUIUtility.singleLineHeight;
 		}
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
 			TableAttribute tableAttribute = (TableAttribute) attribute;
-			DrawTable (position, property, label, tableAttribute);
-		}
 
-		void DrawTable (Rect position, SerializedProperty property, GUIContent label, TableAttribute tableAttribute)
-		{
 			//Check that it is a collection
 			Match match = Regex.Match(property.propertyPath, "^([a-zA-Z0-9_]*).Array.data\\[([0-9]*)\\]$");
 			if (!match.Success)
@@ -61,19 +62,30 @@ namespace EditorGUITable
 
 			if (index != "0")
 				return;
-			EditorGUI.indentLevel = 0;
+			// Sometimes GetLastRect returns 0, so we keep the last relevant value
 			if (GUILayoutUtility.GetLastRect().width > 1f)
 				lastRect = GUILayoutUtility.GetLastRect();
-			Rect r = new Rect(position.x + 15f, position.y, position.width, lastRect.height);
-			if (tableAttribute.properties == null && tableAttribute.widths == null)
-				tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), GUITableOption.AllowScrollView(false));
-			else if (tableAttribute.widths == null)
-				tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), tableAttribute.properties.ToList(), GUITableOption.AllowScrollView(false));
-			else
-				tableState = GUITable.DrawTable(r, tableState, property.serializedObject.FindProperty(collectionPath), GetPropertyColumns(tableAttribute), GUITableOption.AllowScrollView(false));
+
+			SerializedProperty collectionProperty = property.serializedObject.FindProperty(collectionPath);
+
+			EditorGUI.indentLevel = 0;
+
+			Rect r = new Rect(position.x + 15f, position.y, position.width - 15f, lastRect.height);
+
+			tableState = DrawTable (r, collectionProperty, label, tableAttribute);
 		}
 
-		static List<PropertyColumn> GetPropertyColumns (TableAttribute tableAttribute)
+		protected virtual GUITableState DrawTable (Rect rect, SerializedProperty collectionProperty, GUIContent label, TableAttribute tableAttribute)
+		{
+			if (tableAttribute.properties == null && tableAttribute.widths == null)
+				return GUITable.DrawTable(rect, tableState, collectionProperty, GUITableOption.AllowScrollView(false));
+			else if (tableAttribute.widths == null)
+				return GUITable.DrawTable(rect, tableState, collectionProperty, tableAttribute.properties.ToList(), GUITableOption.AllowScrollView(false));
+			else
+				return GUITable.DrawTable(rect, tableState, collectionProperty, GetPropertyColumns(tableAttribute), GUITableOption.AllowScrollView(false));
+		}
+
+		protected static List<PropertyColumn> GetPropertyColumns (TableAttribute tableAttribute)
 		{
 			List<PropertyColumn> res = new List<PropertyColumn>();
 			for (int i = 0 ; i < tableAttribute.properties.Length ; i++)

@@ -10,6 +10,7 @@ namespace EditorGUITable
 
 		public bool allowScrollView = true;
 		public float rowHeight = UnityEditor.EditorGUIUtility.singleLineHeight;
+		public bool reorderable = false;
 
 		public GUITableEntry (GUITableOption[] options)
 		{
@@ -29,6 +30,9 @@ namespace EditorGUITable
 						break;
 					case GUITableOption.Type.RowHeight:
 						this.rowHeight = (float) option.value;
+						break;
+					case GUITableOption.Type.Reorderable:
+						this.reorderable = (bool) option.value;
 						break;
 				}
 			}
