@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 namespace EditorGUITable
 {
@@ -90,7 +91,7 @@ namespace EditorGUITable
 				}
 				rows.Add(row);
 			}
-			return DrawTable (tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, options);
+			return DrawTable (tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, collectionProperty, options);
 		}
 
 		/// <summary>
@@ -119,12 +120,13 @@ namespace EditorGUITable
 				}
 				rows.Add(row);
 			}
-			return DrawTable (tableState, columns.Select((col) => (TableColumn) col).ToList(), rows, options);
+			return DrawTable (tableState, columns.Select((col) => (TableColumn) col).ToList(), rows, collectionProperty, options);
 		}
 
 		/// <summary>
 		/// Draw a table completely manually.
 		/// Each entry has to be created and given as parameter in entries.
+		/// A collectionProperty is needed for reorderable tables. Use an overload with a collectionProperty.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="columns">The Columns of the table.</param>
@@ -136,6 +138,20 @@ namespace EditorGUITable
 			List<List<TableEntry>> entries, 
 			params GUITableOption[] options)
 		{
+			return DrawTable (tableState, columns, entries, null, options);
+		}
+
+		// Used for ReorderableList's callbacks access
+		static List<List<TableEntry>> orderedRows;
+		static List<List<TableEntry>> staticEntries;
+
+		public static GUITableState DrawTable ( 
+			GUITableState tableState,
+			List<TableColumn> columns, 
+			List<List<TableEntry>> entries, 
+			SerializedProperty collectionProperty,
+			params GUITableOption[] options)
+		{
 
 			Rect lastRect = GUILayoutUtility.GetLastRect ();
 
@@ -143,9 +159,59 @@ namespace EditorGUITable
 
 			if (tableState == null)
 				tableState = new GUITableState();
+
+			if (tableEntry.reorderable)
+			{
+				if (collectionProperty == null)
+				{
+					Debug.LogError ("The collection's serialized property is needed to draw a reorderable table.");
+					return tableState;
+				}
+
+				staticEntries = entries;
+
+				if (tableState.reorderableList == null)
+				{
+					ReorderableList list = new ReorderableList (
+						collectionProperty.serializedObject, 
+						collectionProperty,
+						true, true, true, true);
+
+					list.drawElementCallback = (Rect r, int index, bool isActive, bool isFocused) => {
+						GUITable.DrawLine (tableState, columns, orderedRows[index], r.xMin + (list.draggable ? 0 : 14), r.yMin, tableEntry.rowHeight);
+					};
+
+					list.drawHeaderCallback = (Rect r) => { 
+						GUITable.DrawHeaders(r, tableState, columns, r.xMin + 12, r.yMin); 
+					};
+
+					list.onRemoveCallback = (l) => 
+					{
+						l.serializedProperty.DeleteArrayElementAtIndex (staticEntries.IndexOf (orderedRows[l.index]));
+					};
+
+					tableState.SetReorderableList (list);
+				}
+			}
 			
 			tableState.CheckState(columns, tableEntry, lastRect.width);
 
+			orderedRows = entries;
+			if (tableState.sortByColumnIndex >= 0)
+			{
+				if (tableState.sortIncreasing)
+					orderedRows = entries.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
+				else
+					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
+			}
+
+			if (tableEntry.reorderable)
+			{
+				collectionProperty.serializedObject.Update();
+				tableState.reorderableList.DoLayoutList();
+				collectionProperty.serializedObject.ApplyModifiedProperties();
+				return tableState;
+			}
 
 			float rowHeight = tableEntry.rowHeight;
 
@@ -155,11 +221,44 @@ namespace EditorGUITable
 			if (allowScrollView)
 				tableState.scrollPosHoriz = EditorGUILayout.BeginScrollView (tableState.scrollPosHoriz);
 
+
+			tableState.RightClickMenu (columns);
+
+			DrawHeaders (tableState, columns);
+
+			EditorGUILayout.BeginVertical ();
+			if (allowScrollView)
+				tableState.scrollPos = EditorGUILayout.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
+
+			foreach (List<TableEntry> row in orderedRows)
+			{
+				DrawLine (tableState, columns, row, rowHeight);
+			}
+
+			GUI.enabled = true;
+
+			if (allowScrollView)
+				EditorGUILayout.EndScrollView ();
+			EditorGUILayout.EndVertical ();
+
+
+			if (allowScrollView)
+				EditorGUILayout.EndScrollView ();
+			EditorGUILayout.EndHorizontal ();
+
+			tableState.Save();
+
+			return tableState;
+		}
+
+		static void DrawHeaders (
+			GUITableState tableState,
+			List<TableColumn> columns)
+		{
+
 			EditorGUILayout.BeginHorizontal ();
 			GUILayout.Space (2f);
 			float currentX = 0f;
-
-			tableState.RightClickMenu (columns);
 
 			for (int i = 0 ; i < columns.Count ; i++)
 			{
@@ -200,55 +299,31 @@ namespace EditorGUITable
 			}
 			GUI.enabled = true;
 			EditorGUILayout.EndHorizontal ();
+		}
 
+		static void DrawLine (
+			GUITableState tableState,
+			List<TableColumn> columns,
+			List<TableEntry> row,
+			float rowHeight)
+		{
 
-			EditorGUILayout.BeginVertical ();
-			if (allowScrollView)
-				tableState.scrollPos = EditorGUILayout.BeginScrollView (tableState.scrollPos, GUIStyle.none, GUI.skin.verticalScrollbar);
-
-			List<List<TableEntry>> orderedRows = entries;
-			if (tableState.sortByColumnIndex >= 0)
+			EditorGUILayout.BeginHorizontal ();
+			for (int i = 0 ; i < row.Count ; i++)
 			{
-				if (tableState.sortIncreasing)
-					orderedRows = entries.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
-				else
-					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
-			}
-
-			foreach (List<TableEntry> row in orderedRows)
-			{
-				EditorGUILayout.BeginHorizontal ();
-				for (int i = 0 ; i < row.Count ; i++)
+				if (i >= columns.Count)
 				{
-					if (i >= columns.Count)
-					{
-						Debug.LogWarning ("The number of entries in this row is more than the number of columns");
-						continue;
-					}
-					if (!tableState.columnVisible [i])
-						continue;
-					TableColumn column = columns [i];
-					TableEntry property = row[i];
-					GUI.enabled = column.entry.enabledEntries;
-					property.DrawEntryLayout (tableState.columnSizes[i], rowHeight);
+					Debug.LogWarning ("The number of entries in this row is more than the number of columns");
+					continue;
 				}
-				EditorGUILayout.EndHorizontal ();
+				if (!tableState.columnVisible [i])
+					continue;
+				TableColumn column = columns [i];
+				TableEntry property = row[i];
+				GUI.enabled = column.entry.enabledEntries;
+				property.DrawEntryLayout (tableState.columnSizes[i], rowHeight);
 			}
-
-			GUI.enabled = true;
-
-			if (allowScrollView)
-				EditorGUILayout.EndScrollView ();
-			EditorGUILayout.EndVertical ();
-
-
-			if (allowScrollView)
-				EditorGUILayout.EndScrollView ();
 			EditorGUILayout.EndHorizontal ();
-
-			tableState.Save();
-
-			return tableState;
 		}
 
 	}

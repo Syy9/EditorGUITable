@@ -138,7 +138,7 @@ namespace EditorGUITable
 		/// <summary>
 		/// Draw a table completely manually.
 		/// Each entry has to be created and given as parameter in entries.
-		/// A collectionProperty is needed for reorderable tables. Use an overloads with a collectionProperty.
+		/// A collectionProperty is needed for reorderable tables. Use an overload with a collectionProperty.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="rect">The table's containing rectangle.</param>
@@ -157,6 +157,7 @@ namespace EditorGUITable
 		}
 
 		// Used for ReorderableList's callbacks access
+		static List<List<TableEntry>> orderedRows;
 		static List<List<TableEntry>> staticEntries;
 
 		/// <summary>
@@ -180,11 +181,21 @@ namespace EditorGUITable
 		{
 			
 			GUITableEntry tableEntry = new GUITableEntry (options);
-			if (tableEntry.reorderable)
-				staticEntries = entries;
+
 			if (tableState == null)
+				tableState = new GUITableState();
+			
+			if (tableEntry.reorderable)
 			{
-				if (tableEntry.reorderable)
+				if (collectionProperty == null)
+				{
+					Debug.LogError ("The collection's serialized property is needed to draw a reorderable table.");
+					return tableState;
+				}
+
+				staticEntries = entries;
+			
+				if (tableState.reorderableList == null)
 				{
 					ReorderableList list = new ReorderableList (
 						collectionProperty.serializedObject, 
@@ -192,25 +203,37 @@ namespace EditorGUITable
 						true, true, true, true);
 
 					list.drawElementCallback = (Rect r, int index, bool isActive, bool isFocused) => {
-						DrawLine (tableState, columns, staticEntries[index], r.xMin, r.yMin, tableEntry.rowHeight);
+						DrawLine (tableState, columns, orderedRows[index], r.xMin + (list.draggable ? 0 : 14), r.yMin, tableEntry.rowHeight);
 					};
 
-					list.drawHeaderCallback = (r => {DrawHeaders(r, tableState, columns, r.xMin + 10, r.yMin);});
+					list.drawHeaderCallback = (Rect r) => { 
+						DrawHeaders(r, tableState, columns, r.xMin + 12, r.yMin); 
+					};
 
-					tableState = new GUITableState(list);
-				}
-				else
-				{
-					tableState = new GUITableState();
+					list.onRemoveCallback = (l) => 
+					{
+						l.serializedProperty.DeleteArrayElementAtIndex (staticEntries.IndexOf (orderedRows[l.index]));
+					};
+
+					tableState.SetReorderableList (list);
 				}
 			}
 			
 			tableState.CheckState(columns, tableEntry, rect.width);
 
+			orderedRows = entries;
+			if (tableState.sortByColumnIndex >= 0)
+			{
+				if (tableState.sortIncreasing)
+					orderedRows = entries.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
+				else
+					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
+			}
+
 			if (tableEntry.reorderable)
 			{
 				collectionProperty.serializedObject.Update();
-				tableState.list.DoList(rect);
+				tableState.reorderableList.DoList(rect);
 				collectionProperty.serializedObject.ApplyModifiedProperties();
 				return tableState;
 			}
@@ -235,15 +258,6 @@ namespace EditorGUITable
 
 			GUI.enabled = true;
 
-			List<List<TableEntry>> orderedRows = entries;
-			if (tableState.sortByColumnIndex >= 0)
-			{
-				if (tableState.sortIncreasing)
-					orderedRows = entries.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
-				else
-					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
-			}
-
 			currentY += rowHeight;
 
 			foreach (List<TableEntry> row in orderedRows)
@@ -267,7 +281,7 @@ namespace EditorGUITable
 
 	
 
-		static void DrawHeaders (
+		public static void DrawHeaders (
 			Rect rect,
 			GUITableState tableState,
 			List<TableColumn> columns,
@@ -313,7 +327,7 @@ namespace EditorGUITable
 			}
 		}
 
-		static void DrawLine (
+		public static void DrawLine (
 			GUITableState tableState,
 			List<TableColumn> columns,
 			List<TableEntry> row, 

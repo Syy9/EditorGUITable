@@ -40,7 +40,7 @@ namespace EditorGUITable
 
 		string prefsKey;
 
-		public ReorderableList list;
+		public ReorderableList reorderableList;
 
 		public bool isBeingResized { get; private set; }
 
@@ -74,22 +74,9 @@ namespace EditorGUITable
 			this.columnVisible = loadedState.columnVisible;
 		}
 
-		public GUITableState (ReorderableList list)
+		public void SetReorderableList (ReorderableList reorderableList)
 		{
-			this.list = list;
-		}
-
-		public GUITableState (ReorderableList list, string prefsKey)
-		{
-			this.list = list;
-			this.prefsKey = prefsKey;
-			GUITableState loadedState = Load(prefsKey);
-			this.scrollPos = loadedState.scrollPos;
-			this.scrollPosHoriz = loadedState.scrollPosHoriz;
-			this.sortByColumnIndex = loadedState.sortByColumnIndex;
-			this.sortIncreasing = loadedState.sortIncreasing;
-			this.columnSizes = loadedState.columnSizes;
-			this.columnVisible = loadedState.columnVisible;
+			this.reorderableList = reorderableList;
 		}
 
 		public void Save ()
@@ -131,6 +118,8 @@ namespace EditorGUITable
 			{
 				columnSizes[i] = Mathf.Clamp(columnSizes[i], columns[i].entry.minWidth, columns[i].entry.maxWidth);
 			}
+			if (reorderableList != null)
+				reorderableList.draggable = sortByColumnIndex < 0;
 		}
 
 		public void RightClickMenu (List<TableColumn> columns, Rect? position = null)
