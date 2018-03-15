@@ -86,21 +86,12 @@ namespace EditorGUITable
 			List<PropertyColumn> propertyColumns, 
 			params GUITableOption[] options) 
 		{
-			
-			List<List<TableEntry>> rows = new List<List<TableEntry>>();
-
-			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
-			{
-				List<TableEntry> row = new List<TableEntry>();
-				foreach (PropertyColumn col in propertyColumns)
-				{
-					row.Add (new PropertyEntry (
-						collectionProperty.serializedObject, 
-						string.Format("{0}.Array.data[{1}].{2}", collectionProperty.propertyPath, i, col.propertyName)));
-				}
-				rows.Add(row);
-			}
-			return DrawTable (rect, tableState, propertyColumns.Select((col) => (TableColumn) col).ToList(), rows, collectionProperty, options);
+			return DrawTable (
+				rect,
+				tableState,
+				collectionProperty,
+				propertyColumns.Select ((col) => new SelectorColumn (sp => new PropertyEntry (sp.FindPropertyRelative (col.propertyName)), col.propertyName)).ToList (),
+				options);
 		}
 
 		/// <summary>
@@ -120,14 +111,17 @@ namespace EditorGUITable
 			List<SelectorColumn> columns, 
 			params GUITableOption[] options) 
 		{
-			
+			GUITableEntry tableEntry = new GUITableEntry (options);
 			List<List<TableEntry>> rows = new List<List<TableEntry>>();
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
+				SerializedProperty sp = collectionProperty.serializedObject.FindProperty (string.Format ("{0}.Array.data[{1}]", collectionProperty.propertyPath, i));
+				if (tableEntry.filter != null && !tableEntry.filter (sp))
+					continue;
 				List<TableEntry> row = new List<TableEntry>();
 				foreach (SelectorColumn col in columns)
 				{
-					row.Add ( col.selector.Invoke ( collectionProperty.serializedObject.FindProperty( string.Format("{0}.Array.data[{1}].{2}", collectionProperty.propertyPath, i, col.propertyName))));
+					row.Add ( col.selector.Invoke (sp));
 				}
 				rows.Add(row);
 			}

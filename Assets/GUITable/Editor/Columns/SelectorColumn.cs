@@ -12,10 +12,14 @@ namespace EditorGUITable
 	/// This class adds a property and a selector to a column.
 	/// This will be used to automatically draw the entries for this column in some versions of <see cref="GUITable.DrawTable"/>
 	/// </summary>
-	public class SelectorColumn : PropertyColumn
+	public class SelectorColumn : TableColumn
 	{
 		public Func<SerializedProperty, TableEntry> selector;
-		public SelectorColumn (Func<SerializedProperty, TableEntry> selector, string propertyName, string name, params TableColumnOption[] options) : base (propertyName, name, options)
+		public SelectorColumn (Func<SerializedProperty, TableEntry> selector, string name, params TableColumnOption[] options) : base (name, options)
+		{
+			this.selector = selector;
+		}
+		public SelectorColumn (Func<SerializedProperty, TableEntry> selector, string name, float width, params TableColumnOption[] options) : base (name, width, options)
 		{
 			this.selector = selector;
 		}

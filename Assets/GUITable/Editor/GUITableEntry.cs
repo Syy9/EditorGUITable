@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace EditorGUITable
 {
@@ -9,8 +11,9 @@ namespace EditorGUITable
 	{
 
 		public bool allowScrollView = true;
-		public float rowHeight = UnityEditor.EditorGUIUtility.singleLineHeight;
+		public float rowHeight = EditorGUIUtility.singleLineHeight;
 		public bool reorderable = false;
+		public Func <SerializedProperty, bool> filter = null;
 
 		public GUITableEntry (GUITableOption[] options)
 		{
@@ -33,6 +36,9 @@ namespace EditorGUITable
 						break;
 					case GUITableOption.Type.Reorderable:
 						this.reorderable = (bool) option.value;
+						break;
+					case GUITableOption.Type.Filter:
+						this.filter = (Func<SerializedProperty, bool>) option.value;
 						break;
 				}
 			}

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace EditorGUITable
 {
@@ -13,6 +15,7 @@ namespace EditorGUITable
 			AllowScrollView,
 			RowHeight,
 			Reorderable,
+			Filter,
 		}
 
 		public Type type;
@@ -37,6 +40,11 @@ namespace EditorGUITable
 		public static GUITableOption Reorderable (bool enable = true)
 		{
 			return new GUITableOption (Type.Reorderable, enable);
+		}
+
+		public static GUITableOption Filter (Func <SerializedProperty, bool> filter)
+		{
+			return new GUITableOption (Type.Filter, filter);
 		}
 	}
 
