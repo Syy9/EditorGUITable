@@ -239,12 +239,6 @@ namespace EditorGUITable
 			float currentY = rect.y;
 
 			bool displayScrollView = tableState.totalWidth > rect.width && tableEntry.allowScrollView;
-			if (displayScrollView)
-			{
-				tableState.scrollPosHoriz = GUI.BeginScrollView (rect, tableState.scrollPosHoriz, new Rect(0f, 0f, tableState.totalWidth, rect.height));
-				currentX = 0f;
-				currentY = 0f;
-			}
 
 			tableState.RightClickMenu (columns, rect);
 
@@ -253,6 +247,16 @@ namespace EditorGUITable
 			GUI.enabled = true;
 
 			currentY += rowHeight;
+
+			if (tableEntry.allowScrollView)
+			{
+				tableState.scrollPos = GUI.BeginScrollView (
+					new Rect (currentX, currentY, rect.width, Mathf.Min (rect.height, Screen.height / 2 - rect.y - 40)),
+					tableState.scrollPos, 
+					new Rect(0f, 0f, tableState.totalWidth, tableEntry.rowHeight * entries.Count));
+				currentX = 0f;
+				currentY = 0f;
+			}
 
 			foreach (List<TableEntry> row in orderedRows)
 			{
@@ -263,7 +267,7 @@ namespace EditorGUITable
 
 			GUI.enabled = true;
 
-			if (displayScrollView)
+			if (tableEntry.allowScrollView)
 			{
 				GUI.EndScrollView ();
 			}

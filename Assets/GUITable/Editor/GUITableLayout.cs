@@ -143,8 +143,11 @@ namespace EditorGUITable
 			GUITableEntry tableEntry = new GUITableEntry (options);
 			Rect position = GUILayoutUtility.GetRect(
 				tableState.totalWidth, 
-				EditorGUIUtility.singleLineHeight * (entries.Count + (tableEntry.reorderable ? 3 : 1)));
-			return GUITable.DrawTable (position, tableState, columns, entries, collectionProperty, options);
+				(EditorGUIUtility.singleLineHeight + (tableEntry.reorderable ? 5 : 0)) * (entries.Count + (tableEntry.reorderable ? 2 : 1)));
+			if (Event.current.type == EventType.Layout)
+				return tableState;
+			else
+				return GUITable.DrawTable (position, tableState, columns, entries, collectionProperty, options);
 		}
 
 	}
