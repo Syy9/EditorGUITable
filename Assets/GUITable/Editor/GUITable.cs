@@ -242,7 +242,7 @@ namespace EditorGUITable
 
 			tableState.RightClickMenu (columns, rect);
 
-			DrawHeaders(rect, tableState, columns, currentX, currentY);
+			DrawHeaders(rect, tableState, columns, currentX - tableState.scrollPos.x, currentY);
 
 			GUI.enabled = true;
 
