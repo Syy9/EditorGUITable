@@ -28,8 +28,6 @@ namespace EditorGUITable
 
 		public Vector2 scrollPos;
 
-		public Vector2 scrollPosHoriz;
-
 		public int sortByColumnIndex = -1;
 
 		public bool sortIncreasing;
@@ -67,7 +65,6 @@ namespace EditorGUITable
 			this.prefsKey = prefsKey;
 			GUITableState loadedState = Load(prefsKey);
 			this.scrollPos = loadedState.scrollPos;
-			this.scrollPosHoriz = loadedState.scrollPosHoriz;
 			this.sortByColumnIndex = loadedState.sortByColumnIndex;
 			this.sortIncreasing = loadedState.sortIncreasing;
 			this.columnSizes = loadedState.columnSizes;
