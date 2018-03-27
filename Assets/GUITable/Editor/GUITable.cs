@@ -63,35 +63,10 @@ namespace EditorGUITable
 			List<string> properties, 
 			params GUITableOption[] options) 
 		{
-			List<PropertyColumn> columns = properties.Select(prop => new PropertyColumn(
+			List<SelectorColumn> columns = properties.Select(prop => (SelectorColumn)new SelectFromPropertyNameColumn(
 				prop, ObjectNames.NicifyVariableName (prop))).ToList();
 
 			return DrawTable (rect, tableState, collectionProperty, columns, options);
-		}
-
-		/// <summary>
-		/// Draw a table by defining the columns's settings and the path of the corresponding properties.
-		/// This will automatically create Property Entries using these paths.
-		/// </summary>
-		/// <returns>The updated table state.</returns>
-		/// <param name="rect">The table's containing rectangle.</param>
-		/// <param name="tableState">The Table state.</param>
-		/// <param name="collectionProperty">The serialized property of the collection.</param>
-		/// <param name="propertyColumns">The Property columns, that contain the columns properties and the corresponding property path.</param>
-		/// <param name="options">The table options.</param>
-		public static GUITableState DrawTable (
-			Rect rect,
-			GUITableState tableState,
-			SerializedProperty collectionProperty, 
-			List<PropertyColumn> propertyColumns, 
-			params GUITableOption[] options) 
-		{
-			return DrawTable (
-				rect,
-				tableState,
-				collectionProperty,
-				propertyColumns.Select ((col) => new SelectorColumn (sp => new PropertyEntry (sp.FindPropertyRelative (col.propertyName)), col.propertyName)).ToList (),
-				options);
 		}
 
 		/// <summary>
@@ -121,7 +96,7 @@ namespace EditorGUITable
 				List<TableEntry> row = new List<TableEntry>();
 				foreach (SelectorColumn col in columns)
 				{
-					row.Add ( col.selector.Invoke (sp));
+					row.Add ( col.GetEntry (sp));
 				}
 				rows.Add(row);
 			}

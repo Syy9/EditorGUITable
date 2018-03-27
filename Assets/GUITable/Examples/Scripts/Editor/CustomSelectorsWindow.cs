@@ -32,9 +32,9 @@ public class CustomSelectorsWindow : EditorWindow
 
 		List<SelectorColumn> selectorColumns = new List<SelectorColumn>()
 		{
-			new SelectorColumn(prop => new LabelEntry(prop.FindPropertyRelative("stringProperty").stringValue), "String", TableColumn.Width(60f)),
-			new SelectorColumn(prop => new LabelEntry(prop.FindPropertyRelative("floatProperty").floatValue.ToString()), "Float", TableColumn.Width(50f), TableColumn.Optional(true)),
-			new SelectorColumn(prop => new LabelEntry(prop.FindPropertyRelative("objectProperty").objectReferenceValue.name), "Object", TableColumn.Width(110f), TableColumn.EnabledTitle(false), TableColumn.Optional(true)),
+			new SelectFromFunctionColumn(prop => new LabelEntry(prop.FindPropertyRelative("stringProperty").stringValue), "String", TableColumn.Width(60f)),
+			new SelectFromFunctionColumn(prop => new LabelEntry(prop.FindPropertyRelative("floatProperty").floatValue.ToString()), "Float", TableColumn.Width(50f), TableColumn.Optional(true)),
+			new SelectFromFunctionColumn(prop => new LabelEntry(prop.FindPropertyRelative("objectProperty").objectReferenceValue.name), "Object", TableColumn.Width(110f), TableColumn.EnabledTitle(false), TableColumn.Optional(true)),
 		};
 
 		tableState = GUITableLayout.DrawTable (tableState, serializedObject.FindProperty("simpleObjects"), selectorColumns);

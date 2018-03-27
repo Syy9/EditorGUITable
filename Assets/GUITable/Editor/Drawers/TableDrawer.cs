@@ -33,9 +33,9 @@ namespace EditorGUITable
 			string index = match.Groups[2].Value;
 
 			if (index != "0")
-				return EditorGUIUtility.singleLineHeight;
+				return EditorGUIUtility.singleLineHeight + 2;
 			
-			return EditorGUIUtility.singleLineHeight + GetRequiredAdditionalHeight ();
+			return EditorGUIUtility.singleLineHeight + 2 + GetRequiredAdditionalHeight ();
 		}
 
 		protected virtual float GetRequiredAdditionalHeight ()
@@ -85,15 +85,15 @@ namespace EditorGUITable
 				return GUITable.DrawTable(rect, tableState, collectionProperty, GetPropertyColumns(tableAttribute), GUITableOption.AllowScrollView(false));
 		}
 
-		protected static List<PropertyColumn> GetPropertyColumns (TableAttribute tableAttribute)
+		protected static List<SelectorColumn> GetPropertyColumns (TableAttribute tableAttribute)
 		{
-			List<PropertyColumn> res = new List<PropertyColumn>();
+			List<SelectorColumn> res = new List<SelectorColumn>();
 			for (int i = 0 ; i < tableAttribute.properties.Length ; i++)
 			{
 				if (i >= tableAttribute.widths.Length)
-					res.Add(new PropertyColumn(tableAttribute.properties[i], tableAttribute.properties[i]));
+					res.Add(new SelectFromPropertyNameColumn(tableAttribute.properties[i], tableAttribute.properties[i]));
 				else
-					res.Add(new PropertyColumn(tableAttribute.properties[i], tableAttribute.properties[i], TableColumn.Width(tableAttribute.widths[i])));
+					res.Add(new SelectFromPropertyNameColumn(tableAttribute.properties[i], tableAttribute.properties[i], TableColumn.Width(tableAttribute.widths[i])));
 			}
 			return res;
 		}

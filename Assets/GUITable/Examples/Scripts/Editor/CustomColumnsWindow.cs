@@ -29,11 +29,11 @@ public class CustomColumnsWindow : EditorWindow
 	void DrawCustomColumns ()
 	{
 		SerializedObject serializedObject = new SerializedObject(SimpleExample.Instance);
-		List<PropertyColumn> propertyColumns = new List<PropertyColumn>()
+		List<SelectorColumn> propertyColumns = new List<SelectorColumn>()
 		{
-			new PropertyColumn("stringProperty", "String", TableColumn.Width(60f)),
-			new PropertyColumn("floatProperty", "Float", TableColumn.Width(50f), TableColumn.Optional(true)),
-			new PropertyColumn("objectProperty", "Object", TableColumn.Width(50f), TableColumn.EnabledTitle(false), TableColumn.Optional(true)),
+			new SelectFromPropertyNameColumn("stringProperty", "String", TableColumn.Width(60f)),
+			new SelectFromPropertyNameColumn("floatProperty", "Float", TableColumn.Width(50f), TableColumn.Optional(true)),
+			new SelectFromPropertyNameColumn("objectProperty", "Object", TableColumn.Width(50f), TableColumn.EnabledTitle(false), TableColumn.Optional(true)),
 		};
 
 		tableState = GUITableLayout.DrawTable (tableState, serializedObject.FindProperty("simpleObjects"), propertyColumns);
