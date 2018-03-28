@@ -120,6 +120,13 @@ namespace EditorGUITable
 			params GUITableOption[] options)
 		{
 			GUITableEntry tableEntry = new GUITableEntry (options);
+
+			if (tableState == null)
+			{
+				tableState = new GUITableState();
+				tableState.CheckState(columns, tableEntry, float.MaxValue);
+			}
+
 			Rect position = GUILayoutUtility.GetRect(
 				tableState.totalWidth, 
 				(EditorGUIUtility.singleLineHeight + (tableEntry.reorderable ? 5 : 0)) * (entries.Count + (tableEntry.reorderable ? 2 : 1)));
