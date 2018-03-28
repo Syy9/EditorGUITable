@@ -68,6 +68,42 @@ namespace EditorGUITable
 			return "";
 		}
 
+		public static int CompareTwoSerializedProperties (SerializedProperty sp1, SerializedProperty sp2)
+		{
+
+			if (sp1 == null && sp2 == null)
+				return 0;
+			else if (sp2 == null)
+				return 1;
+			else if (sp1 == null)
+				return -1;
+
+			if (sp1.propertyType != sp2.propertyType)
+				return GetPropertyValueAsString (sp1).CompareTo(GetPropertyValueAsString (sp2));
+			
+			switch (sp1.propertyType)
+			{
+				case SerializedPropertyType.String:
+				case SerializedPropertyType.Character:
+					return sp1.stringValue.CompareTo (sp2.stringValue);
+				case SerializedPropertyType.Float:
+					return sp1.doubleValue.CompareTo (sp2.doubleValue);
+				case SerializedPropertyType.Integer:
+				case SerializedPropertyType.LayerMask:
+				case SerializedPropertyType.ArraySize:
+					return sp1.intValue.CompareTo (sp2.intValue);
+				case SerializedPropertyType.Enum:
+					return sp1.enumValueIndex.CompareTo (sp2.enumValueIndex);
+				case SerializedPropertyType.Boolean:
+					return sp1.boolValue.CompareTo (sp2.boolValue);
+				case SerializedPropertyType.ObjectReference:
+					return ((sp1.objectReferenceValue == null) ? "" : sp1.objectReferenceValue.name).CompareTo ((sp2.objectReferenceValue == null) ? "" : sp2.objectReferenceValue.name);
+				case SerializedPropertyType.ExposedReference:
+					return ((sp1.exposedReferenceValue == null) ? "" : sp1.exposedReferenceValue.name).CompareTo ((sp2.exposedReferenceValue == null) ? "" : sp2.exposedReferenceValue.name);
+			}
+			return 0;
+		}
+
 	}
 
 }

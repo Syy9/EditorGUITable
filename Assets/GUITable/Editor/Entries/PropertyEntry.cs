@@ -53,6 +53,22 @@ namespace EditorGUITable
 			}
 		}
 
+		public override int CompareTo (object other)
+		{
+			
+			TableEntry otherEntry = (TableEntry) other;
+			if (otherEntry == null)
+				throw new ArgumentException ("Object is not a GUITableEntry");
+
+			PropertyEntry otherPropEntry = (PropertyEntry) other;
+			if (otherPropEntry == null)
+				return base.CompareTo(other);
+
+			SerializedProperty otherSp = otherPropEntry.sp;
+
+			return CompareTwoSerializedProperties (sp, otherSp);
+		}
+
 		public PropertyEntry (SerializedProperty property)
 		{
 			this.sp = property;
