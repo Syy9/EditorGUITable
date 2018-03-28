@@ -129,7 +129,7 @@ namespace EditorGUITable
 
 			Rect position = GUILayoutUtility.GetRect(
 				tableState.totalWidth, 
-				(EditorGUIUtility.singleLineHeight + (tableEntry.reorderable ? 5 : 0)) * (entries.Count + (tableEntry.reorderable ? 2 : 1)));
+				(tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * entries.Count + EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1));
 			if (Event.current.type == EventType.Layout)
 				return tableState;
 			else

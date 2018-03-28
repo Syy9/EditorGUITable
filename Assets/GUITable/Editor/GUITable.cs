@@ -175,6 +175,8 @@ namespace EditorGUITable
 						DrawLine (tableState, columns, orderedRows[index], r.xMin + (list.draggable ? 0 : 14), r.yMin, tableEntry.rowHeight);
 					};
 
+					list.elementHeight = tableEntry.rowHeight;
+
 					list.drawHeaderCallback = (Rect r) => { 
 						DrawHeaders(r, tableState, columns, r.xMin + 12, r.yMin); 
 					};
@@ -220,7 +222,7 @@ namespace EditorGUITable
 
 			GUI.enabled = true;
 
-			currentY += rowHeight;
+			currentY += EditorGUIUtility.singleLineHeight;
 
 			if (tableEntry.allowScrollView)
 			{
@@ -234,7 +236,7 @@ namespace EditorGUITable
 
 			foreach (List<TableEntry> row in orderedRows)
 			{
-				currentX = rect.x;
+				currentX = tableEntry.allowScrollView ? 0 : rect.x;
 				DrawLine (tableState, columns, row, currentX, currentY, rowHeight);
 				currentY += rowHeight;
 			}
