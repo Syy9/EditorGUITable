@@ -39,6 +39,11 @@ namespace EditorGUITable
 		{
 			this.value = value;
 		}
+
+		public LabelEntry (SerializedProperty sp)
+		{
+			this.value = GetPropertyValueAsString (sp);
+		}
 	}
 
 }

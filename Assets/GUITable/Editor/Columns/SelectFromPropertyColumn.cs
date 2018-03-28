@@ -8,9 +8,8 @@ namespace EditorGUITable
 {
 
 	/// <summary>
-	/// Internal Use Only.
-	/// This class adds a property to a column.
-	/// This will be used to automatically draw the entries for this column in some versions of <see cref="GUITable.DrawTable"/>
+	/// This class represents a column that will draw Property Entries from the given property name, 
+	/// relative to the collection element's serialized property.
 	/// </summary>
 	public class SelectFromPropertyNameColumn : SelectorColumn
 	{
