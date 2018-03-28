@@ -15,8 +15,13 @@ public class PropertyAttributeExample : MonoBehaviour {
 		public Vector2 v2Property;
 	}
 
+	public List<SimpleObject> simpleObjectsDefaultDisplay;
+
 	[Table]
-	public List<SimpleObject> simpleObjects;
+	public List<SimpleObject> simpleObjectsUsingTableAttribute;
+
+	[ReorderableTable]
+	public List<SimpleObject> simpleObjectsUsingReorderableTableAttribute;
 
 	void OnGUI ()
 	{
