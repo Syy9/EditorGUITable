@@ -201,9 +201,8 @@ namespace EditorGUITable
 
 			if (tableEntry.reorderable)
 			{
-				collectionProperty.serializedObject.Update();
 				tableState.reorderableList.DoList(rect);
-				collectionProperty.serializedObject.ApplyModifiedProperties();
+				collectionProperty.serializedObject.ApplyModifiedProperties ();
 				return tableState;
 			}
 
