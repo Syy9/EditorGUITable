@@ -67,9 +67,9 @@ namespace EditorGUITable
 						case SerializedPropertyType.Boolean:
 							return sp.boolValue.ToString ();
 						case SerializedPropertyType.ObjectReference:
-							return sp.objectReferenceValue.name.ToString ();
+							return (sp.objectReferenceValue == null) ? "" : sp.objectReferenceValue.name.ToString ();
 						case SerializedPropertyType.ExposedReference:
-							return sp.exposedReferenceValue.name.ToString ();
+							return (sp.exposedReferenceValue == null) ? "" : sp.exposedReferenceValue.name.ToString ();
 					}
 				}
 				return "";
@@ -110,9 +110,9 @@ namespace EditorGUITable
 					case SerializedPropertyType.Boolean:
 						return sp.boolValue.CompareTo (otherSp.boolValue);
 					case SerializedPropertyType.ObjectReference:
-						return sp.objectReferenceValue.name.CompareTo (otherSp.objectReferenceValue.name);
+						return ((sp.objectReferenceValue == null) ? "" : sp.objectReferenceValue.name).CompareTo ((otherSp.objectReferenceValue == null) ? "" : otherSp.objectReferenceValue.name);
 					case SerializedPropertyType.ExposedReference:
-						return sp.exposedReferenceValue.name.CompareTo (otherSp.exposedReferenceValue.name);
+						return ((sp.exposedReferenceValue == null) ? "" : sp.exposedReferenceValue.name).CompareTo ((otherSp.exposedReferenceValue == null) ? "" : otherSp.exposedReferenceValue.name);
 				}
 			}
 			return 0;
