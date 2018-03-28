@@ -227,7 +227,7 @@ namespace EditorGUITable
 			if (tableEntry.allowScrollView)
 			{
 				tableState.scrollPos = GUI.BeginScrollView (
-					new Rect (currentX, currentY, rect.width, Mathf.Min (rect.height, Screen.height / 2 - rect.y - 40)),
+					new Rect (currentX, currentY, rect.width, Mathf.Min (rect.height, Screen.height / EditorGUIUtility.pixelsPerPoint - rect.y - 40)),
 					tableState.scrollPos, 
 					new Rect(0f, 0f, tableState.totalWidth, tableEntry.rowHeight * entries.Count));
 				currentX = 0f;
