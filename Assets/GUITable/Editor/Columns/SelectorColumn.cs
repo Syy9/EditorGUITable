@@ -9,8 +9,8 @@ namespace EditorGUITable
 {
 
 	/// <summary>
-	/// This class represents a column that can automatically get an entry from an element's serialized property.
-	/// It is abstract so there can be several ways to get this entry.
+	/// This class represents a column that can automatically get a cell from an element's serialized property.
+	/// It is abstract so there can be several ways to get this cell.
 	/// </summary>
 	public abstract class SelectorColumn : TableColumn
 	{
@@ -19,7 +19,7 @@ namespace EditorGUITable
 
 		public SelectorColumn (string title, float width, params TableColumnOption[] options) : base (title, width, options) {}
 
-		public abstract TableEntry GetEntry (SerializedProperty elementProperty);
+		public abstract TableCell GetCell (SerializedProperty elementProperty);
 
 	}
 

@@ -8,14 +8,14 @@ namespace EditorGUITable
 {
 
 	/// <summary>
-	/// This entry class draws a button which, when clicked, will trigger the
+	/// This cell class draws a button which, when clicked, will trigger the
 	/// action given in the constructor.
 	/// </summary>
-	public class ActionEntry : TableEntry
+	public class ActionCell : TableCell
 	{
 		string name;
 		System.Action action;
-		public override void DrawEntryLayout (float width, float height)
+		public override void DrawCellLayout (float width, float height)
 		{
 			if (GUILayout.Button (name, GUILayout.Width (width), GUILayout.Height (height)))
 			{
@@ -24,7 +24,7 @@ namespace EditorGUITable
 			}
 		}
 
-		public override void DrawEntry (Rect rect)
+		public override void DrawCell (Rect rect)
 		{
 			if (GUI.Button (rect, name))
 			{
@@ -41,7 +41,7 @@ namespace EditorGUITable
 			}
 		}
 
-		public ActionEntry (string name, System.Action action)
+		public ActionCell (string name, System.Action action)
 		{
 			this.name = name;
 			this.action = action;

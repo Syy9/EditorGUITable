@@ -83,9 +83,9 @@ namespace EditorGUITable
 			return new TableColumnOption (TableColumnOption.Type.EnabledTitle, value);
 		}
 
-		public static TableColumnOption EnabledEntries (bool value)
+		public static TableColumnOption EnabledCells (bool value)
 		{
-			return new TableColumnOption (TableColumnOption.Type.EnabledEntries, value);
+			return new TableColumnOption (TableColumnOption.Type.EnabledCells, value);
 		}
 
 		public static TableColumnOption Optional (bool value)

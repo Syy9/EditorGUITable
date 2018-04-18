@@ -23,17 +23,17 @@ public class LogoTableEditor : Editor
 			new TableColumn("I     ", 35f),
 		};
 
-		List<List<TableEntry>> rows = new List<List<TableEntry>>();
+		List<List<TableCell>> rows = new List<List<TableCell>>();
 
 		LogoTable targetObject = LogoTable.Instance;
 
 		for (int i = 0 ; i < targetObject.logoLines.Count ; i++)
 		{
-			rows.Add (new List<TableEntry>()
+			rows.Add (new List<TableCell>()
 			{
-				new PropertyEntry (serializedObject, string.Format("logoLines.Array.data[{0}].letter1", i)),
-				new PropertyEntry (serializedObject, string.Format("logoLines.Array.data[{0}].letter2", i)),
-				new PropertyEntry (serializedObject, string.Format("logoLines.Array.data[{0}].color", i)),
+				new PropertyCell (serializedObject, string.Format("logoLines.Array.data[{0}].letter1", i)),
+				new PropertyCell (serializedObject, string.Format("logoLines.Array.data[{0}].letter2", i)),
+				new PropertyCell (serializedObject, string.Format("logoLines.Array.data[{0}].color", i)),
 			});
 		}
 

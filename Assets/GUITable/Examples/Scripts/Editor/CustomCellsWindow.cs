@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using EditorGUITable;
 
-public class CustomEntriesWindow : EditorWindow 
+public class CustomCellsWindow : EditorWindow 
 {
 
 	SerializedObject serializedObject;
@@ -20,13 +20,13 @@ public class CustomEntriesWindow : EditorWindow
 	void OnGUI () 
 	{
 
-		GUILayout.Label ("Customize the entries", EditorStyles.boldLabel);
+		GUILayout.Label ("Customize the cells", EditorStyles.boldLabel);
 
-		DrawCustomEntries ();
+		DrawCustomCells ();
 
 	}
 
-	void DrawCustomEntries ()
+	void DrawCustomCells ()
 	{
 		SerializedObject serializedObject = new SerializedObject(SimpleExample.Instance);
 		
@@ -38,19 +38,19 @@ public class CustomEntriesWindow : EditorWindow
 			new TableColumn("", TableColumn.Width(100f), TableColumn.EnabledTitle(false)),
 		};
 
-		List<List<TableEntry>> rows = new List<List<TableEntry>>();
+		List<List<TableCell>> rows = new List<List<TableCell>>();
 
 		SimpleExample targetObject = (SimpleExample) serializedObject.targetObject;
 
 		for (int i = 0 ; i < targetObject.simpleObjects.Count ; i++)
 		{
 			SimpleExample.SimpleObject entry = targetObject.simpleObjects[i];
-			rows.Add (new List<TableEntry>()
+			rows.Add (new List<TableCell>()
 			{
-				new LabelEntry (entry.stringProperty),
-				new PropertyEntry (serializedObject, string.Format("simpleObjects.Array.data[{0}].floatProperty", i)),
-				new PropertyEntry (serializedObject, string.Format("simpleObjects.Array.data[{0}].objectProperty", i)),
-				new ActionEntry ("Reset", () => entry.Reset ()),
+				new LabelCell (entry.stringProperty),
+				new PropertyCell (serializedObject, string.Format("simpleObjects.Array.data[{0}].floatProperty", i)),
+				new PropertyCell (serializedObject, string.Format("simpleObjects.Array.data[{0}].objectProperty", i)),
+				new ActionCell ("Reset", () => entry.Reset ()),
 			});
 		}
 

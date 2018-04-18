@@ -48,7 +48,7 @@ namespace EditorGUITable
 		/// <summary>
 		/// Draw a table using just the paths of the properties to display.
 		/// This will create columns automatically using the property name as title, and will create
-		/// PropertyEntry instances for each element.
+		/// PropertyCell instances for each element.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="rect">The table's containing rectangle.</param>
@@ -71,7 +71,7 @@ namespace EditorGUITable
 
 		/// <summary>
 		/// Draw a table from the columns' settings, the path for the corresponding properties and a selector function
-		/// that takes a SerializedProperty and returns the TableEntry to put in the corresponding cell.
+		/// that takes a SerializedProperty and returns the TableCell to put in the corresponding cell.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="rect">The table's containing rectangle.</param>
@@ -87,16 +87,16 @@ namespace EditorGUITable
 			params GUITableOption[] options) 
 		{
 			GUITableEntry tableEntry = new GUITableEntry (options);
-			List<List<TableEntry>> rows = new List<List<TableEntry>>();
+			List<List<TableCell>> rows = new List<List<TableCell>>();
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
 				SerializedProperty sp = collectionProperty.serializedObject.FindProperty (string.Format ("{0}.Array.data[{1}]", collectionProperty.propertyPath, i));
 				if (tableEntry.filter != null && !tableEntry.filter (sp))
 					continue;
-				List<TableEntry> row = new List<TableEntry>();
+				List<TableCell> row = new List<TableCell>();
 				foreach (SelectorColumn col in columns)
 				{
-					row.Add ( col.GetEntry (sp));
+					row.Add ( col.GetCell (sp));
 				}
 				rows.Add(row);
 			}
@@ -106,45 +106,45 @@ namespace EditorGUITable
 
 		/// <summary>
 		/// Draw a table completely manually.
-		/// Each entry has to be created and given as parameter in entries.
+		/// Each cell has to be created and given as parameter in cells.
 		/// A collectionProperty is needed for reorderable tables. Use an overload with a collectionProperty.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="rect">The table's containing rectangle.</param>
 		/// <param name="tableState">The Table state.</param>
 		/// <param name="columns">The Columns of the table.</param>
-		/// <param name="entries">The Entries as a list of rows.</param>
+		/// <param name="cells">The Cells as a list of rows.</param>
 		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable (
 			Rect rect,
 			GUITableState tableState,
 			List<TableColumn> columns, 
-			List<List<TableEntry>> entries, 
+			List<List<TableCell>> cells, 
 			params GUITableOption[] options)
 		{
-			return DrawTable(rect, tableState, columns, entries, null, options);
+			return DrawTable(rect, tableState, columns, cells, null, options);
 		}
 
 		// Used for ReorderableList's callbacks access
-		static List<List<TableEntry>> orderedRows;
-		static List<List<TableEntry>> staticEntries;
+		static List<List<TableCell>> orderedRows;
+		static List<List<TableCell>> staticCells;
 
 		/// <summary>
 		/// Draw a table completely manually.
-		/// Each entry has to be created and given as parameter in entries.
+		/// Each cell has to be created and given as parameter in cells.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="rect">The table's containing rectangle.</param>
 		/// <param name="tableState">The Table state.</param>
 		/// <param name="columns">The Columns of the table.</param>
-		/// <param name="entries">The Entries as a list of rows.</param>
+		/// <param name="cells">The Cells as a list of rows.</param>
 		/// <param name="collectionProperty">The SerializeProperty of the collection. This is useful for reorderable tables.</param>
 		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable (
 			Rect rect,
 			GUITableState tableState,
 			List<TableColumn> columns, 
-			List<List<TableEntry>> entries, 
+			List<List<TableCell>> cells, 
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options)
 		{
@@ -162,7 +162,7 @@ namespace EditorGUITable
 					return tableState;
 				}
 
-				staticEntries = entries;
+				staticCells = cells;
 			
 				if (tableState.reorderableList == null)
 				{
@@ -183,7 +183,7 @@ namespace EditorGUITable
 
 					list.onRemoveCallback = (l) => 
 					{
-						l.serializedProperty.DeleteArrayElementAtIndex (staticEntries.IndexOf (orderedRows[l.index]));
+						l.serializedProperty.DeleteArrayElementAtIndex (staticCells.IndexOf (orderedRows[l.index]));
 					};
 
 					tableState.SetReorderableList (list);
@@ -192,13 +192,13 @@ namespace EditorGUITable
 			
 			tableState.CheckState(columns, tableEntry, rect.width);
 
-			orderedRows = entries;
+			orderedRows = cells;
 			if (tableState.sortByColumnIndex >= 0)
 			{
 				if (tableState.sortIncreasing)
-					orderedRows = entries.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
+					orderedRows = cells.OrderBy (row => row [tableState.sortByColumnIndex]).ToList();
 				else
-					orderedRows = entries.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
+					orderedRows = cells.OrderByDescending (row => row [tableState.sortByColumnIndex]).ToList();
 			}
 
 			if (tableEntry.reorderable)
@@ -229,12 +229,12 @@ namespace EditorGUITable
 				tableState.scrollPos = GUI.BeginScrollView (
 					new Rect (currentX, currentY, rect.width, Mathf.Min (rect.height, Screen.height / EditorGUIUtility.pixelsPerPoint - rect.y - 40)),
 					tableState.scrollPos, 
-					new Rect(0f, 0f, tableState.totalWidth, tableEntry.rowHeight * entries.Count));
+					new Rect(0f, 0f, tableState.totalWidth, tableEntry.rowHeight * cells.Count));
 				currentX = 0f;
 				currentY = 0f;
 			}
 
-			foreach (List<TableEntry> row in orderedRows)
+			foreach (List<TableCell> row in orderedRows)
 			{
 				currentX = tableEntry.allowScrollView ? 0 : rect.x;
 				DrawLine (tableState, columns, row, currentX, currentY, rowHeight);
@@ -304,7 +304,7 @@ namespace EditorGUITable
 		public static void DrawLine (
 			GUITableState tableState,
 			List<TableColumn> columns,
-			List<TableEntry> row, 
+			List<TableCell> row, 
 			float currentX,
 			float currentY,
 			float rowHeight)
@@ -314,15 +314,15 @@ namespace EditorGUITable
 			{
 				if (i >= columns.Count)
 				{
-					Debug.LogWarning ("The number of entries in this row is more than the number of columns");
+					Debug.LogWarning ("The number of cells in this row is more than the number of columns");
 					continue;
 				}
 				if (!tableState.columnVisible [i])
 					continue;
 				TableColumn column = columns [i];
-				TableEntry property = row[i];
-				GUI.enabled = column.entry.enabledEntries;
-				property.DrawEntry (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
+				TableCell property = row[i];
+				GUI.enabled = column.entry.enabledCells;
+				property.DrawCell (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
 				currentX += tableState.columnSizes[i] + 4f;
 			}
 		}

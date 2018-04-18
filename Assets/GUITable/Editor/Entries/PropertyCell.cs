@@ -9,16 +9,16 @@ namespace EditorGUITable
 {
 
 	/// <summary>
-	/// This entry class just uses EditorGUILayout.PropertyField to draw a given property.
+	/// This cell class just uses EditorGUILayout.PropertyField to draw a given property.
 	/// This is the basic way to use GUITable. It will draw the properties the same way Unity would by default.
 	/// </summary>
-	public class PropertyEntry : TableEntry
+	public class PropertyCell : TableCell
 	{
 		SerializedProperty sp;
 		SerializedObject so;
 		string propertyPath;
 
-		public override void DrawEntryLayout (float width, float height)
+		public override void DrawCellLayout (float width, float height)
 		{
 			if (sp != null)
 			{
@@ -32,7 +32,7 @@ namespace EditorGUITable
 			}
 		}
 
-		public override void DrawEntry (Rect rect)
+		public override void DrawCell (Rect rect)
 		{
 			if (sp != null)
 			{
@@ -56,27 +56,27 @@ namespace EditorGUITable
 		public override int CompareTo (object other)
 		{
 			
-			TableEntry otherEntry = (TableEntry) other;
-			if (otherEntry == null)
-				throw new ArgumentException ("Object is not a GUITableEntry");
+			TableCell otherCell = (TableCell) other;
+			if (otherCell == null)
+				throw new ArgumentException ("Object is not a TableCell");
 
-			PropertyEntry otherPropEntry = (PropertyEntry) other;
-			if (otherPropEntry == null)
+			PropertyCell otherPropCell = (PropertyCell) other;
+			if (otherPropCell == null)
 				return base.CompareTo(other);
 
-			SerializedProperty otherSp = otherPropEntry.sp;
+			SerializedProperty otherSp = otherPropCell.sp;
 
 			return CompareTwoSerializedProperties (sp, otherSp);
 		}
 
-		public PropertyEntry (SerializedProperty property)
+		public PropertyCell (SerializedProperty property)
 		{
 			this.sp = property;
 			this.so = property.serializedObject;
 			this.propertyPath = property.propertyPath;
 		}
 
-		public PropertyEntry (SerializedObject so, string propertyPath)
+		public PropertyCell (SerializedObject so, string propertyPath)
 		{
 			this.so = so;
 			this.propertyPath = propertyPath;

@@ -41,7 +41,7 @@ public class AdvancedExampleWindow : EditorWindow
 		List<TableColumn> columns = new List<TableColumn>()
 		{
 			new TableColumn("Name", TableColumn.Width(60f), TableColumn.ExpandWidth(true)),
-			new TableColumn("Prefab", TableColumn.Width(50f), TableColumn.EnabledEntries(false), TableColumn.Optional(true)),
+			new TableColumn("Prefab", TableColumn.Width(50f), TableColumn.EnabledCells(false), TableColumn.Optional(true)),
 			new TableColumn("Type", TableColumn.Width(50f), TableColumn.Optional(true)),
 			new TableColumn("Health", TableColumn.Width(50f)),
 			new TableColumn("Speed", TableColumn.Width(50f)),
@@ -52,7 +52,7 @@ public class AdvancedExampleWindow : EditorWindow
 			new TableColumn("Instantiation", TableColumn.Width(110f), TableColumn.Optional(true))
 		};
 
-		List<List<TableEntry>> rows = new List<List<TableEntry>>();
+		List<List<TableCell>> rows = new List<List<TableCell>>();
 
 		AdvancedExample targetObject = (AdvancedExample) serializedObject.targetObject;
 
@@ -60,18 +60,18 @@ public class AdvancedExampleWindow : EditorWindow
 		{
 			Enemy enemy = targetObject.enemies[i];
 			int sentenceIndex = targetObject.introSentences.FindIndex(s => s.enemyType == enemy.type);
-			rows.Add (new List<TableEntry>()
+			rows.Add (new List<TableCell>()
 			{
-				new LabelEntry (enemy.name),
-				new PropertyEntry (serializedObject, string.Format("enemies.Array.data[{0}]", i)),
-				new PropertyEntry (new SerializedObject(enemy), "type"),
-				new PropertyEntry (new SerializedObject(enemy), "health"),
-				new PropertyEntry (new SerializedObject(enemy), "speed"),
-				new PropertyEntry (new SerializedObject(enemy), "color"),
-				new PropertyEntry (new SerializedObject(enemy), "canSwim"),
-				new SpawnersEntry (new SerializedObject(enemy), "spawnersMask"),
-				new PropertyEntry (serializedObject, string.Format("introSentences.Array.data[{0}].sentence", sentenceIndex)),
-				new ActionEntry ("Instantiate", () => enemy.Instantiate ()),
+				new LabelCell (enemy.name),
+				new PropertyCell (serializedObject, string.Format("enemies.Array.data[{0}]", i)),
+				new PropertyCell (new SerializedObject(enemy), "type"),
+				new PropertyCell (new SerializedObject(enemy), "health"),
+				new PropertyCell (new SerializedObject(enemy), "speed"),
+				new PropertyCell (new SerializedObject(enemy), "color"),
+				new PropertyCell (new SerializedObject(enemy), "canSwim"),
+				new SpawnersCell (new SerializedObject(enemy), "spawnersMask"),
+				new PropertyCell (serializedObject, string.Format("introSentences.Array.data[{0}].sentence", sentenceIndex)),
+				new ActionCell ("Instantiate", () => enemy.Instantiate ()),
 			});
 		}
 

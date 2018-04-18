@@ -30,19 +30,19 @@ public class ActionExampleEditor : Editor
 			new TableColumn("", TableColumn.Width(50f), TableColumn.EnabledTitle(false))
 		};
 
-		List<List<TableEntry>> rows = new List<List<TableEntry>>();
+		List<List<TableCell>> rows = new List<List<TableCell>>();
 
 		ActionExample targetObject = (ActionExample) target;
 
 		for (int i = 0 ; i < targetObject.simpleObjects.Count ; i++)
 		{
 			ActionExample.SimpleObject entry = targetObject.simpleObjects[i];
-			rows.Add (new List<TableEntry>()
+			rows.Add (new List<TableCell>()
 			{
-				new LabelEntry (entry.stringProperty),
-				new PropertyEntry (serializedObject, string.Format("simpleObjects.Array.data[{0}].floatProperty", i)),
-				new PropertyEntry (serializedObject, string.Format("simpleObjects.Array.data[{0}].objectProperty", i)),
-				new ActionEntry ("Reset", () => entry.Reset() ),
+				new LabelCell (entry.stringProperty),
+				new PropertyCell (serializedObject, string.Format("simpleObjects.Array.data[{0}].floatProperty", i)),
+				new PropertyCell (serializedObject, string.Format("simpleObjects.Array.data[{0}].objectProperty", i)),
+				new ActionCell ("Reset", () => entry.Reset() ),
 			});
 		}
 

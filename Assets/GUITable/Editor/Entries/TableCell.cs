@@ -9,35 +9,35 @@ namespace EditorGUITable
 {
 
 	/// <summary>
-	/// Base class for all table entries.
-	/// DrawEntry needs to be overriden to draw the entry for the cell.
+	/// Base class for all table cells.
+	/// DrawCell needs to be overriden to draw the cell.
 	/// Use this to customize the table however needed.
 	/// CompareTo can be overriden to customize the sorting.
-	/// comparingValue is used as a fallback for sorting any types of entries, even different types.
+	/// comparingValue is used as a fallback for sorting any types of cells, even different types.
 	/// </summary>
-	public abstract class TableEntry : System.IComparable
+	public abstract class TableCell : System.IComparable
 	{
 		/// <summary>
-		/// Draws the entry using GUILayout.
+		/// Draws the cell using GUILayout.
 		/// </summary>
 		/// <param name="width">Width.</param>
 		/// <param name="height">Height.</param>
-		public abstract void DrawEntryLayout (float width, float height);
+		public abstract void DrawCellLayout (float width, float height);
 
 		/// <summary>
-		/// Draws the entry using GUI (without GUILayout).
+		/// Draws the cell using GUI (without GUILayout).
 		/// </summary>
 		/// <param name="rect">Rect.</param>
-		public abstract void DrawEntry (Rect rect);
+		public abstract void DrawCell (Rect rect);
 
 		public abstract string comparingValue { get; }
 
 		public virtual int CompareTo (object other) 
 		{ 
-			TableEntry otherEntry = (TableEntry) other;
-			if (otherEntry == null)
-				throw new ArgumentException ("Object is not a TableEntry");
-			return comparingValue.CompareTo ( otherEntry.comparingValue );
+			TableCell otherCell = (TableCell) other;
+			if (otherCell == null)
+				throw new ArgumentException ("Object is not a TableCell");
+			return comparingValue.CompareTo ( otherCell.comparingValue );
 		}
 
 		public static string GetPropertyValueAsString (SerializedProperty sp)

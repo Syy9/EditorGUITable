@@ -13,7 +13,7 @@ public class TableColumnOption
 		MaxWidth,
 		Resizeable,
 		Sortable,
-		EnabledEntries,
+		EnabledCells,
 		EnabledTitle,
 		Optional,
 		VisibleByDefault,

@@ -45,7 +45,7 @@ namespace EditorGUITable
 		/// <summary>
 		/// Draw a table using just the paths of the properties to display.
 		/// This will create columns automatically using the property name as title, and will create
-		/// PropertyEntry instances for each element.
+		/// PropertyCell instances for each element.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
@@ -65,7 +65,7 @@ namespace EditorGUITable
 
 		/// <summary>
 		/// Draw a table from the columns' settings, the path for the corresponding properties and a selector function
-		/// that takes a SerializedProperty and returns the TableEntry to put in the corresponding cell.
+		/// that takes a SerializedProperty and returns the TableCell to put in the corresponding cell.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
@@ -78,16 +78,16 @@ namespace EditorGUITable
 			params GUITableOption[] options) 
 		{
 			GUITableEntry tableEntry = new GUITableEntry (options);
-			List<List<TableEntry>> rows = new List<List<TableEntry>>();
+			List<List<TableCell>> rows = new List<List<TableCell>>();
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
 				SerializedProperty sp = collectionProperty.serializedObject.FindProperty (string.Format ("{0}.Array.data[{1}]", collectionProperty.propertyPath, i));
 				if (tableEntry.filter != null && !tableEntry.filter (sp))
 					continue;
-				List <TableEntry> row = new List<TableEntry>();
+				List <TableCell> row = new List<TableCell>();
 				foreach (SelectorColumn col in columns)
 				{
-					row.Add ( col.GetEntry (sp));
+					row.Add ( col.GetCell (sp));
 				}
 				rows.Add(row);
 			}
@@ -96,26 +96,26 @@ namespace EditorGUITable
 
 		/// <summary>
 		/// Draw a table completely manually.
-		/// Each entry has to be created and given as parameter in entries.
+		/// Each cell has to be created and given as parameter in cells.
 		/// A collectionProperty is needed for reorderable tables. Use an overload with a collectionProperty.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
 		/// <param name="columns">The Columns of the table.</param>
-		/// <param name="entries">The Entries as a list of rows.</param>
+		/// <param name="cells">The Cells as a list of rows.</param>
 		/// <param name="tableState">The Table state.</param>
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			List<TableColumn> columns, 
-			List<List<TableEntry>> entries, 
+			List<List<TableCell>> cells, 
 			params GUITableOption[] options)
 		{
-			return DrawTable (tableState, columns, entries, null, options);
+			return DrawTable (tableState, columns, cells, null, options);
 		}
 
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			List<TableColumn> columns, 
-			List<List<TableEntry>> entries, 
+			List<List<TableCell>> cells, 
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options)
 		{
@@ -129,11 +129,11 @@ namespace EditorGUITable
 
 			Rect position = GUILayoutUtility.GetRect(
 				tableState.totalWidth, 
-				(tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * entries.Count + EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1));
+				(tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * cells.Count + EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1));
 			if (Event.current.type == EventType.Layout)
 				return tableState;
 			else
-				return GUITable.DrawTable (position, tableState, columns, entries, collectionProperty, options);
+				return GUITable.DrawTable (position, tableState, columns, cells, collectionProperty, options);
 		}
 
 	}

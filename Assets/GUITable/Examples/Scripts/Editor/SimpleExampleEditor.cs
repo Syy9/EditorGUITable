@@ -65,9 +65,9 @@ public class SimpleExampleEditor : Editor
 		GUILayout.Space (10f);
 
 		GUILayout.BeginHorizontal ();
-		GUILayout.Label ("Customize the entries", EditorStyles.boldLabel, GUILayout.Width(170f));
+		GUILayout.Label ("Customize the cells", EditorStyles.boldLabel, GUILayout.Width(170f));
 		if (GUILayout.Button("Window Example", GUILayout.Width (120f)))
-			EditorWindow.GetWindow<CustomEntriesWindow>().Show();
+			EditorWindow.GetWindow<CustomCellsWindow>().Show();
 		GUILayout.EndHorizontal ();
 
 		GUILayout.FlexibleSpace();

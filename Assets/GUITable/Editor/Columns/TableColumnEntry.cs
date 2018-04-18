@@ -12,9 +12,9 @@ public class TableColumnEntry
 	public bool resizeable = true;
 	public bool sortable = true;
 	/// <summary>
-	/// Defines if the entries are enabled (interactable) or disabled (grayed out). Default: true.
+	/// Defines if the cells are enabled (interactable) or disabled (grayed out). Default: true.
 	/// </summary>
-	public bool enabledEntries = true;
+	public bool enabledCells = true;
 	/// <summary>
 	/// Defines if the column is sortable.
 	/// </summary>
@@ -69,8 +69,8 @@ public class TableColumnEntry
 				case TableColumnOption.Type.EnabledTitle:
 					this.enabledTitle = (bool) option.value;
 					break;
-				case TableColumnOption.Type.EnabledEntries:
-					this.enabledEntries = (bool) option.value;
+				case TableColumnOption.Type.EnabledCells:
+					this.enabledCells = (bool) option.value;
 					break;
 				case TableColumnOption.Type.Optional:
 					this.optional = (bool) option.value;

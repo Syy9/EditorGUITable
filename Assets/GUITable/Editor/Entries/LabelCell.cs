@@ -8,21 +8,21 @@ namespace EditorGUITable
 {
 
 	/// <summary>
-	/// This entry class draws a string as a label.
+	/// This cell class draws a string as a label.
 	/// This is useful for properties you want to display in the table
-	/// as read only, as the default PropertyField used in PropertyEntry uses editable fields.
+	/// as read only, as the default PropertyField used in PropertyCell uses editable fields.
 	/// </summary>
-	public class LabelEntry : TableEntry
+	public class LabelCell : TableCell
 	{
 
 		string value;
 
-		public override void DrawEntryLayout (float width, float height)
+		public override void DrawCellLayout (float width, float height)
 		{
 			EditorGUILayout.LabelField (value, GUILayout.Width (width), GUILayout.Height (height));
 		}
 
-		public override void DrawEntry (Rect rect)
+		public override void DrawCell (Rect rect)
 		{
 			GUI.Label(rect, value);
 		}
@@ -35,12 +35,12 @@ namespace EditorGUITable
 			}
 		}
 
-		public LabelEntry (string value)
+		public LabelCell (string value)
 		{
 			this.value = value;
 		}
 
-		public LabelEntry (SerializedProperty sp)
+		public LabelCell (SerializedProperty sp)
 		{
 			this.value = GetPropertyValueAsString (sp);
 		}
