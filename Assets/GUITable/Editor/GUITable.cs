@@ -276,6 +276,8 @@ namespace EditorGUITable
 						columnName += " " + '\u25BC'.ToString();
 				}
 
+				GUI.enabled = true;
+
 				tableState.ResizeColumn (i, currentX, rect);
 
 				GUI.enabled = column.entry.enabledTitle;
