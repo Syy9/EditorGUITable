@@ -10,6 +10,8 @@ public class SimpleExampleEditor : Editor
 
 	GUITableState tableState;
 
+	bool reorderable = true;
+
 	void OnEnable ()
 	{
 		tableState = new GUITableState("tableState");
@@ -28,7 +30,11 @@ public class SimpleExampleEditor : Editor
 
 	void DrawSimple ()
 	{
-		tableState = GUITableLayout.DrawTable (tableState, serializedObject.FindProperty("simpleObjects"));
+		reorderable = EditorGUILayout.Toggle ("Reorderable", reorderable);
+		tableState = GUITableLayout.DrawTable (
+			tableState, 
+			serializedObject.FindProperty("simpleObjects"), 
+			GUITableOption.Reorderable(reorderable));
 	}
 
 	void DrawObjectsTable ()
