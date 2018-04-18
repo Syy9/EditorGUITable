@@ -148,7 +148,6 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options)
 		{
-			
 			GUITableEntry tableEntry = new GUITableEntry (options);
 
 			if (tableState == null)
@@ -203,7 +202,7 @@ namespace EditorGUITable
 
 			if (tableEntry.reorderable)
 			{
-				tableState.reorderableList.DoList(rect);
+				tableState.reorderableList.DoList(new Rect (rect.x, rect.y, tableState.totalWidth + 23f, rect.height));
 				collectionProperty.serializedObject.ApplyModifiedProperties ();
 				return tableState;
 			}
