@@ -6,6 +6,7 @@ namespace EditorGUITable
 {
 
 	/// <summary>
+	/// Full Version Only
 	/// Attribute that automatically draws a collection as a table
 	/// 
 	/// Example:
@@ -34,15 +35,30 @@ namespace EditorGUITable
 		public string[] properties = null;
 		public float[] widths = null;
 
+		/// <summary>
+		/// Full Version Only
+		/// This attribute will display the collection in a table, instead of the classic Unity list.
+		/// </summary>
 		public TableAttribute () 
 		{
 		}
 
+		/// <summary>
+		/// Full Version Only
+		/// This attribute will display the collection's chosen properties in a table, instead of the classic Unity list.
+		/// </summary>
+		/// <param name="properties"> The properties to display in the table </param>
 		public TableAttribute (params string[] properties)
 		{
 			this.properties = properties;
 		}
 
+		/// <summary>
+		/// Full Version Only
+		/// This attribute will display the collection's chosen properties in a table, with the chosen column sizes, instead of the classic Unity list.
+		/// </summary>
+		/// <param name="properties"> The properties to display in the table</param>
+		/// <param name="widths"> The widths of the table's columns</param>
 		public TableAttribute (string[] properties, float[] widths)
 		{
 			this.properties = properties;

@@ -22,25 +22,7 @@ namespace EditorGUITable
 
 		public override float GetPropertyHeight (SerializedProperty property, GUIContent label)
 		{
-			//Check that it is a collection
-			Match match = Regex.Match(property.propertyPath, "^([a-zA-Z0-9_]*).Array.data\\[([0-9]*)\\]$");
-			if (!match.Success)
-			{
-				return EditorGUIUtility.singleLineHeight;
-			}
-
-			// Check that it's the first element
-			string index = match.Groups[2].Value;
-
-			if (index != "0")
-				return EditorGUIUtility.singleLineHeight + 2;
-			
-			return EditorGUIUtility.singleLineHeight + 2 + GetRequiredAdditionalHeight ();
-		}
-
-		protected virtual float GetRequiredAdditionalHeight ()
-		{
-			return 1f * EditorGUIUtility.singleLineHeight;
+			return EditorGUIUtility.singleLineHeight;
 		}
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -75,28 +57,14 @@ namespace EditorGUITable
 			tableState = DrawTable (r, collectionProperty, label, tableAttribute);
 		}
 
+		/// <summary>
+		/// Full Version Only
+		/// </summary>
 		protected virtual GUITableState DrawTable (Rect rect, SerializedProperty collectionProperty, GUIContent label, TableAttribute tableAttribute)
 		{
-			if (tableAttribute.properties == null && tableAttribute.widths == null)
-				return GUITable.DrawTable(rect, tableState, collectionProperty, GUITableOption.AllowScrollView(false));
-			else if (tableAttribute.widths == null)
-				return GUITable.DrawTable(rect, tableState, collectionProperty, tableAttribute.properties.ToList(), GUITableOption.AllowScrollView(false));
-			else
-				return GUITable.DrawTable(rect, tableState, collectionProperty, GetPropertyColumns(tableAttribute), GUITableOption.AllowScrollView(false));
+			return null;
 		}
-
-		protected static List<SelectorColumn> GetPropertyColumns (TableAttribute tableAttribute)
-		{
-			List<SelectorColumn> res = new List<SelectorColumn>();
-			for (int i = 0 ; i < tableAttribute.properties.Length ; i++)
-			{
-				if (i >= tableAttribute.widths.Length)
-					res.Add(new SelectFromPropertyNameColumn(tableAttribute.properties[i], tableAttribute.properties[i]));
-				else
-					res.Add(new SelectFromPropertyNameColumn(tableAttribute.properties[i], tableAttribute.properties[i], TableColumn.Width(tableAttribute.widths[i])));
-			}
-			return res;
-		}
+		
 
 	}
 
