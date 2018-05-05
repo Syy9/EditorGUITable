@@ -69,10 +69,10 @@ namespace EditorGUITable
 			else
 				return GUITable.DrawTable (position, tableState, tableColumns, rows, collectionProperty, new GUITableOption[] { });
 		}
-
-
+			
 
 		#region FULL_VERSION
+
 
 		/// <summary>
 		/// Full Version Only.
@@ -86,10 +86,19 @@ namespace EditorGUITable
 		/// <param name="options">The Table options.</param>
 		public static GUITableState DrawTable (
 			GUITableState tableState,
-			SerializedProperty collectionProperty,
-			params GUITableOption[] options)
+			SerializedProperty collectionProperty, 
+			params GUITableOption[] options) 
 		{
-			return null;
+			List<string> properties = new List<string>();
+			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
+			foreach (SerializedProperty prop in collectionProperty.serializedObject.FindProperty(firstElementPath))
+			{
+				string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
+				// Avoid drawing properties more than 1 level deep
+				if (!subPropName.Contains("."))
+					properties.Add (subPropName);
+			}
+			return DrawTable (tableState, collectionProperty, properties, SetDemoVersionOption (options));
 		}
 
 		/// <summary>
@@ -103,13 +112,16 @@ namespace EditorGUITable
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="properties">The paths (names) of the properties to display.</param>
 		/// <param name="options">The Table options.</param>
-		public static GUITableState DrawTable (
+		public static GUITableState DrawTable ( 
 			GUITableState tableState,
-			SerializedProperty collectionProperty,
-			List<string> properties,
-			params GUITableOption[] options)
+			SerializedProperty collectionProperty, 
+			List<string> properties, 
+			params GUITableOption[] options) 
 		{
-			return null;
+			List<SelectorColumn> columns = properties.Select(prop => (SelectorColumn) new SelectFromPropertyNameColumn(
+				prop, ObjectNames.NicifyVariableName (prop))).ToList();
+
+			return DrawTable (tableState, collectionProperty, columns, SetDemoVersionOption (options));
 		}
 
 		/// <summary>
@@ -122,13 +134,27 @@ namespace EditorGUITable
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="columns">The Selector Columns.</param>
 		/// <param name="options">The Table options.</param>
-		public static GUITableState DrawTable (
+		public static GUITableState DrawTable ( 
 			GUITableState tableState,
-			SerializedProperty collectionProperty,
-			List<SelectorColumn> columns,
-			params GUITableOption[] options)
+			SerializedProperty collectionProperty, 
+			List<SelectorColumn> columns, 
+			params GUITableOption[] options) 
 		{
-			return null;
+			GUITableEntry tableEntry = new GUITableEntry (options);
+			List<List<TableCell>> rows = new List<List<TableCell>>();
+			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
+			{
+				SerializedProperty sp = collectionProperty.serializedObject.FindProperty (string.Format ("{0}.Array.data[{1}]", collectionProperty.propertyPath, i));
+				if (tableEntry.filter != null && !tableEntry.filter (sp))
+					continue;
+				List <TableCell> row = new List<TableCell>();
+				foreach (SelectorColumn col in columns)
+				{
+					row.Add ( col.GetCell (sp));
+				}
+				rows.Add(row);
+			}
+			return DrawTable (tableState, columns.Select((col) => (TableColumn) col).ToList(), rows, collectionProperty, SetDemoVersionOption (options));
 		}
 
 		/// <summary>
@@ -142,13 +168,13 @@ namespace EditorGUITable
 		/// <param name="columns">The Columns of the table.</param>
 		/// <param name="cells">The Cells as a list of rows.</param>
 		/// <param name="options">The Table options.</param>
-		public static GUITableState DrawTable (
+		public static GUITableState DrawTable ( 
 			GUITableState tableState,
-			List<TableColumn> columns,
-			List<List<TableCell>> cells,
+			List<TableColumn> columns, 
+			List<List<TableCell>> cells, 
 			params GUITableOption[] options)
 		{
-			return null;
+			return DrawTable (tableState, columns, cells, null, SetDemoVersionOption (options));
 		}
 
 		/// <summary>
@@ -163,17 +189,40 @@ namespace EditorGUITable
 		/// <param name="cells">The Cells as a list of rows.</param>
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="options">The Table options.</param>
-		public static GUITableState DrawTable (
+		public static GUITableState DrawTable ( 
 			GUITableState tableState,
-			List<TableColumn> columns,
-			List<List<TableCell>> cells,
+			List<TableColumn> columns, 
+			List<List<TableCell>> cells, 
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options)
 		{
-			return null;
+			GUITableEntry tableEntry = new GUITableEntry (options);
+
+			if (tableState == null)
+			{
+				tableState = new GUITableState();
+				tableState.CheckState(columns, tableEntry, float.MaxValue);
+			}
+
+			Rect position = GUILayoutUtility.GetRect(
+				tableState.totalWidth, 
+				(tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * cells.Count + EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1));
+			if (Event.current.type == EventType.Layout)
+				return tableState;
+			else
+				return GUITable.DrawTable (position, tableState, columns, cells, collectionProperty, SetDemoVersionOption (options));
 		}
 
-		#endregion FULL_VERSION
+		static GUITableOption[] SetDemoVersionOption (GUITableOption[] options)
+		{
+			if (!options.Any (o => o.type == GUITableOption.Type.DemoVersion))
+				return options.Concat (new GUITableOption[] { GUITableOption.DemoVersion () }).ToArray ();
+			else
+				return options;
+		}
+
+		#endregion
+
 
 
 	}

@@ -17,6 +17,8 @@ namespace EditorGUITable
 	public static class GUITable
 	{
 
+		const string FULL_VERSION_URL = "https://assetstore.unity.com/packages/tools/gui/editor-gui-table-108795";
+
 		/// <summary>
 		/// Draw a table just from the collection's property.
 		/// This will create columns for all the visible members in the elements' class,
@@ -148,6 +150,7 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options)
 		{
+
 			GUITableEntry tableEntry = new GUITableEntry (options);
 
 			if (tableState == null)
@@ -171,13 +174,13 @@ namespace EditorGUITable
 						true, true, true, true);
 
 					list.drawElementCallback = (Rect r, int index, bool isActive, bool isFocused) => {
-						DrawLine (tableState, columns, orderedRows[index], r.xMin + (list.draggable ? 0 : 14), r.yMin, tableEntry.rowHeight);
+						DrawLine (tableState, columns, orderedRows[index], r.xMin + (list.draggable ? 0 : 14), r.yMin, tableEntry.rowHeight, tableEntry);
 					};
 
 					list.elementHeight = tableEntry.rowHeight;
 
 					list.drawHeaderCallback = (Rect r) => { 
-						DrawHeaders(r, tableState, columns, r.xMin + 12, r.yMin); 
+						DrawHeaders(r, tableState, columns, r.xMin + 12, r.yMin, tableEntry); 
 					};
 
 					list.onRemoveCallback = (l) => 
@@ -202,8 +205,11 @@ namespace EditorGUITable
 
 			if (tableEntry.reorderable)
 			{
-				tableState.reorderableList.DoList(new Rect (rect.x, rect.y, tableState.totalWidth + 23f, rect.height));
+				Rect listRect = new Rect (rect.x, rect.y, tableState.totalWidth + 23f, cells.Count * tableEntry.rowHeight + EditorGUIUtility.singleLineHeight);
+				tableState.reorderableList.DoList(listRect);
 				collectionProperty.serializedObject.ApplyModifiedProperties ();
+				if (tableEntry.demoVersion)
+					DrawFullVersionButton (listRect);
 				return tableState;
 			}
 
@@ -217,7 +223,7 @@ namespace EditorGUITable
 
 			tableState.RightClickMenu (columns, rect);
 
-			DrawHeaders(rect, tableState, columns, currentX - tableState.scrollPos.x, currentY);
+			DrawHeaders(rect, tableState, columns, currentX - tableState.scrollPos.x, currentY, tableEntry);
 
 			GUI.enabled = true;
 
@@ -236,7 +242,7 @@ namespace EditorGUITable
 			foreach (List<TableCell> row in orderedRows)
 			{
 				currentX = tableEntry.allowScrollView ? 0 : rect.x;
-				DrawLine (tableState, columns, row, currentX, currentY, rowHeight);
+				DrawLine (tableState, columns, row, currentX, currentY, rowHeight, tableEntry);
 				currentY += rowHeight;
 			}
 
@@ -249,6 +255,11 @@ namespace EditorGUITable
 
 			tableState.Save();
 
+			if (tableEntry.demoVersion)
+			{
+				DrawFullVersionButton (new Rect (rect.x, rect.y, tableState.totalWidth, cells.Count * tableEntry.rowHeight + EditorGUIUtility.singleLineHeight));
+			}
+
 			return tableState;
 		}
 
@@ -259,7 +270,8 @@ namespace EditorGUITable
 			GUITableState tableState,
 			List<TableColumn> columns,
 			float currentX,
-			float currentY)
+			float currentY,
+			GUITableEntry tableEntry)
 		{
 			for (int i = 0 ; i < columns.Count ; i++)
 			{
@@ -279,7 +291,10 @@ namespace EditorGUITable
 
 				tableState.ResizeColumn (i, currentX, rect);
 
-				GUI.enabled = column.entry.enabledTitle;
+				if (tableEntry.demoVersion)
+					GUI.enabled = false;
+				else
+					GUI.enabled = column.entry.enabledTitle;
 
 				if (GUI.Button(new Rect(currentX, currentY, tableState.columnSizes[i]+4, EditorGUIUtility.singleLineHeight), columnName, EditorStyles.miniButtonMid) && column.entry.isSortable)
 				{
@@ -308,7 +323,8 @@ namespace EditorGUITable
 			List<TableCell> row, 
 			float currentX,
 			float currentY,
-			float rowHeight)
+			float rowHeight,
+			GUITableEntry tableEntry)
 		{
 
 			for (int i = 0 ; i < row.Count ; i++)
@@ -322,10 +338,54 @@ namespace EditorGUITable
 					continue;
 				TableColumn column = columns [i];
 				TableCell property = row[i];
-				GUI.enabled = column.entry.enabledCells;
+				if (tableEntry.demoVersion)
+					GUI.enabled = false;
+				else
+					GUI.enabled = column.entry.enabledCells;	
 				property.DrawCell (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
 				currentX += tableState.columnSizes[i] + 4f;
 			}
+		}
+
+		static void DrawFullVersionButton (Rect tableRect)
+		{
+			GUI.enabled = true;
+			if (goodButton (new Rect (tableRect.center.x - 100f, tableRect.center.y - 30f, 200f, 60f), "Get the Full Version"))
+				Application.OpenURL (FULL_VERSION_URL);
+		}
+
+
+
+		static bool goodButton(Rect bounds, string caption) {
+			GUIStyle btnStyle = GUI.skin.FindStyle("button");
+			int controlID = GUIUtility.GetControlID(bounds.GetHashCode(), FocusType.Passive);
+
+			bool isMouseOver = bounds.Contains(Event.current.mousePosition);
+			bool isDown = GUIUtility.hotControl == controlID;
+
+			if (GUIUtility.hotControl != 0 && !isDown) {
+				// ignore mouse while some other control has it
+				// (this is the key bit that GUI.Button appears to be missing)
+				isMouseOver = false;
+			}
+
+			if (Event.current.type == EventType.Repaint) {
+				btnStyle.Draw(bounds, new GUIContent(caption), isMouseOver, isDown, false, false);
+			}
+			switch (Event.current.GetTypeForControl(controlID)) {
+				case EventType.mouseDown:
+					if (isMouseOver) {  // (note: isMouseOver will be false when another control is hot)
+						GUIUtility.hotControl = controlID;
+					}
+					break;
+
+				case EventType.mouseUp:
+					if (GUIUtility.hotControl == controlID) GUIUtility.hotControl = 0;
+					if (isMouseOver) return true;
+					break;
+			}
+
+			return false;
 		}
 
 	}

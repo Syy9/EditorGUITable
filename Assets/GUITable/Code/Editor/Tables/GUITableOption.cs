@@ -16,6 +16,7 @@ namespace EditorGUITable
 			RowHeight,
 			Reorderable,
 			Filter,
+			DemoVersion,
 		}
 
 		public Type type;
@@ -45,6 +46,11 @@ namespace EditorGUITable
 		public static GUITableOption Filter (Func <SerializedProperty, bool> filter)
 		{
 			return new GUITableOption (Type.Filter, filter);
+		}
+
+		public static GUITableOption DemoVersion ()
+		{
+			return new GUITableOption (Type.DemoVersion, true);
 		}
 	}
 

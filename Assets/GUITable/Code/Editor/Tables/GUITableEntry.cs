@@ -15,6 +15,8 @@ namespace EditorGUITable
 		public bool reorderable = false;
 		public Func <SerializedProperty, bool> filter = null;
 
+		public bool demoVersion = false;
+
 		public GUITableEntry (GUITableOption[] options)
 		{
 			ApplyOptions (options);
@@ -39,6 +41,9 @@ namespace EditorGUITable
 						break;
 					case GUITableOption.Type.Filter:
 						this.filter = (Func<SerializedProperty, bool>) option.value;
+						break;
+					case GUITableOption.Type.DemoVersion:
+						this.demoVersion = (bool) option.value;
 						break;
 				}
 			}
