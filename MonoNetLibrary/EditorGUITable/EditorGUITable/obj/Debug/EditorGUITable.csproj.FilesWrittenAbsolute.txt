@@ -1,0 +1,16 @@
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/UnityEngine.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/UnityEditor.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/Mono.Cecil.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/Unity.SerializationLogic.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/Unity.DataContract.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/Unity.UNetWeaver.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/Unity.CecilTools.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/EditorGUITable.dll.mdb
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/EditorGUITable.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/obj/Debug/EditorGUITable.dll
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/obj/Debug/EditorGUITable.dll.mdb
+/Users/jquentin/Documents/Projects/EditorGUITable/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Debug/System.Core.dll
