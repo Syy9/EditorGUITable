@@ -257,7 +257,7 @@ namespace EditorGUITable
 
 			if (tableEntry.demoVersion)
 			{
-				DrawFullVersionButton (new Rect (rect.x, rect.y, tableState.totalWidth, cells.Count * tableEntry.rowHeight + EditorGUIUtility.singleLineHeight));
+				DrawFullVersionButton (new Rect (rect.x, rect.y, Mathf.Min (Screen.width / EditorGUIUtility.pixelsPerPoint, tableState.totalWidth), cells.Count * tableEntry.rowHeight + EditorGUIUtility.singleLineHeight));
 			}
 
 			return tableState;
