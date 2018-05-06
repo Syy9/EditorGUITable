@@ -40,7 +40,7 @@ public class AdvancedExampleWindow : EditorWindow
 
 		List<TableColumn> columns = new List<TableColumn>()
 		{
-			new TableColumn("Name", TableColumn.Width(60f), TableColumn.ExpandWidth(true)),
+			new TableColumn("Name", TableColumn.Width(60f)),
 			new TableColumn("Prefab", TableColumn.Width(50f), TableColumn.EnabledCells(false), TableColumn.Optional(true)),
 			new TableColumn("Type", TableColumn.Width(50f), TableColumn.Optional(true)),
 			new TableColumn("Health", TableColumn.Width(50f)),
