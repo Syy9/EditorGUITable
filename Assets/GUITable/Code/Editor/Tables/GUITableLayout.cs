@@ -23,8 +23,9 @@ namespace EditorGUITable
 		/// similar to what Unity would show in the classic vertical collection display, but as a table instead.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
-		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="tableState">The Table state.</param>
+		/// <param name="collectionProperty">The serialized property of the collection.</param>
+		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable (
 			GUITableState tableState,
 			SerializedProperty collectionProperty, 
@@ -48,9 +49,10 @@ namespace EditorGUITable
 		/// PropertyCell instances for each element.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
+		/// <param name="tableState">The Table state.</param>
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="properties">The paths (names) of the properties to display.</param>
-		/// <param name="tableState">The Table state.</param>
+		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			SerializedProperty collectionProperty, 
@@ -68,9 +70,10 @@ namespace EditorGUITable
 		/// that takes a SerializedProperty and returns the TableCell to put in the corresponding cell.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
+		/// <param name="tableState">The Table state.</param>
 		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="columns">The Selector Columns.</param>
-		/// <param name="tableState">The Table state.</param>
+		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			SerializedProperty collectionProperty, 
@@ -100,9 +103,10 @@ namespace EditorGUITable
 		/// A collectionProperty is needed for reorderable tables. Use an overload with a collectionProperty.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
+		/// <param name="tableState">The Table state.</param>
 		/// <param name="columns">The Columns of the table.</param>
 		/// <param name="cells">The Cells as a list of rows.</param>
-		/// <param name="tableState">The Table state.</param>
+		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			List<TableColumn> columns, 
@@ -112,6 +116,16 @@ namespace EditorGUITable
 			return DrawTable (tableState, columns, cells, null, options);
 		}
 
+		/// <summary>
+		/// Draw a table completely manually.
+		/// Each cell has to be created and given as parameter in cells.
+		/// </summary>
+		/// <returns>The updated table state.</returns>
+		/// <param name="tableState">The Table state.</param>
+		/// <param name="columns">The Columns of the table.</param>
+		/// <param name="cells">The Cells as a list of rows.</param>
+		/// <param name="collectionProperty">The SerializeProperty of the collection. This is useful for reorderable tables.</param>
+		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			List<TableColumn> columns, 
