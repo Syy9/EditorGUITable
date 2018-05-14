@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{05CF75DA-94B2-43C9-AD88-7459CA076E9A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>EditorGUITable</RootNamespace>
+    <AssemblyName>EditorGUITable</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\Managed\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="RabbitMQ.Client" />
+    <Reference Include="Npgsql" />
+    <Reference Include="Novell.Directory.Ldap" />
+    <Reference Include="Mono.WebBrowser" />
+    <Reference Include="Mono.Tasklets" />
+    <Reference Include="Mono.Simd" />
+    <Reference Include="Mono.Security.Win32" />
+    <Reference Include="Mono.Security" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Mono.Messaging.RabbitMQ" />
+    <Reference Include="Mono.Messaging" />
+    <Reference Include="Mono.Management" />
+    <Reference Include="Mono.Http" />
+    <Reference Include="Mono.Debugger.Soft" />
+    <Reference Include="Mono.Data.Tds" />
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="Mono.CSharp" />
+    <Reference Include="Mono.CompilerServices.SymbolWriter" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="Mono.C5" />
+    <Reference Include="Microsoft.VisualC" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.Build.Utilities" />
+    <Reference Include="Microsoft.Build.Tasks" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="ICSharpCode.SharpZipLib" />
+    <Reference Include="cscompmgd" />
+    <Reference Include="Commons.Xml.Relaxng" />
+    <Reference Include="Boo.Lang.Useful, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67" />
+    <Reference Include="Boo.Lang.PatternMatching, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67" />
+    <Reference Include="Boo.Lang.Parser, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67" />
+    <Reference Include="Boo.Lang.Interpreter, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67" />
+    <Reference Include="Boo.Lang.Extensions, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67" />
+    <Reference Include="Boo.Lang.Compiler, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67" />
+    <Reference Include="Boo.Lang.CodeDom, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67" />
+    <Reference Include="Boo.Lang, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67" />
+    <Reference Include="Accessibility" />
+    <Reference Include="UnityScript.Lang, Version=1.0.0.0, Culture=neutral" />
+    <Reference Include="UnityScript, Version=1.0.0.0, Culture=neutral" />
+    <Reference Include="System.Core">
+      <HintPath>..\..\..\..\..\..\..\..\Applications\Unity\Unity.app\Contents\Mono\lib\mono\2.0\System.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\..\Assets\GUITable\Code\Attributes\ReorderableTableAttribute.cs">
+      <Link>Code\Attributes\ReorderableTableAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Attributes\TableAttribute.cs">
+      <Link>Code\Attributes\TableAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Cells\ActionCell.cs">
+      <Link>Code\Editor\Cells\ActionCell.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Cells\LabelCell.cs">
+      <Link>Code\Editor\Cells\LabelCell.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Cells\PropertyCell.cs">
+      <Link>Code\Editor\Cells\PropertyCell.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Cells\TableCell.cs">
+      <Link>Code\Editor\Cells\TableCell.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Columns\SelectFromCellTypeColumn.cs">
+      <Link>Code\Editor\Columns\SelectFromCellTypeColumn.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Columns\SelectFromFunctionColumn.cs">
+      <Link>Code\Editor\Columns\SelectFromFunctionColumn.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Columns\SelectFromPropertyColumn.cs">
+      <Link>Code\Editor\Columns\SelectFromPropertyColumn.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Columns\SelectorColumn.cs">
+      <Link>Code\Editor\Columns\SelectorColumn.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Columns\TableColumn.cs">
+      <Link>Code\Editor\Columns\TableColumn.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Columns\TableColumnEntry.cs">
+      <Link>Code\Editor\Columns\TableColumnEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Columns\TableColumnOption.cs">
+      <Link>Code\Editor\Columns\TableColumnOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Drawers\ReorderableTableDrawer.cs">
+      <Link>Code\Editor\Drawers\ReorderableTableDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Drawers\TableDrawer.cs">
+      <Link>Code\Editor\Drawers\TableDrawer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITable.cs">
+      <Link>Code\Editor\Tables\GUITable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITableEntry.cs">
+      <Link>Code\Editor\Tables\GUITableEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITableLayout.cs">
+      <Link>Code\Editor\Tables\GUITableLayout.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITableOption.cs">
+      <Link>Code\Editor\Tables\GUITableOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITableState.cs">
+      <Link>Code\Editor\Tables\GUITableState.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="..\..\..\Assets\GUITable\Code\Attributes.meta">
+      <Link>Code\Attributes.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor.meta">
+      <Link>Code\Editor.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Attributes\ReorderableTableAttribute.cs.meta">
+      <Link>Code\Attributes\ReorderableTableAttribute.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Attributes\TableAttribute.cs.meta">
+      <Link>Code\Attributes\TableAttribute.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Cells.meta">
+      <Link>Code\Editor\Cells.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Columns.meta">
+      <Link>Code\Editor\Columns.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Drawers.meta">
+      <Link>Code\Editor\Drawers.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Tables.meta">
+      <Link>Code\Editor\Tables.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Cells\ActionCell.cs.meta">
+      <Link>Code\Editor\Cells\ActionCell.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Cells\LabelCell.cs.meta">
+      <Link>Code\Editor\Cells\LabelCell.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Cells\PropertyCell.cs.meta">
+      <Link>Code\Editor\Cells\PropertyCell.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Cells\TableCell.cs.meta">
+      <Link>Code\Editor\Cells\TableCell.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Columns\SelectFromCellTypeColumn.cs.meta">
+      <Link>Code\Editor\Columns\SelectFromCellTypeColumn.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Columns\SelectFromFunctionColumn.cs.meta">
+      <Link>Code\Editor\Columns\SelectFromFunctionColumn.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Columns\SelectFromPropertyColumn.cs.meta">
+      <Link>Code\Editor\Columns\SelectFromPropertyColumn.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Columns\SelectorColumn.cs.meta">
+      <Link>Code\Editor\Columns\SelectorColumn.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Columns\TableColumn.cs.meta">
+      <Link>Code\Editor\Columns\TableColumn.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Columns\TableColumnEntry.cs.meta">
+      <Link>Code\Editor\Columns\TableColumnEntry.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Columns\TableColumnOption.cs.meta">
+      <Link>Code\Editor\Columns\TableColumnOption.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Drawers\ReorderableTableDrawer.cs.meta">
+      <Link>Code\Editor\Drawers\ReorderableTableDrawer.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Drawers\TableDrawer.cs.meta">
+      <Link>Code\Editor\Drawers\TableDrawer.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITable.cs.meta">
+      <Link>Code\Editor\Tables\GUITable.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITableEntry.cs.meta">
+      <Link>Code\Editor\Tables\GUITableEntry.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITableLayout.cs.meta">
+      <Link>Code\Editor\Tables\GUITableLayout.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITableOption.cs.meta">
+      <Link>Code\Editor\Tables\GUITableOption.cs.meta</Link>
+    </None>
+    <None Include="..\..\..\Assets\GUITable\Code\Editor\Tables\GUITableState.cs.meta">
+      <Link>Code\Editor\Tables\GUITableState.cs.meta</Link>
+    </None>
+  </ItemGroup>
+</Project>
