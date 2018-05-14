@@ -1,0 +1,16 @@
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/EditorGUITable.dll.mdb
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/EditorGUITable.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/obj/Release/EditorGUITable.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/obj/Release/EditorGUITable.dll.mdb
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/UnityEngine.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/UnityEditor.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/System.Core.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/Mono.Cecil.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/Unity.SerializationLogic.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/Unity.DataContract.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/ICSharpCode.NRefactory.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/Unity.UNetWeaver.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/Unity.UNetWeaver.dll.mdb
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/Unity.CecilTools.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/Mono.Cecil.Pdb.dll
+/Users/jquentin/Documents/Projects/EditorGUITable_Lite/MonoNetLibrary/EditorGUITable/EditorGUITable/bin/Release/Mono.Cecil.Mdb.dll
