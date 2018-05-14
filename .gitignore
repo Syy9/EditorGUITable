@@ -34,3 +34,4 @@ sysinfo.txt
 *.unitypackage
 
 MonoNetLibrary/TestLibrary/TestLibrary/Library
+MonoNetLibrary/TestLibrary/TestLibrary/Temp
