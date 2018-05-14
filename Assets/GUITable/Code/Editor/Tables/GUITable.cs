@@ -232,7 +232,9 @@ namespace EditorGUITable
 			if (tableEntry.allowScrollView)
 			{
 				tableState.scrollPos = GUI.BeginScrollView (
-					new Rect (currentX, currentY, rect.width, Mathf.Min (rect.height, Screen.height / EditorGUIUtility.pixelsPerPoint - rect.y - 40)),
+					// TODO: Put back support for internal vertical scroll bar, maybe as an option
+					//new Rect (currentX, currentY, rect.width, Mathf.Min (rect.height, Screen.height / EditorGUIUtility.pixelsPerPoint - rect.y - 40)),
+					new Rect (currentX, currentY, rect.width, rect.height),
 					tableState.scrollPos, 
 					new Rect(0f, 0f, tableState.totalWidth, tableEntry.rowHeight * cells.Count));
 				currentX = 0f;

@@ -62,7 +62,7 @@ namespace EditorGUITable
 			}
 
 			Rect position = GUILayoutUtility.GetRect (
-				tableState.totalWidth,
+				tableEntry.allowScrollView ? Screen.width / EditorGUIUtility.pixelsPerPoint - 40 : tableState.totalWidth,
 				(tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * rows.Count + EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1));
 			if (Event.current.type == EventType.Layout)
 				return tableState;
