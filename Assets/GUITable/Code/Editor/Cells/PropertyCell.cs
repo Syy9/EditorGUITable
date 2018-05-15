@@ -18,20 +18,6 @@ namespace EditorGUITable
 		SerializedObject so;
 		string propertyPath;
 
-		public override void DrawCellLayout (float width, float height)
-		{
-			if (sp != null)
-			{
-				EditorGUILayout.PropertyField (sp, GUIContent.none, GUILayout.Width (width), GUILayout.Height (height));
-				so.ApplyModifiedProperties ();
-			}
-			else
-			{
-				Debug.LogWarningFormat ("Property not found: {0} -> {1}", so.targetObject.name, propertyPath);
-				GUILayout.Space (width + 4f);
-			}
-		}
-
 		public override void DrawCell (Rect rect)
 		{
 			if (sp != null)

@@ -17,11 +17,6 @@ namespace EditorGUITable
 
 		string value;
 
-		public override void DrawCellLayout (float width, float height)
-		{
-			EditorGUILayout.LabelField (value, GUILayout.Width (width), GUILayout.Height (height));
-		}
-
 		public override void DrawCell (Rect rect)
 		{
 			GUI.Label(rect, value);

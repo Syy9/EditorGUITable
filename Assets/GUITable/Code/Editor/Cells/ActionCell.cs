@@ -15,14 +15,6 @@ namespace EditorGUITable
 	{
 		string name;
 		System.Action action;
-		public override void DrawCellLayout (float width, float height)
-		{
-			if (GUILayout.Button (name, GUILayout.Width (width), GUILayout.Height (height)))
-			{
-				if (action != null)
-					action.Invoke ();
-			}
-		}
 
 		public override void DrawCell (Rect rect)
 		{
