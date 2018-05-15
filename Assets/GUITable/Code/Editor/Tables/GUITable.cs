@@ -33,14 +33,30 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options) 
 		{
-			List<string> properties = new List<string>();
 			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
-			foreach (SerializedProperty prop in collectionProperty.serializedObject.FindProperty(firstElementPath))
+			List<string> properties = new List<string>();
+			SerializedProperty firstElement = collectionProperty.FindPropertyRelative (firstElementPath);
+			if (firstElement.propertyType == SerializedPropertyType.ObjectReference)
 			{
-				string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
-				// Avoid drawing properties more than 1 level deep
-				if (!subPropName.Contains("."))
-					properties.Add (subPropName);
+				SerializedProperty sp = new SerializedObject (firstElement.objectReferenceValue).GetIterator ();
+				sp.Next (true);
+				while (sp.NextVisible(false))
+				{
+					if (!sp.propertyPath.Contains(".") && sp.name != "m_Script")
+					{
+						properties.Add (sp.propertyPath);
+					}
+				}
+			}
+			else
+			{
+				foreach (SerializedProperty prop in firstElement)
+				{
+					string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
+					// Avoid drawing properties more than 1 level deep
+					if (!subPropName.Contains("."))
+						properties.Add (subPropName);
+				}
 			}
 			return DrawTable (rect, tableState, collectionProperty, properties, options);
 		}

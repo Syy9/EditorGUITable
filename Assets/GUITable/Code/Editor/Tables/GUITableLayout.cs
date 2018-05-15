@@ -31,14 +31,30 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty, 
 			params GUITableOption[] options) 
 		{
+			string firstElementPath = "Array.data[0]";
 			List<string> properties = new List<string>();
-			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
-			foreach (SerializedProperty prop in collectionProperty.serializedObject.FindProperty(firstElementPath))
+			SerializedProperty firstElement = collectionProperty.FindPropertyRelative (firstElementPath);
+			if (firstElement.propertyType == SerializedPropertyType.ObjectReference)
 			{
-				string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
-				// Avoid drawing properties more than 1 level deep
-				if (!subPropName.Contains("."))
-					properties.Add (subPropName);
+				SerializedProperty sp = new SerializedObject (firstElement.objectReferenceValue).GetIterator ();
+				sp.Next (true);
+				while (sp.NextVisible(false))
+				{
+					if (!sp.propertyPath.Contains(".") && sp.name != "m_Script")
+					{
+						properties.Add (sp.propertyPath);
+					}
+				}
+			}
+			else
+			{
+				foreach (SerializedProperty prop in firstElement)
+				{
+					string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
+					// Avoid drawing properties more than 1 level deep
+					if (!subPropName.Contains("."))
+						properties.Add (subPropName);
+				}
 			}
 			return DrawTable (tableState, collectionProperty, properties, options);
 		}
@@ -84,7 +100,7 @@ namespace EditorGUITable
 			List<List<TableCell>> rows = new List<List<TableCell>>();
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
-				SerializedProperty sp = collectionProperty.serializedObject.FindProperty (string.Format ("{0}.Array.data[{1}]", collectionProperty.propertyPath, i));
+				SerializedProperty sp = collectionProperty.FindPropertyRelative (string.Format ("Array.data[{0}]", i));
 				if (tableEntry.filter != null && !tableEntry.filter (sp))
 					continue;
 				List <TableCell> row = new List<TableCell>();
