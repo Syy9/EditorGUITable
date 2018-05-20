@@ -36,7 +36,7 @@ namespace EditorGUITable
 			params GUITableOption[] options) 
 		{
 
-			List <string> properties = ReflectionHelpers.GetElementsSerializedFields (collectionProperty);
+			List <string> properties = SerializationHelpers.GetElementsSerializedFields (collectionProperty);
 			if (properties == null && collectionProperty.arraySize == 0)
 			{
 				DrawTable (
@@ -99,7 +99,7 @@ namespace EditorGUITable
 			List<List<TableCell>> rows = new List<List<TableCell>>();
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
-				SerializedProperty sp = collectionProperty.serializedObject.FindProperty (string.Format ("{0}.Array.data[{1}]", collectionProperty.propertyPath, i));
+				SerializedProperty sp = collectionProperty.FindPropertyRelative (SerializationHelpers.GetElementAtIndexRelativePath (i));
 				if (tableEntry.filter != null && !tableEntry.filter (sp))
 					continue;
 				List<TableCell> row = new List<TableCell>();
