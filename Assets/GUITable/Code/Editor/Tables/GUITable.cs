@@ -17,6 +17,8 @@ namespace EditorGUITable
 	public static class GUITable
 	{
 
+		static readonly Color TABLE_BG_COLOR = new Color (0.3f, 0.3f, 0.3f);
+
 		/// <summary>
 		/// Draw a table just from the collection's property.
 		/// This will create columns for all the visible members in the elements' class,
@@ -33,30 +35,21 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options) 
 		{
-			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
-			List<string> properties = new List<string>();
-			SerializedProperty firstElement = collectionProperty.FindPropertyRelative (firstElementPath);
-			if (firstElement.propertyType == SerializedPropertyType.ObjectReference)
+
+			List <string> properties = ReflectionHelpers.GetElementsSerializedFields (collectionProperty);
+			if (properties == null && collectionProperty.arraySize == 0)
 			{
-				SerializedProperty sp = new SerializedObject (firstElement.objectReferenceValue).GetIterator ();
-				sp.Next (true);
-				while (sp.NextVisible(false))
+				DrawTable (
+					rect,
+					null, 
+					new List<TableColumn> () 
 				{
-					if (!sp.propertyPath.Contains(".") && sp.name != "m_Script")
-					{
-						properties.Add (sp.propertyPath);
-					}
-				}
-			}
-			else
-			{
-				foreach (SerializedProperty prop in firstElement)
-				{
-					string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
-					// Avoid drawing properties more than 1 level deep
-					if (!subPropName.Contains("."))
-						properties.Add (subPropName);
-				}
+					new TableColumn (collectionProperty.displayName + "(properties unknown, add at least 1 element)", TableColumn.Sortable (false), TableColumn.Resizeable (false))
+				}, 
+					new List <List <TableCell>> (),
+					collectionProperty, 
+					options);
+				return tableState;
 			}
 			return DrawTable (rect, tableState, collectionProperty, properties, options);
 		}
@@ -227,7 +220,7 @@ namespace EditorGUITable
 			float rowHeight = tableEntry.rowHeight;
 
 			float currentX = rect.x;
-			float currentY = rect.y;
+			float currentY = rect.y + 5;
 
 			bool displayScrollView = tableState.totalWidth > rect.width && tableEntry.allowScrollView;
 
@@ -242,18 +235,27 @@ namespace EditorGUITable
 			if (tableEntry.allowScrollView)
 			{
 				tableState.scrollPos = GUI.BeginScrollView (
-					new Rect (currentX, currentY, rect.width, Mathf.Min (rect.height, Screen.height / EditorGUIUtility.pixelsPerPoint - rect.y - 40)),
+					new Rect (currentX, currentY, rect.width, TableHeight (tableEntry, cells.Count)),
 					tableState.scrollPos, 
 					new Rect(0f, 0f, tableState.totalWidth, tableEntry.rowHeight * cells.Count));
 				currentX = 0f;
 				currentY = 0f;
 			}
 
-			foreach (List<TableCell> row in orderedRows)
+			if (orderedRows.Count == 0)
 			{
 				currentX = tableEntry.allowScrollView ? 0 : rect.x;
-				DrawLine (tableState, columns, row, currentX, currentY, rowHeight);
-				currentY += rowHeight;
+				GUIHelpers.DrawRect (new Rect (currentX, currentY, tableState.totalWidth, rowHeight), TABLE_BG_COLOR);
+				GUI.Label (new Rect (currentX + 5, currentY, rect.width, rowHeight), "Collection is empty");
+			}
+			else
+			{
+				foreach (List<TableCell> row in orderedRows)
+				{
+					currentX = tableEntry.allowScrollView ? 0 : rect.x;
+					DrawLine (tableState, columns, row, currentX, currentY, rowHeight);
+					currentY += rowHeight;
+				}
 			}
 
 			GUI.enabled = true;
@@ -342,6 +344,12 @@ namespace EditorGUITable
 				property.DrawCell (new Rect(currentX, currentY, tableState.columnSizes[i], rowHeight));
 				currentX += tableState.columnSizes[i] + 4f;
 			}
+		}
+
+		public static float TableHeight (GUITableEntry tableEntry, int nbRows)
+		{
+			return (tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * Mathf.Max(1, nbRows) 
+			+ EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1);
 		}
 
 	}

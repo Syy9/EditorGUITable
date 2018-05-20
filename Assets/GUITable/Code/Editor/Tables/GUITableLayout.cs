@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,30 +32,19 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty, 
 			params GUITableOption[] options) 
 		{
-			string firstElementPath = "Array.data[0]";
-			List<string> properties = new List<string>();
-			SerializedProperty firstElement = collectionProperty.FindPropertyRelative (firstElementPath);
-			if (firstElement.propertyType == SerializedPropertyType.ObjectReference)
+			List <string> properties = ReflectionHelpers.GetElementsSerializedFields (collectionProperty);
+			if (properties == null && collectionProperty.arraySize == 0)
 			{
-				SerializedProperty sp = new SerializedObject (firstElement.objectReferenceValue).GetIterator ();
-				sp.Next (true);
-				while (sp.NextVisible(false))
-				{
-					if (!sp.propertyPath.Contains(".") && sp.name != "m_Script")
+				DrawTable (
+					null, 
+					new List<TableColumn> () 
 					{
-						properties.Add (sp.propertyPath);
-					}
-				}
-			}
-			else
-			{
-				foreach (SerializedProperty prop in firstElement)
-				{
-					string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
-					// Avoid drawing properties more than 1 level deep
-					if (!subPropName.Contains("."))
-						properties.Add (subPropName);
-				}
+					new TableColumn (collectionProperty.displayName + "(properties unknown, add at least 1 element)", TableColumn.Sortable (false), TableColumn.Resizeable (false))
+					}, 
+					new List <List <TableCell>> (),
+					collectionProperty, 
+					options);
+				return tableState;
 			}
 			return DrawTable (tableState, collectionProperty, properties, options);
 		}
@@ -157,9 +147,14 @@ namespace EditorGUITable
 				tableState.CheckState(columns, tableEntry, float.MaxValue);
 			}
 
+			float requiredHeight = GUITable.TableHeight (tableEntry, cells.Count) + 10;
+
+			if (tableEntry.allowScrollView && tableState.totalWidth + 19 > Screen.width / EditorGUIUtility.pixelsPerPoint)
+				requiredHeight += EditorGUIUtility.singleLineHeight;
+			
 			Rect position = GUILayoutUtility.GetRect(
-				tableState.totalWidth, 
-				(tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * cells.Count + EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1));
+				tableEntry.allowScrollView ? Screen.width / EditorGUIUtility.pixelsPerPoint - 40 : tableState.totalWidth,
+				requiredHeight);
 			if (Event.current.type == EventType.Layout)
 				return tableState;
 			else
