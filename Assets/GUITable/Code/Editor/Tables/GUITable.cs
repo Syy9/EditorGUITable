@@ -36,7 +36,8 @@ namespace EditorGUITable
 			params GUITableOption[] options) 
 		{
 
-			List <string> properties = SerializationHelpers.GetElementsSerializedFields (collectionProperty);
+			bool isObjectReferencesCollection = false;
+			List <string> properties = SerializationHelpers.GetElementsSerializedFields (collectionProperty, out isObjectReferencesCollection);
 			if (properties == null && collectionProperty.arraySize == 0)
 			{
 				DrawTable (
@@ -50,6 +51,13 @@ namespace EditorGUITable
 					collectionProperty, 
 					options);
 				return tableState;
+			}
+			if (isObjectReferencesCollection)
+			{
+				List<SelectorColumn> columns = new List<SelectorColumn> ();
+				columns.Add (new SelectObjectReferenceColumn ("Object Reference", TableColumn.Optional (true)));
+				columns.AddRange (properties.Select (prop => (SelectorColumn) new SelectFromPropertyNameColumn (prop, ObjectNames.NicifyVariableName (prop))));
+				return DrawTable (rect, tableState, collectionProperty, columns, options);
 			}
 			return DrawTable (rect, tableState, collectionProperty, properties, options);
 		}

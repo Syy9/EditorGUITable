@@ -40,8 +40,10 @@ public static class SerializationHelpers
 		return null;
 	}
 
-	public static List<string> GetElementsSerializedFields (SerializedProperty collectionProperty)
+	public static List<string> GetElementsSerializedFields (SerializedProperty collectionProperty, out bool isObjectReferencesCollection)
 	{
+		isObjectReferencesCollection = false;
+
 		List<string> properties = new List<string>();
 
 		SerializedProperty firstElement = GetFirstNonNullElement (collectionProperty);
@@ -52,7 +54,7 @@ public static class SerializationHelpers
 			// If the elements are object references, get the properties of the target object type
 			if (firstElement.propertyType == SerializedPropertyType.ObjectReference)
 			{
-				Debug.Log (firstElement.objectReferenceValue);
+				isObjectReferencesCollection = true;
 				SerializedProperty sp = new SerializedObject (firstElement.objectReferenceValue).GetIterator ();
 				sp.Next (true);
 				while (sp.NextVisible(false))
@@ -83,8 +85,11 @@ public static class SerializationHelpers
 			string elementType = collectionProperty.arrayElementType;
 			// If the elements are object references, we use the target object type 
 			if (elementType.StartsWith ("PPtr"))
+			{
 				// The type for object references will be in the form "PPtr<ObjectType>", so we just extract the "ObjectType"
 				elementType = elementType.Substring (6, elementType.Length - 7);
+				isObjectReferencesCollection = true;
+			}
 			// Type.GetType will only search in a few assemblies, so we use this more complete function
 			Type type = ReflectionHelpers.GetType (elementType);
 			// arrayElementType will not tell us if the type is a nested type, so we try the nested types of the serializedObject
