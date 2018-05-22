@@ -22,9 +22,6 @@ public class AdvancedExampleEditor : Editor
 
 		base.OnInspectorGUI();
 
-//		EditorGUILayout.PropertyField (serializedObject.FindProperty("enemies"), true);
-//		serializedObject.ApplyModifiedProperties();
-
 		GUILayout.Space (20f);
 
 		GUILayout.Label ("Table display", EditorStyles.boldLabel);

@@ -11,12 +11,6 @@ public class AdvancedExampleWindow : EditorWindow
 
 	GUITableState tableState;
 
-
-	void OnEnable ()
-	{
-//		tableState = new GUITableState("tableState2");
-	}
-
 	public static void Init ()
 	{
 		AdvancedExampleWindow window = EditorWindow.GetWindow<AdvancedExampleWindow>();
@@ -37,45 +31,42 @@ public class AdvancedExampleWindow : EditorWindow
 	{
 
 		SerializedObject serializedObject = new SerializedObject(AdvancedExample.Instance);
-
-		List<TableColumn> columns = new List<TableColumn>()
-		{
-			new TableColumn("Name", TableColumn.Width(60f), TableColumn.ExpandWidth(true)),
-			new TableColumn("Prefab", TableColumn.Width(50f), TableColumn.EnabledCells(false), TableColumn.Optional(true)),
-			new TableColumn("Type", TableColumn.Width(50f), TableColumn.Optional(true)),
-			new TableColumn("Health", TableColumn.Width(50f)),
-			new TableColumn("Speed", TableColumn.Width(50f)),
-			new TableColumn("Color", TableColumn.Width(50f), TableColumn.Optional(true)),
-			new TableColumn("Can Swim", TableColumn.Width(30f), TableColumn.Optional(true)),
-			new TableColumn("Spawners", TableColumn.Width(450f), TableColumn.Optional(true)),
-			new TableColumn("Intro (shared by type)", TableColumn.Width(110f), TableColumn.Optional(true)),
-			new TableColumn("Instantiation", TableColumn.Width(110f), TableColumn.Optional(true))
-		};
-
-		List<List<TableCell>> rows = new List<List<TableCell>>();
-
 		AdvancedExample targetObject = (AdvancedExample) serializedObject.targetObject;
 
-		for (int i = 0 ; i < targetObject.enemies.Count ; i++)
+		List <SelectorColumn> columns = new List<SelectorColumn> ();
+		columns.Add (new SelectObjectReferenceColumn ("Enemy Prefab", TableColumn.Width(75f), TableColumn.EnabledCells(false), TableColumn.Optional(true)));
+		columns.Add (new SelectFromPropertyNameColumn ("type", "Type", TableColumn.Width(50f), TableColumn.Optional(true)));
+		columns.Add (new SelectFromPropertyNameColumn ("health", "Health", TableColumn.Width(50f)));
+		columns.Add (new SelectFromPropertyNameColumn ("speed", "Speed", TableColumn.Width(50f)));
+		columns.Add (new SelectFromPropertyNameColumn ("color", "Color", TableColumn.Width(50f), TableColumn.Optional(true)));
+		columns.Add (new SelectFromPropertyNameColumn ("canSwim", "Can Swim", TableColumn.Width(30f), TableColumn.Optional(true)));
+		columns.Add (new SelectFromFunctionColumn (
+			sp => new SpawnersCell (new SerializedObject (sp.objectReferenceValue), "spawnersMask"), 
+			"Spawners", 
+			TableColumn.Width(450f), 
+			TableColumn.Optional(true)));
+		columns.Add (new SelectFromFunctionColumn (
+			sp =>
 		{
-			Enemy enemy = targetObject.enemies[i];
+			Enemy enemy = (Enemy) sp.objectReferenceValue;
 			int sentenceIndex = targetObject.introSentences.FindIndex(s => s.enemyType == enemy.type);
-			rows.Add (new List<TableCell>()
-			{
-				new LabelCell (enemy.name),
-				new PropertyCell (serializedObject, string.Format("enemies.Array.data[{0}]", i)),
-				new PropertyCell (new SerializedObject(enemy), "type"),
-				new PropertyCell (new SerializedObject(enemy), "health"),
-				new PropertyCell (new SerializedObject(enemy), "speed"),
-				new PropertyCell (new SerializedObject(enemy), "color"),
-				new PropertyCell (new SerializedObject(enemy), "canSwim"),
-				new SpawnersCell (new SerializedObject(enemy), "spawnersMask"),
-				new PropertyCell (serializedObject, string.Format("introSentences.Array.data[{0}].sentence", sentenceIndex)),
-				new ActionCell ("Instantiate", () => enemy.Instantiate ()),
-			});
-		}
+			return new PropertyCell (serializedObject, string.Format("introSentences.Array.data[{0}].sentence", sentenceIndex));
+		}, 
+			"Intro (shared by type)", 
+			TableColumn.Width(110f), 
+			TableColumn.Optional(true)));
+		columns.Add (new SelectFromFunctionColumn (
+			sp => 
+		{
+			Enemy enemy = (Enemy) sp.objectReferenceValue;
+			return new ActionCell ("Instantiate", () => enemy.Instantiate ());
+		}, 
+			"Instantiation", 
+			TableColumn.Width(110f), 
+			TableColumn.Optional(true)));
 
-		tableState = GUITableLayout.DrawTable (tableState, columns, rows);
+		tableState = GUITableLayout.DrawTable (tableState, serializedObject.FindProperty ("enemies"), columns);
+
 	}
 
 }
