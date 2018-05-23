@@ -16,7 +16,6 @@ namespace EditorGUITable
 		SerializedProperty sp;
 		SerializedObject so;
 		string propertyPath;
-		Type type;
 
 		public override void DrawCell (Rect rect)
 		{
@@ -51,14 +50,6 @@ namespace EditorGUITable
 			this.so = so;
 			this.propertyPath = propertyPath;
 			this.sp = so.FindProperty(propertyPath);
-		}
-
-		public ObjectCell (SerializedObject so, string propertyPath, Type type)
-		{
-			this.so = so;
-			this.propertyPath = propertyPath;
-			this.sp = so.FindProperty(propertyPath);
-			this.type = type;
 		}
 
 	}
