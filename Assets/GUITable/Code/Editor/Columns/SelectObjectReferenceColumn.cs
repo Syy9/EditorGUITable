@@ -21,7 +21,7 @@ namespace EditorGUITable
 		{
 			if (elementProperty.propertyType == SerializedPropertyType.ObjectReference)
 			{
-				return new PropertyCell (elementProperty);
+				return new ObjectCell (elementProperty);
 			}
 			else
 			{
