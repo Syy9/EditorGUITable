@@ -2,29 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TableColumnOption
+namespace EditorGUITable
 {
 
-	public enum Type
+	public class TableColumnOption
 	{
-		ExpandWidth,
-		Width,
-		MinWidth,
-		MaxWidth,
-		Resizeable,
-		Sortable,
-		EnabledCells,
-		EnabledTitle,
-		Optional,
-		VisibleByDefault,
+
+		public enum Type
+		{
+			ExpandWidth,
+			Width,
+			MinWidth,
+			MaxWidth,
+			Resizeable,
+			Sortable,
+			EnabledCells,
+			EnabledTitle,
+			Optional,
+			VisibleByDefault,
+		}
+
+		public Type type;
+		public object value;
+
+		public TableColumnOption(Type type, object value)
+		{
+			this.type = type;
+			this.value = value;
+		}
 	}
 
-	public Type type;
-	public object value;
-
-	public TableColumnOption(Type type, object value)
-	{
-		this.type = type;
-		this.value = value;
-	}
 }
