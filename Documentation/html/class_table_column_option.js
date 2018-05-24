@@ -7,7 +7,7 @@ var class_table_column_option =
       [ "MaxWidth", "class_table_column_option.html#abf345bf5e5f731d15fc65f293b216771ada2861bd822eace4e9fab340cb596dae", null ],
       [ "Resizeable", "class_table_column_option.html#abf345bf5e5f731d15fc65f293b216771ac12da3f7389af7d8a5850e8bd08bcda3", null ],
       [ "Sortable", "class_table_column_option.html#abf345bf5e5f731d15fc65f293b216771a73c130f2bcae405bc5d5cf58bb857991", null ],
-      [ "EnabledEntries", "class_table_column_option.html#abf345bf5e5f731d15fc65f293b216771ad6c21718ccb34a22813d7100c7166e59", null ],
+      [ "EnabledCells", "class_table_column_option.html#abf345bf5e5f731d15fc65f293b216771ab05774820e74ec7e7eb3d0f661dc0558", null ],
       [ "EnabledTitle", "class_table_column_option.html#abf345bf5e5f731d15fc65f293b216771a878dea2370700f41c74b5befb0a5cd70", null ],
       [ "Optional", "class_table_column_option.html#abf345bf5e5f731d15fc65f293b216771aebb061953c0454b2c8ee7b0ac615ebcd", null ],
       [ "VisibleByDefault", "class_table_column_option.html#abf345bf5e5f731d15fc65f293b216771ae0b51f61e51a8a6b2f422a97b1842d0f", null ]

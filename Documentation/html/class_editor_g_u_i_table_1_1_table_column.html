@@ -31,9 +31,9 @@
   <td id="projectlogo"><img alt="Logo" src="Logo_rounded.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Editor GUI Table
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
-   <div id="projectbrief">A plugin to allow programmers to easily create customizable tables in Unity Editor</div>
+   <div id="projectbrief">Allows programmers to easily create customizable tables in Unity Editor</div>
   </td>
  </tr>
  </tbody>
@@ -107,8 +107,11 @@ Inheritance diagram for EditorGUITable.TableColumn:</div>
  <div class="center">
   <img src="class_editor_g_u_i_table_1_1_table_column.png" usemap="#EditorGUITable.TableColumn_map" alt=""/>
   <map id="EditorGUITable.TableColumn_map" name="EditorGUITable.TableColumn_map">
-<area href="class_editor_g_u_i_table_1_1_property_column.html" title="Internal Use Only. This class adds a property to a column. This will be used to automatically draw th..." alt="EditorGUITable.PropertyColumn" shape="rect" coords="0,56,191,80"/>
-<area href="class_editor_g_u_i_table_1_1_selector_column.html" title="This class adds a property and a selector to a column. This will be used to automatically draw the en..." alt="EditorGUITable.SelectorColumn" shape="rect" coords="0,112,191,136"/>
+<area href="class_editor_g_u_i_table_1_1_selector_column.html" title="This class represents a column that can automatically get a cell from an element&#39;s serialized propert..." alt="EditorGUITable.SelectorColumn" shape="rect" coords="445,56,732,80"/>
+<area href="class_editor_g_u_i_table_1_1_select_from_cell_type_column.html" title="This class represents a column that will draw Property Cells from the given property name..." alt="EditorGUITable.SelectFromCellTypeColumn" shape="rect" coords="0,112,287,136"/>
+<area href="class_editor_g_u_i_table_1_1_select_from_function_column.html" title="This class represents a column that will draw cells using the given function from the element&#39;s seria..." alt="EditorGUITable.SelectFromFunctionColumn" shape="rect" coords="297,112,584,136"/>
+<area href="class_editor_g_u_i_table_1_1_select_from_property_name_column.html" title="This class represents a column that will draw Property Cells from the given property name..." alt="EditorGUITable.SelectFromPropertyNameColumn" shape="rect" coords="594,112,881,136"/>
+<area href="class_editor_g_u_i_table_1_1_select_object_reference_column.html" title="This class represents a column that will draw Property Cells from the given property name..." alt="EditorGUITable.SelectObjectReferenceColumn" shape="rect" coords="891,112,1178,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -117,21 +120,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adfb68a7994e1329ac769c79d9d5c332d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_table_column.html#adfb68a7994e1329ac769c79d9d5c332d">TableColumn</a> (string title, params <a class="el" href="class_table_column_option.html">TableColumnOption</a>[] options)</td></tr>
 <tr class="memdesc:adfb68a7994e1329ac769c79d9d5c332d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a column with its title and options. Edit the other public properties for more settings.  <a href="#adfb68a7994e1329ac769c79d9d5c332d">More...</a><br /></td></tr>
 <tr class="separator:adfb68a7994e1329ac769c79d9d5c332d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63ad9fb2478afb63febf24e9ed4d5890"><td class="memItemLeft" align="right" valign="top"><a id="a63ad9fb2478afb63febf24e9ed4d5890"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TableColumn</b> (string title, float width)</td></tr>
-<tr class="separator:a63ad9fb2478afb63febf24e9ed4d5890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef857d5c4fb9b7b9889bb0047f4d3f3a"><td class="memItemLeft" align="right" valign="top"><a id="aef857d5c4fb9b7b9889bb0047f4d3f3a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TableColumn</b> (string title, float width, params <a class="el" href="class_table_column_option.html">TableColumnOption</a>[] options)</td></tr>
+<tr class="separator:aef857d5c4fb9b7b9889bb0047f4d3f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e5f5e33c206ba1d11aa486ff4938b6a"><td class="memItemLeft" align="right" valign="top"><a id="a4e5f5e33c206ba1d11aa486ff4938b6a"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>GetDefaultWidth</b> ()</td></tr>
+<tr class="separator:a4e5f5e33c206ba1d11aa486ff4938b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a09da3ea97c951019a94b0b5123146e7b"><td class="memItemLeft" align="right" valign="top"><a id="a09da3ea97c951019a94b0b5123146e7b"></a>
-static <a class="el" href="class_table_column_option.html">TableColumnOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ExpandWidth</b> (bool enable)</td></tr>
-<tr class="separator:a09da3ea97c951019a94b0b5123146e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a768aecae0a16bd4d69692dfd6a40c809"><td class="memItemLeft" align="right" valign="top"><a id="a768aecae0a16bd4d69692dfd6a40c809"></a>
-static <a class="el" href="class_table_column_option.html">TableColumnOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>MinWidth</b> (float value)</td></tr>
-<tr class="separator:a768aecae0a16bd4d69692dfd6a40c809"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e03c2abfdcb3d3873408de863b5d84a"><td class="memItemLeft" align="right" valign="top"><a id="a4e03c2abfdcb3d3873408de863b5d84a"></a>
-static <a class="el" href="class_table_column_option.html">TableColumnOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>MaxWidth</b> (float value)</td></tr>
-<tr class="separator:a4e03c2abfdcb3d3873408de863b5d84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a131c2c51b8487b35708c14756bc56159"><td class="memItemLeft" align="right" valign="top"><a id="a131c2c51b8487b35708c14756bc56159"></a>
 static <a class="el" href="class_table_column_option.html">TableColumnOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Width</b> (float value)</td></tr>
 <tr class="separator:a131c2c51b8487b35708c14756bc56159"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,9 +141,9 @@ static <a class="el" href="class_table_column_option.html">TableColumnOption</a>
 <tr class="memitem:a75178ce2e3d7ad11758d413968b1fb66"><td class="memItemLeft" align="right" valign="top"><a id="a75178ce2e3d7ad11758d413968b1fb66"></a>
 static <a class="el" href="class_table_column_option.html">TableColumnOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>EnabledTitle</b> (bool value)</td></tr>
 <tr class="separator:a75178ce2e3d7ad11758d413968b1fb66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86d1eda120806f1b74c25e01debcd65e"><td class="memItemLeft" align="right" valign="top"><a id="a86d1eda120806f1b74c25e01debcd65e"></a>
-static <a class="el" href="class_table_column_option.html">TableColumnOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>EnabledEntries</b> (bool value)</td></tr>
-<tr class="separator:a86d1eda120806f1b74c25e01debcd65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe0c1557e311d2bb78b63aa34be04197"><td class="memItemLeft" align="right" valign="top"><a id="afe0c1557e311d2bb78b63aa34be04197"></a>
+static <a class="el" href="class_table_column_option.html">TableColumnOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>EnabledCells</b> (bool value)</td></tr>
+<tr class="separator:afe0c1557e311d2bb78b63aa34be04197"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade101144654dfd6c42c5da8b3aa4f633"><td class="memItemLeft" align="right" valign="top"><a id="ade101144654dfd6c42c5da8b3aa4f633"></a>
 static <a class="el" href="class_table_column_option.html">TableColumnOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Optional</b> (bool value)</td></tr>
 <tr class="separator:ade101144654dfd6c42c5da8b3aa4f633"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,9 +171,6 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>title</b><code> [ge
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">EditorGUITable.TableColumn.TableColumn </td>
@@ -196,11 +190,6 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>title</b><code> [ge
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Initializes a column with its title and options. Edit the other public properties for more settings. </p>
@@ -215,7 +204,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>title</b><code> [ge
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Editor/Columns/TableColumn.cs</li>
+<li>/Users/jquentin/Documents/Projects/EditorGUITable/Assets/GUITable/Code/Editor/Columns/TableColumn.cs</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

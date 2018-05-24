@@ -31,9 +31,9 @@
   <td id="projectlogo"><img alt="Logo" src="Logo_rounded.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Editor GUI Table
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
-   <div id="projectbrief">A plugin to allow programmers to easily create customizable tables in Unity Editor</div>
+   <div id="projectbrief">Allows programmers to easily create customizable tables in Unity Editor</div>
   </td>
  </tr>
  </tbody>
@@ -109,7 +109,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>ApplyOptions<
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a08139cc094136d8c57b12fd6b95b31de"><td class="memItemLeft" align="right" valign="top"><a id="a08139cc094136d8c57b12fd6b95b31de"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>defaultWidth</b> = 100f</td></tr>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>defaultWidth</b> = 0f</td></tr>
 <tr class="separator:a08139cc094136d8c57b12fd6b95b31de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77f73236638c69a797520dd45a72909f"><td class="memItemLeft" align="right" valign="top"><a id="a77f73236638c69a797520dd45a72909f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>expandWidth</b> = false</td></tr>
@@ -126,9 +126,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>resizeable</b> = true
 <tr class="memitem:ae6cfc37ad06ec5a1014b7ad2de6152c5"><td class="memItemLeft" align="right" valign="top"><a id="ae6cfc37ad06ec5a1014b7ad2de6152c5"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>sortable</b> = true</td></tr>
 <tr class="separator:ae6cfc37ad06ec5a1014b7ad2de6152c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67b708efeb53404a92acd14d3d835be5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table_column_entry.html#a67b708efeb53404a92acd14d3d835be5">enabledEntries</a> = true</td></tr>
-<tr class="memdesc:a67b708efeb53404a92acd14d3d835be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the entries are enabled (interactable) or disabled (grayed out). Default: true.  <a href="#a67b708efeb53404a92acd14d3d835be5">More...</a><br /></td></tr>
-<tr class="separator:a67b708efeb53404a92acd14d3d835be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ea132a71916c598e70cc41c589086f7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table_column_entry.html#a3ea132a71916c598e70cc41c589086f7">enabledCells</a> = true</td></tr>
+<tr class="memdesc:a3ea132a71916c598e70cc41c589086f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the cells are enabled (interactable) or disabled (grayed out). Default: true.  <a href="#a3ea132a71916c598e70cc41c589086f7">More...</a><br /></td></tr>
+<tr class="separator:a3ea132a71916c598e70cc41c589086f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac15f6f79fd208e7d3cf25d38e94c2b24"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table_column_entry.html#ac15f6f79fd208e7d3cf25d38e94c2b24">isSortable</a> = true</td></tr>
 <tr class="memdesc:ac15f6f79fd208e7d3cf25d38e94c2b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines if the column is sortable.  <a href="#ac15f6f79fd208e7d3cf25d38e94c2b24">More...</a><br /></td></tr>
 <tr class="separator:ac15f6f79fd208e7d3cf25d38e94c2b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,9 +148,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sortable</b> = true</
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">TableColumnEntry.TableColumnEntry </td>
@@ -160,11 +157,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sortable</b> = true</
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Defines if the column is expandable. </p>
@@ -172,19 +164,19 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sortable</b> = true</
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a67b708efeb53404a92acd14d3d835be5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67b708efeb53404a92acd14d3d835be5">&#9670;&nbsp;</a></span>enabledEntries</h2>
+<a id="a3ea132a71916c598e70cc41c589086f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ea132a71916c598e70cc41c589086f7">&#9670;&nbsp;</a></span>enabledCells</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool TableColumnEntry.enabledEntries = true</td>
+          <td class="memname">bool TableColumnEntry.enabledCells = true</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Defines if the entries are enabled (interactable) or disabled (grayed out). Default: true. </p>
+<p>Defines if the cells are enabled (interactable) or disabled (grayed out). Default: true. </p>
 
 </div>
 </div>
@@ -253,7 +245,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>sortable</b> = true</
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Editor/Columns/TableColumnEntry.cs</li>
+<li>/Users/jquentin/Documents/Projects/EditorGUITable/Assets/GUITable/Code/Editor/Columns/TableColumnEntry.cs</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
