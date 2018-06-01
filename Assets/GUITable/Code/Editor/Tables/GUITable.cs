@@ -204,6 +204,8 @@ namespace EditorGUITable
 
 					tableState.SetReorderableList (list);
 				}
+
+				tableState.reorderableList.serializedProperty = collectionProperty;
 			}
 			
 			tableState.CheckState(columns, tableEntry, rect.width);
