@@ -230,10 +230,6 @@ namespace EditorGUITable
 			float currentX = rect.x;
 			float currentY = rect.y + 5;
 
-			bool displayScrollView = tableState.totalWidth > rect.width && tableEntry.allowScrollView;
-
-			tableState.RightClickMenu (columns, rect);
-
 			DrawHeaders(rect, tableState, columns, currentX - tableState.scrollPos.x, currentY);
 
 			GUI.enabled = true;
@@ -287,6 +283,7 @@ namespace EditorGUITable
 			float currentX,
 			float currentY)
 		{
+			tableState.RightClickMenu (columns, rect);
 			for (int i = 0 ; i < columns.Count ; i++)
 			{
 				TableColumn column = columns[i];
