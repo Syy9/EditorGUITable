@@ -23,6 +23,9 @@ public class PropertyAttributeExample : MonoBehaviour {
 	[ReorderableTable]
 	public List<SimpleObject> simpleObjectsUsingReorderableTableAttribute;
 
+	[Table]
+	public List <Enemy> enemies;
+
 	void OnGUI ()
 	{
 		GUILayout.Label ("Select the PropertyAttribute scene object to visualize the table in the inspector");

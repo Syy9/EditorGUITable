@@ -31,9 +31,9 @@
   <td id="projectlogo"><img alt="Logo" src="Logo_rounded.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Editor GUI Table
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
-   <div id="projectbrief">A plugin to allow programmers to easily create customizable tables in Unity Editor</div>
+   <div id="projectbrief">Allows programmers to easily create customizable tables in Unity Editor</div>
   </td>
  </tr>
  </tbody>
@@ -105,11 +105,23 @@ $(document).ready(function(){initNavTree('class_editor_g_u_i_table_1_1_g_u_i_tab
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aab7e8f3314020a2f5fda74e6d618d330"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_state.html#aab7e8f3314020a2f5fda74e6d618d330">GUITableState</a> (string prefsKey)</td></tr>
-<tr class="memdesc:aab7e8f3314020a2f5fda74e6d618d330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a GUIExtensions.GUITableState with a key to save it in EditorPrefs. This constructor can't be used in ScriptableObject's constructor or in the property's declaration, because it uses the EditorPrefs. Use it in OnEnable or Awake instead.  <a href="#aab7e8f3314020a2f5fda74e6d618d330">More...</a><br /></td></tr>
+<tr class="memdesc:aab7e8f3314020a2f5fda74e6d618d330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_state.html" title="The current state of the GUITable. This has to be used the same way state parameters are used in Unit...">EditorGUITable.GUITableState</a> with a key to save it in EditorPrefs. This constructor can't be used in ScriptableObject's constructor or in the property's declaration, because it uses the EditorPrefs. Use it in OnEnable or Awake instead.  <a href="#aab7e8f3314020a2f5fda74e6d618d330">More...</a><br /></td></tr>
 <tr class="separator:aab7e8f3314020a2f5fda74e6d618d330"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c619547e6065b12b584f888e572b1d2"><td class="memItemLeft" align="right" valign="top"><a id="a0c619547e6065b12b584f888e572b1d2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetReorderableList</b> (ReorderableList reorderableList)</td></tr>
+<tr class="separator:a0c619547e6065b12b584f888e572b1d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02acb0bb7c75ca1bcd97a2f89da2617b"><td class="memItemLeft" align="right" valign="top"><a id="a02acb0bb7c75ca1bcd97a2f89da2617b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Save</b> ()</td></tr>
 <tr class="separator:a02acb0bb7c75ca1bcd97a2f89da2617b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ea4276cadee589d1d814ad587106f22"><td class="memItemLeft" align="right" valign="top"><a id="a0ea4276cadee589d1d814ad587106f22"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CheckState</b> (List&lt; <a class="el" href="class_editor_g_u_i_table_1_1_table_column.html">TableColumn</a> &gt; columns, <a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_entry.html">GUITableEntry</a> tableEntry, float availableWidth)</td></tr>
+<tr class="separator:a0ea4276cadee589d1d814ad587106f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aca1648ec180d0ee03f39d47a1ba7f2"><td class="memItemLeft" align="right" valign="top"><a id="a3aca1648ec180d0ee03f39d47a1ba7f2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RightClickMenu</b> (List&lt; <a class="el" href="class_editor_g_u_i_table_1_1_table_column.html">TableColumn</a> &gt; columns, Rect? position=null)</td></tr>
+<tr class="separator:a3aca1648ec180d0ee03f39d47a1ba7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16b22aaf8e9b6ed3d4c1449ef894042b"><td class="memItemLeft" align="right" valign="top"><a id="a16b22aaf8e9b6ed3d4c1449ef894042b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ResizeColumn</b> (int indexColumn, float currentX, Rect? position=null)</td></tr>
+<tr class="separator:a16b22aaf8e9b6ed3d4c1449ef894042b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -122,9 +134,6 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a5d522c1790784ff16db98b345b74a0ca"><td class="memItemLeft" align="right" valign="top"><a id="a5d522c1790784ff16db98b345b74a0ca"></a>
 Vector2&#160;</td><td class="memItemRight" valign="bottom"><b>scrollPos</b></td></tr>
 <tr class="separator:a5d522c1790784ff16db98b345b74a0ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9aaf765fd446c9e48b17b47528f647f"><td class="memItemLeft" align="right" valign="top"><a id="ac9aaf765fd446c9e48b17b47528f647f"></a>
-Vector2&#160;</td><td class="memItemRight" valign="bottom"><b>scrollPosHoriz</b></td></tr>
-<tr class="separator:ac9aaf765fd446c9e48b17b47528f647f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4fe2697eec54139de525bb0b87be1b3"><td class="memItemLeft" align="right" valign="top"><a id="ad4fe2697eec54139de525bb0b87be1b3"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>sortByColumnIndex</b> = -1</td></tr>
 <tr class="separator:ad4fe2697eec54139de525bb0b87be1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,9 +146,15 @@ List&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>column
 <tr class="memitem:a5351f180498096a8da853064d8a2e4d0"><td class="memItemLeft" align="right" valign="top"><a id="a5351f180498096a8da853064d8a2e4d0"></a>
 List&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>columnVisible</b> = new List&lt;bool&gt; ()</td></tr>
 <tr class="separator:a5351f180498096a8da853064d8a2e4d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae265f68d70cebd190e3dfd566ddf09bb"><td class="memItemLeft" align="right" valign="top"><a id="ae265f68d70cebd190e3dfd566ddf09bb"></a>
+ReorderableList&#160;</td><td class="memItemRight" valign="bottom"><b>reorderableList</b></td></tr>
+<tr class="separator:ae265f68d70cebd190e3dfd566ddf09bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
+<tr class="memitem:a4130ddf3a229512ea9a2874413540885"><td class="memItemLeft" align="right" valign="top"><a id="a4130ddf3a229512ea9a2874413540885"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isBeingResized</b><code> [get]</code></td></tr>
+<tr class="separator:a4130ddf3a229512ea9a2874413540885"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2f4887bcadfd3fcdf6e4642e5be1d80"><td class="memItemLeft" align="right" valign="top"><a id="ad2f4887bcadfd3fcdf6e4642e5be1d80"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>totalWidth</b><code> [get]</code></td></tr>
 <tr class="separator:ad2f4887bcadfd3fcdf6e4642e5be1d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,9 +167,6 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>totalWidth</b><code>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">EditorGUITable.GUITableState.GUITableState </td>
@@ -164,14 +176,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>totalWidth</b><code>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Initializes a GUIExtensions.GUITableState with a key to save it in EditorPrefs. This constructor can't be used in ScriptableObject's constructor or in the property's declaration, because it uses the EditorPrefs. Use it in OnEnable or Awake instead. </p>
+<p>Initializes a <a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_state.html" title="The current state of the GUITable. This has to be used the same way state parameters are used in Unit...">EditorGUITable.GUITableState</a> with a key to save it in EditorPrefs. This constructor can't be used in ScriptableObject's constructor or in the property's declaration, because it uses the EditorPrefs. Use it in OnEnable or Awake instead. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">prefsKey</td><td>Prefs key.</td></tr>
@@ -182,7 +189,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>totalWidth</b><code>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Editor/GUITableState.cs</li>
+<li>/Users/jquentin/Documents/Projects/EditorGUITable/Assets/GUITable/Code/Editor/Tables/GUITableState.cs</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

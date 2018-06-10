@@ -22,9 +22,6 @@ public class AdvancedExampleEditor : Editor
 
 		base.OnInspectorGUI();
 
-//		EditorGUILayout.PropertyField (serializedObject.FindProperty("enemies"), true);
-//		serializedObject.ApplyModifiedProperties();
-
 		GUILayout.Space (20f);
 
 		GUILayout.Label ("Table display", EditorStyles.boldLabel);
@@ -42,12 +39,6 @@ public class SpawnersCell : TableCell
 
 	SerializedProperty sp;
 	SerializedObject so;
-
-	public override void DrawCellLayout (float width, float height)
-	{
-		sp.intValue = EditorGUILayout.MaskField (sp.intValue, AdvancedExample.Instance.spawners.Select(s => s.name).ToArray(), GUILayout.Width(width), GUILayout.Height(height));
-		so.ApplyModifiedProperties();
-	}
 
 	public override void DrawCell (Rect rect)
 	{

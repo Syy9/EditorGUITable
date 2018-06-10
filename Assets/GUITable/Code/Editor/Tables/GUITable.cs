@@ -19,6 +19,8 @@ namespace EditorGUITable
 
 		const string FULL_VERSION_URL = "https://assetstore.unity.com/packages/tools/gui/editor-gui-table-108795";
 
+		static readonly Color TABLE_BG_COLOR = new Color (0.3f, 0.3f, 0.3f);
+
 		/// <summary>
 		/// Draw a table just from the collection's property.
 		/// This will create columns for all the visible members in the elements' class,
@@ -35,14 +37,29 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options) 
 		{
-			List<string> properties = new List<string>();
-			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
-			foreach (SerializedProperty prop in collectionProperty.serializedObject.FindProperty(firstElementPath))
+
+			bool isObjectReferencesCollection = false;
+			List <string> properties = SerializationHelpers.GetElementsSerializedFields (collectionProperty, out isObjectReferencesCollection);
+			if (properties == null && collectionProperty.arraySize == 0)
 			{
-				string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
-				// Avoid drawing properties more than 1 level deep
-				if (!subPropName.Contains("."))
-					properties.Add (subPropName);
+				DrawTable (
+					rect,
+					null, 
+					new List<TableColumn> () 
+				{
+					new TableColumn (collectionProperty.displayName + "(properties unknown, add at least 1 element)", TableColumn.Sortable (false), TableColumn.Resizeable (false))
+				}, 
+					new List <List <TableCell>> (),
+					collectionProperty, 
+					options);
+				return tableState;
+			}
+			if (isObjectReferencesCollection)
+			{
+				List<SelectorColumn> columns = new List<SelectorColumn> ();
+				columns.Add (new SelectObjectReferenceColumn ("Object Reference", TableColumn.Optional (true)));
+				columns.AddRange (properties.Select (prop => (SelectorColumn) new SelectFromPropertyNameColumn (prop, ObjectNames.NicifyVariableName (prop))));
+				return DrawTable (rect, tableState, collectionProperty, columns, options);
 			}
 			return DrawTable (rect, tableState, collectionProperty, properties, options);
 		}
@@ -92,7 +109,7 @@ namespace EditorGUITable
 			List<List<TableCell>> rows = new List<List<TableCell>>();
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
-				SerializedProperty sp = collectionProperty.serializedObject.FindProperty (string.Format ("{0}.Array.data[{1}]", collectionProperty.propertyPath, i));
+				SerializedProperty sp = collectionProperty.FindPropertyRelative (SerializationHelpers.GetElementAtIndexRelativePath (i));
 				if (tableEntry.filter != null && !tableEntry.filter (sp))
 					continue;
 				List<TableCell> row = new List<TableCell>();
@@ -190,6 +207,8 @@ namespace EditorGUITable
 
 					tableState.SetReorderableList (list);
 				}
+
+				tableState.reorderableList.serializedProperty = collectionProperty;
 			}
 			
 			tableState.CheckState(columns, tableEntry, rect.width);
@@ -217,11 +236,7 @@ namespace EditorGUITable
 			float rowHeight = tableEntry.rowHeight;
 
 			float currentX = rect.x;
-			float currentY = rect.y;
-
-			bool displayScrollView = tableState.totalWidth > rect.width && tableEntry.allowScrollView;
-
-			tableState.RightClickMenu (columns, rect);
+			float currentY = rect.y + 5;
 
 			DrawHeaders(rect, tableState, columns, currentX - tableState.scrollPos.x, currentY, tableEntry);
 
@@ -232,20 +247,27 @@ namespace EditorGUITable
 			if (tableEntry.allowScrollView)
 			{
 				tableState.scrollPos = GUI.BeginScrollView (
-					// TODO: Put back support for internal vertical scroll bar, maybe as an option
-					//new Rect (currentX, currentY, rect.width, Mathf.Min (rect.height, Screen.height / EditorGUIUtility.pixelsPerPoint - rect.y - 40)),
-					new Rect (currentX, currentY, rect.width, rect.height),
+					new Rect (currentX, currentY, rect.width, TableHeight (tableEntry, cells.Count)),
 					tableState.scrollPos, 
 					new Rect(0f, 0f, tableState.totalWidth, tableEntry.rowHeight * cells.Count));
 				currentX = 0f;
 				currentY = 0f;
 			}
 
-			foreach (List<TableCell> row in orderedRows)
+			if (orderedRows.Count == 0)
 			{
 				currentX = tableEntry.allowScrollView ? 0 : rect.x;
-				DrawLine (tableState, columns, row, currentX, currentY, rowHeight, tableEntry);
-				currentY += rowHeight;
+				GUIHelpers.DrawRect (new Rect (currentX, currentY, tableState.totalWidth, rowHeight), TABLE_BG_COLOR);
+				GUI.Label (new Rect (currentX + 5, currentY, rect.width, rowHeight), "Collection is empty");
+			}
+			else
+			{
+				foreach (List<TableCell> row in orderedRows)
+				{
+					currentX = tableEntry.allowScrollView ? 0 : rect.x;
+					DrawLine (tableState, columns, row, currentX, currentY, rowHeight, tableEntry);
+					currentY += rowHeight;
+				}
 			}
 
 			GUI.enabled = true;
@@ -275,6 +297,7 @@ namespace EditorGUITable
 			float currentY,
 			GUITableEntry tableEntry)
 		{
+			tableState.RightClickMenu (columns, rect);
 			for (int i = 0 ; i < columns.Count ; i++)
 			{
 				TableColumn column = columns[i];
@@ -388,6 +411,12 @@ namespace EditorGUITable
 			}
 
 			return false;
+		}
+
+		public static float TableHeight (GUITableEntry tableEntry, int nbRows)
+		{
+			return (tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * Mathf.Max(1, nbRows) 
+			+ EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1);
 		}
 
 	}

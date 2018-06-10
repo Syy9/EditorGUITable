@@ -21,8 +21,16 @@ namespace EditorGUITable
 
 		public override TableCell GetCell (SerializedProperty elementProperty)
 		{
-			return new PropertyCell (elementProperty.FindPropertyRelative (propertyName));
+			if (elementProperty.propertyType == SerializedPropertyType.ObjectReference)
+			{
+				if (elementProperty.objectReferenceValue == null)
+					return new LabelCell ("null");
+				return new PropertyCell (new SerializedObject (elementProperty.objectReferenceValue).FindProperty (propertyName));
+			}
+			else
+				return new PropertyCell (elementProperty.FindPropertyRelative (propertyName));
 		}
+	
 	}
 
 }

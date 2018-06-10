@@ -31,9 +31,9 @@
   <td id="projectlogo"><img alt="Logo" src="Logo_rounded.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Editor GUI Table
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
-   <div id="projectbrief">A plugin to allow programmers to easily create customizable tables in Unity Editor</div>
+   <div id="projectbrief">Allows programmers to easily create customizable tables in Unity Editor</div>
   </td>
  </tr>
  </tbody>
@@ -97,8 +97,8 @@ $(document).ready(function(){initNavTree('namespace_editor_g_u_i_table.html','')
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_action_entry.html">ActionEntry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This entry class draws a button which, when clicked, will trigger the action given in the constructor.  <a href="class_editor_g_u_i_table_1_1_action_entry.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_action_cell.html">ActionCell</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This cell class draws a button which, when clicked, will trigger the action given in the constructor.  <a href="class_editor_g_u_i_table_1_1_action_cell.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>GUITable</b></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main Class of the Table Plugin. This contains static functions to draw a table, from the most basic to the most customizable. <br /></td></tr>
@@ -113,23 +113,46 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_state.html">GUITableState</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current state of the GUITable. This has to be used the same way state parameters are used in Unity GUI functions, like the scroll position in BeginScrollView. It has to be passed from one GUI frame to another by keeping a reference in your calling code.  <a href="class_editor_g_u_i_table_1_1_g_u_i_table_state.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_label_entry.html">LabelEntry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This entry class draws a string as a label. This is useful for properties you want to display in the table as read only, as the default PropertyField used in <a class="el" href="class_editor_g_u_i_table_1_1_property_entry.html" title="This entry class just uses EditorGUILayout.PropertyField to draw a given property. This is the basic way to use GUITable. It will draw the properties the same way Unity would by default. ">PropertyEntry</a> uses editable fields.  <a href="class_editor_g_u_i_table_1_1_label_entry.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_label_cell.html">LabelCell</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This cell class draws a string as a label. This is useful for properties you want to display in the table as read only, as the default PropertyField used in <a class="el" href="class_editor_g_u_i_table_1_1_property_cell.html" title="This cell class just uses EditorGUILayout.PropertyField to draw a given property. This is the basic w...">PropertyCell</a> uses editable fields.  <a href="class_editor_g_u_i_table_1_1_label_cell.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_property_column.html">PropertyColumn</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal Use Only. This class adds a property to a column. This will be used to automatically draw the entries for this column in some versions of GUITable.DrawTable  <a href="class_editor_g_u_i_table_1_1_property_column.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_object_cell.html">ObjectCell</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This entry class just uses EditorGUILayout.ObjectField to draw a given property.  <a href="class_editor_g_u_i_table_1_1_object_cell.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_property_entry.html">PropertyEntry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This entry class just uses EditorGUILayout.PropertyField to draw a given property. This is the basic way to use GUITable. It will draw the properties the same way Unity would by default.  <a href="class_editor_g_u_i_table_1_1_property_entry.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_property_cell.html">PropertyCell</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This cell class just uses EditorGUILayout.PropertyField to draw a given property. This is the basic way to use GUITable. It will draw the properties the same way Unity would by default.  <a href="class_editor_g_u_i_table_1_1_property_cell.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_reorderable_table_attribute.html">ReorderableTableAttribute</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attribute that automatically draws a collection as a table with the Reorderable option enabled  <a href="class_editor_g_u_i_table_1_1_reorderable_table_attribute.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_reorderable_table_drawer.html">ReorderableTableDrawer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_select_from_cell_type_column.html">SelectFromCellTypeColumn</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class represents a column that will draw Property Cells from the given property name, relative to the collection element's serialized property.  <a href="class_editor_g_u_i_table_1_1_select_from_cell_type_column.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_select_from_function_column.html">SelectFromFunctionColumn</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class represents a column that will draw cells using the given function from the element's serialized property. This allows to build any type of table cell.  <a href="class_editor_g_u_i_table_1_1_select_from_function_column.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_select_from_property_name_column.html">SelectFromPropertyNameColumn</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class represents a column that will draw Property Cells from the given property name, relative to the collection element's serialized property.  <a href="class_editor_g_u_i_table_1_1_select_from_property_name_column.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_select_object_reference_column.html">SelectObjectReferenceColumn</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class represents a column that will draw Property Cells from the given property name, relative to the collection element's serialized property.  <a href="class_editor_g_u_i_table_1_1_select_object_reference_column.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_selector_column.html">SelectorColumn</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class adds a property and a selector to a column. This will be used to automatically draw the entries for this column in some versions of GUITable.DrawTable  <a href="class_editor_g_u_i_table_1_1_selector_column.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class represents a column that can automatically get a cell from an element's serialized property. It is abstract so there can be several ways to get this cell.  <a href="class_editor_g_u_i_table_1_1_selector_column.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_table_attribute.html">TableAttribute</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attribute that automatically draws a collection as a table  <a href="class_editor_g_u_i_table_1_1_table_attribute.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_table_cell.html">TableCell</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all table cells. DrawCell needs to be overriden to draw the cell. Use this to customize the table however needed. CompareTo can be overriden to customize the sorting. comparingValue is used as a fallback for sorting any types of cells, even different types.  <a href="class_editor_g_u_i_table_1_1_table_cell.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_table_column.html">TableColumn</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all table columns. It only takes a title and a width in the constructor, but other settings are available to customize the column.  <a href="class_editor_g_u_i_table_1_1_table_column.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_table_entry.html">TableEntry</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for all table entries. DrawEntry needs to be overriden to draw the entry for the cell. Use this to customize the table however needed. CompareTo can be overriden to customize the sorting. comparingValue is used as a fallback for sorting any types of entries, even different types.  <a href="class_editor_g_u_i_table_1_1_table_entry.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_editor_g_u_i_table_1_1_table_drawer.html">TableDrawer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Drawer for the Table Attribute. See the <a class="el" href="class_editor_g_u_i_table_1_1_table_attribute.html" title="Attribute that automatically draws a collection as a table ">TableAttribute</a> class documentation for the limitations of this attribute.  <a href="class_editor_g_u_i_table_1_1_table_drawer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,8 +24,9 @@ namespace EditorGUITable
 		/// similar to what Unity would show in the classic vertical collection display, but as a table instead.
 		/// </summary>
 		/// <returns>The updated table state.</returns>
-		/// <param name="collectionProperty">The serialized property of the collection.</param>
 		/// <param name="tableState">The Table state.</param>
+		/// <param name="collectionProperty">The serialized property of the collection.</param>
+		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable (
 			GUITableState tableState,
 			SerializedProperty collectionProperty)
@@ -89,14 +91,27 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty, 
 			params GUITableOption[] options) 
 		{
-			List<string> properties = new List<string>();
-			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
-			foreach (SerializedProperty prop in collectionProperty.serializedObject.FindProperty(firstElementPath))
+			bool isObjectReferencesCollection = false;
+			List <string> properties = SerializationHelpers.GetElementsSerializedFields (collectionProperty, out isObjectReferencesCollection);
+			if (properties == null && collectionProperty.arraySize == 0)
 			{
-				string subPropName = prop.propertyPath.Substring(firstElementPath.Length + 1);
-				// Avoid drawing properties more than 1 level deep
-				if (!subPropName.Contains("."))
-					properties.Add (subPropName);
+				DrawTable (
+					null, 
+					new List<TableColumn> () 
+					{
+					new TableColumn (collectionProperty.displayName + "(properties unknown, add at least 1 element)", TableColumn.Sortable (false), TableColumn.Resizeable (false))
+					}, 
+					new List <List <TableCell>> (),
+					collectionProperty, 
+					options);
+				return tableState;
+			}
+			if (isObjectReferencesCollection)
+			{
+				List<SelectorColumn> columns = new List<SelectorColumn> ();
+				columns.Add (new SelectObjectReferenceColumn ("Object Reference", TableColumn.Optional (true)));
+				columns.AddRange (properties.Select (prop => (SelectorColumn) new SelectFromPropertyNameColumn (prop, ObjectNames.NicifyVariableName (prop))));
+				return DrawTable (tableState, collectionProperty, columns, options);
 			}
 			return DrawTable (tableState, collectionProperty, properties, SetDemoVersionOption (options));
 		}
@@ -144,7 +159,7 @@ namespace EditorGUITable
 			List<List<TableCell>> rows = new List<List<TableCell>>();
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
 			{
-				SerializedProperty sp = collectionProperty.serializedObject.FindProperty (string.Format ("{0}.Array.data[{1}]", collectionProperty.propertyPath, i));
+				SerializedProperty sp = collectionProperty.FindPropertyRelative (SerializationHelpers.GetElementAtIndexRelativePath(i));
 				if (tableEntry.filter != null && !tableEntry.filter (sp))
 					continue;
 				List <TableCell> row = new List<TableCell>();
@@ -187,8 +202,8 @@ namespace EditorGUITable
 		/// <param name="tableState">The Table state.</param>
 		/// <param name="columns">The Columns of the table.</param>
 		/// <param name="cells">The Cells as a list of rows.</param>
-		/// <param name="collectionProperty">The serialized property of the collection.</param>
-		/// <param name="options">The Table options.</param>
+		/// <param name="collectionProperty">The SerializeProperty of the collection. This is useful for reorderable tables.</param>
+		/// <param name="options">The table options.</param>
 		public static GUITableState DrawTable ( 
 			GUITableState tableState,
 			List<TableColumn> columns, 
@@ -204,9 +219,14 @@ namespace EditorGUITable
 				tableState.CheckState(columns, tableEntry, float.MaxValue);
 			}
 
+			float requiredHeight = GUITable.TableHeight (tableEntry, cells.Count) + 10;
+
+			if (tableEntry.allowScrollView && tableState.totalWidth + 19 > Screen.width / EditorGUIUtility.pixelsPerPoint)
+				requiredHeight += EditorGUIUtility.singleLineHeight;
+			
 			Rect position = GUILayoutUtility.GetRect(
-				tableState.totalWidth, 
-				(tableEntry.rowHeight + (tableEntry.reorderable ? 5 : 0)) * cells.Count + EditorGUIUtility.singleLineHeight * (tableEntry.reorderable ? 2 : 1));
+				tableEntry.allowScrollView ? Screen.width / EditorGUIUtility.pixelsPerPoint - 40 : tableState.totalWidth,
+				requiredHeight);
 			if (Event.current.type == EventType.Layout)
 				return tableState;
 			else

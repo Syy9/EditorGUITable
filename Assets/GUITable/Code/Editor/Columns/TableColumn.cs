@@ -48,20 +48,21 @@ namespace EditorGUITable
 			}
 		}
 
-		public static TableColumnOption ExpandWidth (bool enable)
-		{
-			return new TableColumnOption (TableColumnOption.Type.ExpandWidth, enable);
-		}
-
-		public static TableColumnOption MinWidth (float value)
-		{
-			return new TableColumnOption (TableColumnOption.Type.MinWidth, value);
-		}
-
-		public static TableColumnOption MaxWidth (float value)
-		{
-			return new TableColumnOption (TableColumnOption.Type.MaxWidth, value);
-		}
+		// TODO These options are not ready yet 
+//		public static TableColumnOption ExpandWidth (bool enable)
+//		{
+//			return new TableColumnOption (TableColumnOption.Type.ExpandWidth, enable);
+//		}
+//
+//		public static TableColumnOption MinWidth (float value)
+//		{
+//			return new TableColumnOption (TableColumnOption.Type.MinWidth, value);
+//		}
+//
+//		public static TableColumnOption MaxWidth (float value)
+//		{
+//			return new TableColumnOption (TableColumnOption.Type.MaxWidth, value);
+//		}
 
 		public static TableColumnOption Width (float value)
 		{

@@ -31,9 +31,9 @@
   <td id="projectlogo"><img alt="Logo" src="Logo_rounded.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Editor GUI Table
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">2.1.1</span>
    </div>
-   <div id="projectbrief">A plugin to allow programmers to easily create customizable tables in Unity Editor</div>
+   <div id="projectbrief">Allows programmers to easily create customizable tables in Unity Editor</div>
   </td>
  </tr>
  </tbody>
@@ -102,7 +102,9 @@ $(document).ready(function(){initNavTree('class_editor_g_u_i_table_1_1_g_u_i_tab
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a095cb87443fb1af279bfdad89fc97979"><td class="memItemLeft" align="right" valign="top"><a id="a095cb87443fb1af279bfdad89fc97979"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Type</b> { <b>AllowScrollView</b>, 
-<b>RowHeight</b>
+<b>RowHeight</b>, 
+<b>Reorderable</b>, 
+<b>Filter</b>
  }</td></tr>
 <tr class="separator:a095cb87443fb1af279bfdad89fc97979"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -120,6 +122,12 @@ static <a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_option.html"
 <tr class="memitem:a2cdf1ca2f313a150f12e08bee2e034a0"><td class="memItemLeft" align="right" valign="top"><a id="a2cdf1ca2f313a150f12e08bee2e034a0"></a>
 static <a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_option.html">GUITableOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>RowHeight</b> (float value)</td></tr>
 <tr class="separator:a2cdf1ca2f313a150f12e08bee2e034a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a643484597d203b20cfb767c86043c6"><td class="memItemLeft" align="right" valign="top"><a id="a1a643484597d203b20cfb767c86043c6"></a>
+static <a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_option.html">GUITableOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Reorderable</b> (bool enable=true)</td></tr>
+<tr class="separator:a1a643484597d203b20cfb767c86043c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49abfe29004cbc4290f2cf1201e52601"><td class="memItemLeft" align="right" valign="top"><a id="a49abfe29004cbc4290f2cf1201e52601"></a>
+static <a class="el" href="class_editor_g_u_i_table_1_1_g_u_i_table_option.html">GUITableOption</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Filter</b> (Func&lt; SerializedProperty, bool &gt; filter)</td></tr>
+<tr class="separator:a49abfe29004cbc4290f2cf1201e52601"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -131,7 +139,7 @@ object&#160;</td><td class="memItemRight" valign="bottom"><b>value</b></td></tr>
 <tr class="separator:a0cfad34a241e2c7c777ba82a5eeb23e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Editor/GUITableOption.cs</li>
+<li>/Users/jquentin/Documents/Projects/EditorGUITable/Assets/GUITable/Code/Editor/Tables/GUITableOption.cs</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -17,13 +17,7 @@ namespace EditorGUITable
 	/// </summary>
 	public abstract class TableCell : System.IComparable
 	{
-		/// <summary>
-		/// Draws the cell using GUILayout.
-		/// </summary>
-		/// <param name="width">Width.</param>
-		/// <param name="height">Height.</param>
-		public abstract void DrawCellLayout (float width, float height);
-
+		
 		/// <summary>
 		/// Draws the cell using GUI (without GUILayout).
 		/// </summary>
