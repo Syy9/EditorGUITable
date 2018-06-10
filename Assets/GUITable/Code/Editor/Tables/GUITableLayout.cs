@@ -31,6 +31,7 @@ namespace EditorGUITable
 			GUITableState tableState,
 			SerializedProperty collectionProperty)
 		{
+			GUITable.SetUsingFunction ("GUITableLayout_0");
 			List<string> properties = new List<string> ();
 			string firstElementPath = collectionProperty.propertyPath + ".Array.data[0]";
 			foreach (SerializedProperty prop in collectionProperty.serializedObject.FindProperty (firstElementPath))
@@ -91,6 +92,7 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty, 
 			params GUITableOption[] options) 
 		{
+			GUITable.SetUsingFunction ("GUITableLayout_1");
 			bool isObjectReferencesCollection = false;
 			List <string> properties = SerializationHelpers.GetElementsSerializedFields (collectionProperty, out isObjectReferencesCollection);
 			if (properties == null && collectionProperty.arraySize == 0)
@@ -133,6 +135,7 @@ namespace EditorGUITable
 			List<string> properties, 
 			params GUITableOption[] options) 
 		{
+			GUITable.SetUsingFunction ("GUITableLayout_2");
 			List<SelectorColumn> columns = properties.Select(prop => (SelectorColumn) new SelectFromPropertyNameColumn(
 				prop, ObjectNames.NicifyVariableName (prop))).ToList();
 
@@ -155,6 +158,7 @@ namespace EditorGUITable
 			List<SelectorColumn> columns, 
 			params GUITableOption[] options) 
 		{
+			GUITable.SetUsingFunction ("GUITableLayout_3");
 			GUITableEntry tableEntry = new GUITableEntry (options);
 			List<List<TableCell>> rows = new List<List<TableCell>>();
 			for (int i = 0 ; i < collectionProperty.arraySize ; i++)
@@ -189,6 +193,7 @@ namespace EditorGUITable
 			List<List<TableCell>> cells, 
 			params GUITableOption[] options)
 		{
+			GUITable.SetUsingFunction ("GUITableLayout_4");
 			return DrawTable (tableState, columns, cells, null, SetDemoVersionOption (options));
 		}
 
@@ -211,6 +216,7 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options)
 		{
+			GUITable.SetUsingFunction ("GUITableLayout_5");
 			GUITableEntry tableEntry = new GUITableEntry (options);
 
 			if (tableState == null)

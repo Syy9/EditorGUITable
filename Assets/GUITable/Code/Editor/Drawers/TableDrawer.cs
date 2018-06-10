@@ -95,11 +95,20 @@ namespace EditorGUITable
 		protected virtual GUITableState DrawTable (Rect rect, SerializedProperty collectionProperty, GUIContent label, TableAttribute tableAttribute)
 		{
 			if (tableAttribute.properties == null && tableAttribute.widths == null)
+			{
+				GUITable.SetUsingFunction ("TableDrawer_1");
 				return GUITable.DrawTable(rect, tableState, collectionProperty, GUITableOption.AllowScrollView(false), GUITableOption.DemoVersion ());
+			}
 			else if (tableAttribute.widths == null)
+			{
+				GUITable.SetUsingFunction ("TableDrawer_2");
 				return GUITable.DrawTable(rect, tableState, collectionProperty, tableAttribute.properties.ToList(), GUITableOption.AllowScrollView(false), GUITableOption.DemoVersion ());
+			}
 			else
+			{
+				GUITable.SetUsingFunction ("TableDrawer_3");
 				return GUITable.DrawTable(rect, tableState, collectionProperty, GetPropertyColumns(tableAttribute), GUITableOption.AllowScrollView(false), GUITableOption.DemoVersion ());
+			}
 		}
 
 		protected static List<SelectorColumn> GetPropertyColumns (TableAttribute tableAttribute)

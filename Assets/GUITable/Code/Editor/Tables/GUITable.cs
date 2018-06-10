@@ -17,7 +17,9 @@ namespace EditorGUITable
 	public static class GUITable
 	{
 
-		const string FULL_VERSION_URL = "https://assetstore.unity.com/packages/tools/gui/editor-gui-table-108795";
+		const string FULL_VERSION_URL = "https://assetstore.unity.com/packages/tools/gui/editor-gui-table-108795?utm_source=lite_version&utm_medium=";
+
+		static string usingFunction;
 
 		static readonly Color TABLE_BG_COLOR = new Color (0.3f, 0.3f, 0.3f);
 
@@ -61,6 +63,7 @@ namespace EditorGUITable
 				columns.AddRange (properties.Select (prop => (SelectorColumn) new SelectFromPropertyNameColumn (prop, ObjectNames.NicifyVariableName (prop))));
 				return DrawTable (rect, tableState, collectionProperty, columns, options);
 			}
+			SetUsingFunction ("GUITable_1");
 			return DrawTable (rect, tableState, collectionProperty, properties, options);
 		}
 
@@ -85,6 +88,7 @@ namespace EditorGUITable
 			List<SelectorColumn> columns = properties.Select(prop => (SelectorColumn)new SelectFromPropertyNameColumn(
 				prop, ObjectNames.NicifyVariableName (prop))).ToList();
 
+			SetUsingFunction ("GUITable_2");
 			return DrawTable (rect, tableState, collectionProperty, columns, options);
 		}
 
@@ -120,6 +124,7 @@ namespace EditorGUITable
 				rows.Add(row);
 			}
 
+			SetUsingFunction ("GUITable_3");
 			return DrawTable (rect, tableState, columns.Select((col) => (TableColumn) col).ToList(), rows, collectionProperty, options);
 		}
 
@@ -141,6 +146,7 @@ namespace EditorGUITable
 			List<List<TableCell>> cells, 
 			params GUITableOption[] options)
 		{
+			SetUsingFunction ("GUITable_4");
 			return DrawTable(rect, tableState, columns, cells, null, options);
 		}
 
@@ -167,6 +173,8 @@ namespace EditorGUITable
 			SerializedProperty collectionProperty,
 			params GUITableOption[] options)
 		{
+
+			SetUsingFunction ("GUITable_5");
 
 			GUITableEntry tableEntry = new GUITableEntry (options);
 
@@ -284,6 +292,8 @@ namespace EditorGUITable
 				DrawFullVersionButton (new Rect (rect.x, rect.y, Mathf.Min (Screen.width / EditorGUIUtility.pixelsPerPoint, tableState.totalWidth), cells.Count * tableEntry.rowHeight + EditorGUIUtility.singleLineHeight));
 			}
 
+			usingFunction = null;
+
 			return tableState;
 		}
 
@@ -376,10 +386,14 @@ namespace EditorGUITable
 		{
 			GUI.enabled = true;
 			if (goodButton (new Rect (tableRect.center.x - 100f, tableRect.center.y - 30f, 200f, 60f), "Get the Full Version"))
-				Application.OpenURL (FULL_VERSION_URL);
+				Application.OpenURL (FULL_VERSION_URL + usingFunction);
 		}
 
-
+		public static void SetUsingFunction (string functionName)
+		{
+			if (string.IsNullOrEmpty (usingFunction))
+				usingFunction = functionName;
+		}
 
 		static bool goodButton(Rect bounds, string caption) {
 			GUIStyle btnStyle = GUI.skin.FindStyle("button");
