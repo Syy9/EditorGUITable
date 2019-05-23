@@ -1,6 +1,6 @@
 # EditorGUITable
 
-<img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Logo_rounded.png" />
+<img src="https://raw.githubusercontent.com/luoxiao0309/EditorGUITable/master/StoreAssets/Logo_rounded.png" />
 
 A beautiful, easy-to-use and customizable table to display in the Unity Editor! <BR><BR>
 This plugin helps programmers to create nice visual editors for artists and game designers to use in the Editor. <BR><BR>
@@ -19,12 +19,12 @@ It uses the GUILayout elements and just organizes them in a table, so the style 
  
 <BR> <BR>
 
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/e654bb23c86862637d73e24c06d4ac8ccaba2868/StoreAssets/Screenshot%201.png" width="500" />
+ <img src="https://raw.githubusercontent.com/luoxiao0309/EditorGUITable/master/StoreAssets/Screenshot%201.png" width="500" />
  
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%202.png" width="500" />
+ <img src="https://raw.githubusercontent.com/luoxiao0309/EditorGUITable/master/StoreAssets/Screenshot%202.png" width="500" />
  
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%203.png" width="500" />
+ <img src="https://raw.githubusercontent.com/luoxiao0309/EditorGUITable/master/StoreAssets/Screenshot%203.png" width="500" />
  
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%204.png" width="500" />
+ <img src="https://raw.githubusercontent.com/luoxiao0309/EditorGUITable/master/StoreAssets/Screenshot%204.png" width="500" />
  
- <img src="https://raw.githubusercontent.com/jquentin/EditorGUITable/master/StoreAssets/Screenshot%205.png" width="500" />
+ <img src="https://raw.githubusercontent.com/luoxiao0309/EditorGUITable/master/StoreAssets/Screenshot%205.png" width="500" />
